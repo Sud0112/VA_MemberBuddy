@@ -73,9 +73,9 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
   ];
 
   const workoutTypes = [
-    { name: 'Cardio', value: 45, color: '#3b82f6' },
-    { name: 'Strength', value: 35, color: '#10b981' },
-    { name: 'Flexibility', value: 20, color: '#f59e0b' }
+    { name: 'Cardio', value: 45, color: '#8b5cf6' },
+    { name: 'Strength', value: 35, color: '#06b6d4' },
+    { name: 'Flexibility', value: 20, color: '#f97316' }
   ];
 
   const currentStreak = 7;
@@ -86,30 +86,30 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-700 to-blue-700 bg-clip-text text-transparent mb-2">
           Welcome back, <span data-testid="text-user-first-name">{user?.firstName}</span>!
         </h1>
-        <p className="text-gray-600">You're crushing it! Keep up the momentum 🔥 💪</p>
+        <p className="text-gray-800 font-medium">You're crushing it! Keep up the momentum 🔥 💪</p>
       </div>
 
       {/* Enhanced Stats Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border-0 bg-gradient-to-br from-blue-50 to-blue-100">
-          <div className="absolute -top-2 -right-2 w-20 h-20 bg-blue-200/30 rounded-full"></div>
+        <Card className="relative overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-blue-200 bg-gradient-to-br from-blue-100 via-cyan-50 to-purple-100">
+          <div className="absolute -top-2 -right-2 w-20 h-20 bg-gradient-to-br from-blue-300/40 to-purple-300/40 rounded-full"></div>
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shadow-sm">
-                <Calendar className="text-blue-600 h-6 w-6" />
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-200 to-cyan-200 rounded-xl flex items-center justify-center shadow-md">
+                <Calendar className="text-blue-700 h-6 w-6" />
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-gray-900" data-testid="text-monthly-visits">{currentVisits}</p>
-                <p className="text-sm text-gray-600">of {monthlyGoal} visits</p>
+                <p className="text-2xl font-bold bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent" data-testid="text-monthly-visits">{currentVisits}</p>
+                <p className="text-sm font-medium text-gray-800">of {monthlyGoal} visits</p>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600 font-medium">Monthly Goal 🎯</span>
-                <span className="font-bold text-blue-600">{Math.round(goalProgress)}%</span>
+                <span className="text-gray-800 font-semibold">Monthly Goal 🎯</span>
+                <span className="font-bold text-blue-700">{Math.round(goalProgress)}%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2.5 shadow-inner">
                 <div 

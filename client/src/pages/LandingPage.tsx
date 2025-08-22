@@ -35,14 +35,14 @@ export function LandingPage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-gradient-to-r from-white/95 to-blue-50/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
+      <header className="bg-gradient-to-r from-white/95 via-purple-50/95 to-blue-50/95 backdrop-blur-sm border-b border-purple-200 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
                 <Dumbbell className="text-white h-4 w-4" />
               </div>
-              <span className="text-xl font-bold text-gray-900">Member Buddy</span>
+              <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Member Buddy</span>
             </div>
             <nav className="hidden md:flex items-center gap-8">
               <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
@@ -69,13 +69,13 @@ export function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary/5 via-white to-blue-50 pt-16 pb-20">
+      <section className="relative bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 pt-16 pb-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
                 Your AI-Powered{" "}
-                <span className="text-primary font-black drop-shadow-sm">
+                <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 bg-clip-text text-transparent font-black drop-shadow-sm">
                   Fitness Journey
                 </span>
               </h1>
@@ -108,14 +108,14 @@ export function LandingPage() {
                 alt="Modern gym interior with high-tech equipment"
                 className="rounded-2xl shadow-2xl w-full"
               />
-              <div className="absolute -bottom-6 -left-6 bg-gradient-to-br from-white to-blue-50 p-4 rounded-xl shadow-lg">
+              <div className="absolute -bottom-6 -left-6 bg-gradient-to-br from-white via-purple-50 to-blue-100 p-4 rounded-xl shadow-lg border border-purple-200">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Brain className="text-primary h-6 w-6" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full flex items-center justify-center">
+                    <Brain className="text-purple-600 h-6 w-6" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">AI Coach Active</p>
-                    <p className="text-sm text-gray-600">Personalizing your workout</p>
+                    <p className="font-bold text-purple-800">AI Coach Active</p>
+                    <p className="text-sm font-medium text-purple-600">Personalizing your workout</p>
                   </div>
                 </div>
               </div>
@@ -125,13 +125,13 @@ export function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+      <section id="features" className="py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-700 to-blue-700 bg-clip-text text-transparent mb-4">
               Powered by AI, Designed for You
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl font-medium text-gray-800 max-w-3xl mx-auto">
               Experience cutting-edge technology meets premium fitness facilities
             </p>
           </div>
@@ -177,14 +177,14 @@ export function LandingPage() {
             ].map((feature, index) => (
               <Card
                 key={index}
-                className="bg-gradient-to-br from-white to-gray-50 border hover:border-primary/20 hover:shadow-lg transition-all duration-300"
+                className="bg-gradient-to-br from-white via-purple-50/30 to-blue-50/30 border-2 border-purple-100 hover:border-purple-300 hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
                 <CardContent className="p-8">
-                  <div className={`w-12 h-12 bg-${feature.color.split('-')[1]}-100 rounded-xl flex items-center justify-center mb-6`}>
+                  <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-blue-100 rounded-xl flex items-center justify-center mb-6 shadow-md">
                     <feature.icon className={`${feature.color} h-6 w-6`} />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.description}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+                  <p className="text-gray-700 font-medium leading-relaxed">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -215,7 +215,7 @@ export function LandingPage() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-gray-50">
+      <section id="pricing" className="py-20 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
@@ -338,7 +338,7 @@ export function LandingPage() {
       </section>
 
       {/* Success Statistics */}
-      <section className="py-16 bg-gradient-to-br from-blue-50 to-purple-50 border-t border-gray-100">
+      <section className="py-16 bg-gradient-to-br from-orange-50 via-yellow-50 to-green-50 border-t border-purple-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Trusted by Thousands</h2>
@@ -382,7 +382,7 @@ export function LandingPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+      <section className="py-20 bg-gradient-to-br from-pink-50 via-rose-50 to-red-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Success Stories</h2>
@@ -469,7 +469,7 @@ export function LandingPage() {
       </section>
 
       {/* Enhanced Features Showcase */}
-      <section className="py-20 bg-gradient-to-br from-purple-50 to-pink-50">
+      <section className="py-20 bg-gradient-to-br from-violet-50 via-indigo-50 to-cyan-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose Member Buddy?</h2>
