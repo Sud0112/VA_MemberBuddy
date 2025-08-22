@@ -75,7 +75,7 @@ export function LandingPage() {
             <div className="text-center lg:text-left">
               <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
                 Your AI-Powered{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">
+                <span className="text-primary font-black drop-shadow-sm">
                   Fitness Journey
                 </span>
               </h1>
@@ -222,7 +222,7 @@ export function LandingPage() {
               Choose Your Membership
             </h2>
             <p className="text-xl text-gray-600">
-              Flexible plans designed to fit your lifestyle and fitness goals
+              Flexible plans designed to fit your lifestyle and fitness goals (UK pricing)
             </p>
           </div>
 
@@ -234,7 +234,7 @@ export function LandingPage() {
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
                   <p className="text-gray-600 mb-4">Perfect for getting started</p>
                   <div className="text-4xl font-bold text-gray-900">
-                    $29<span className="text-lg text-gray-600">/month</span>
+                    £22<span className="text-lg text-gray-600">/month</span>
                   </div>
                 </div>
                 <ul className="space-y-4 mb-8">
@@ -263,7 +263,7 @@ export function LandingPage() {
 
             {/* Premium Plan */}
             <Card className="bg-gradient-to-br from-primary to-primary/90 text-white relative transform lg:scale-105 shadow-xl">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-medium">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg border-2 border-white z-10">
                 Most Popular
               </div>
               <CardContent className="p-8">
@@ -271,7 +271,7 @@ export function LandingPage() {
                   <h3 className="text-2xl font-bold mb-2">Premium</h3>
                   <p className="text-primary-foreground/80 mb-4">The complete experience</p>
                   <div className="text-4xl font-bold">
-                    $79<span className="text-lg text-primary-foreground/80">/month</span>
+                    £59<span className="text-lg text-primary-foreground/80">/month</span>
                   </div>
                 </div>
                 <ul className="space-y-4 mb-8">
@@ -307,7 +307,7 @@ export function LandingPage() {
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">Student</h3>
                   <p className="text-gray-600 mb-4">Special pricing for students</p>
                   <div className="text-4xl font-bold text-gray-900">
-                    $19<span className="text-lg text-gray-600">/month</span>
+                    £15<span className="text-lg text-gray-600">/month</span>
                   </div>
                 </div>
                 <ul className="space-y-4 mb-8">
