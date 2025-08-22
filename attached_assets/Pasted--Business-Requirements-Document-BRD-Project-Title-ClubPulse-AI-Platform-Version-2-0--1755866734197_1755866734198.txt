@@ -1,0 +1,109 @@
+
+# Business Requirements Document (BRD)
+## Project Title: ClubPulse AI Platform
+**Version:** 2.0
+**Date:** August 21, 2025
+
+---
+
+### 1. Introduction
+This document outlines the business and functional requirements for the ClubPulse AI platform, a sophisticated, AI-powered web application for a premium health and wellness club. The platform serves three key user personas: prospective customers, registered members, and club staff. It integrates generative AI to enhance lead acquisition, improve member engagement and retention, and streamline staff workflows. The primary goal is to provide a seamless, valuable, and modern digital experience that reflects the brand's premium and innovative identity.
+
+### 2. Business Goals & Objectives
+*   **Increase Lead Conversion:** Leverage a public-facing landing page and an interactive AI chatbot to convert website visitors into registered members.
+*   **Enhance Member Engagement & Retention:** Provide personalized value to members through an AI workout planner and a dynamic loyalty rewards program, thereby reducing churn.
+*   **Improve Staff Efficiency:** Equip staff with AI-powered tools to proactively manage at-risk members and create targeted loyalty campaigns, reducing manual effort.
+*   **Strengthen Brand Perception:** Position the club as a technology leader in the fitness industry by offering a cutting-edge, intuitive, and aesthetically pleasing digital platform.
+
+### 3. Scope of Work
+The scope includes a single, integrated web application with three distinct user experiences:
+1.  **A Public-Facing Website:** For marketing, information dissemination, and new member acquisition.
+2.  **A Secure Member Portal:** An authenticated area for registered members to manage their profile and access exclusive features.
+3.  **A Secure Staff Dashboard:** An authenticated area for authorized staff to access member management and marketing tools.
+
+---
+
+### 4. User Personas & Roles
+
+| Persona               | Role            | Description                                                                                                                              | Key Objectives                                                                      |
+| --------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **Prospective Member**| Unauthenticated | An individual visiting the website to learn about the club.                                                                              | Learn about facilities/pricing, ask questions via chatbot, sign up for a membership. |
+| **Club Member**       | Authenticated   | A registered and paying member of the club.                                                                                              | Access loyalty rewards, get personalized workout plans, manage their membership.    |
+| **Club Staff**        | Authenticated   | An employee responsible for member retention and marketing.                                                                              | Identify at-risk members, take action to retain them, manage loyalty campaigns.     |
+
+---
+
+### 5. Functional Requirements (FR)
+
+#### Module 1: Public Website & Acquisition
+
+*   **FR-1.1: Landing Page:** The application must feature a polished, public-facing landing page accessible to all visitors. This page shall include:
+    *   A compelling hero section.
+    *   A section highlighting key features (e.g., AI Coaching, Loyalty Rewards).
+    *   A clear pricing table for different membership tiers (Basic, Premium, Student).
+    *   A professional header and footer.
+*   **FR-1.2: AI Acquisition Chatbot:**
+    *   The chatbot must be available as a floating widget on the landing page.
+    *   It must be able to answer questions about club pricing, facilities, hours, and location.
+    *   It must guide interested users through a conversational flow to book a club tour, collecting their name and email.
+*   **FR-1.3: User Authentication & Registration:**
+    *   The application must provide a single page for both user login and registration.
+    *   Users must be able to toggle between "Sign In" and "Sign Up" modes.
+    *   The registration flow must capture a user's full name and email, creating a new 'member' account and logging them in upon success.
+
+#### Module 2: Member Portal
+
+*   **FR-2.1: Secure Access:** All member portal pages must be protected and accessible only after a member has successfully logged in.
+*   **FR-2.2: Member Dashboard:** Upon login, members shall be directed to a portal that displays:
+    *   A personalized welcome message.
+    *   Their profile information (name, avatar, membership type).
+    *   Their current loyalty points balance.
+*   **FR-2.3: Dynamic Loyalty Offers:**
+    *   The portal must display a list of available loyalty offers that have been published by staff.
+    *   Members must be able to redeem offers using their points.
+    *   The system must validate if a member has enough points and prevent re-redeeming the same offer.
+    *   The UI must clearly distinguish between redeemable, redeemed, and unaffordable offers.
+*   **FR-2.4: AI Personal Workout Planner:**
+    *   Members must have access to a dedicated page for generating workout plans.
+    *   The interface must allow members to describe their fitness goals in natural language.
+    *   The system shall use a generative AI model to create and display a structured, weekly workout plan tailored to the user's input.
+
+#### Module 3: Staff Dashboard
+
+*   **FR-3.1: Secure Access:** All staff dashboard pages must be protected and accessible only after a staff member has successfully logged in.
+*   **FR-3.2: Churn Prediction Dashboard:**
+    *   The dashboard must display key metrics: total members, number of at-risk members, and projected churn rate.
+    *   It must display a clickable list of members identified as having a high risk of churning, sorted by risk level.
+*   **FR-3.3: AI Retention Strategy Generation:**
+    *   Upon selecting an at-risk member, the system must allow staff to generate personalized, AI-powered retention strategies based on that member's profile data.
+*   **FR-3.4: Staff Action Logging:**
+    *   Staff must be able to log outreach actions (e.g., Call, Email) taken for a specific member, including notes.
+    *   The system must display a history of all logged actions for the selected member.
+*   **FR-3.5: Dynamic Loyalty Engine Management:**
+    *   Staff must have an interface to generate new loyalty offers using AI by providing natural language criteria.
+    *   Staff must be able to "publish" the AI-generated offers, making them immediately available to all members in the Member Portal.
+    *   The interface must also display a list of all currently active offers.
+
+---
+
+### 6. Non-Functional Requirements (NFR)
+
+*   **NFR-6.1: User Interface & Experience (UI/UX):**
+    *   The application must have a clean, modern, and professional aesthetic inspired by the ShadCN UI design system.
+    *   The application must be fully responsive and provide a seamless experience on desktop, tablet, and mobile devices.
+    *   Fluid micro-interactions and animations (e.g., hover effects, page transitions, animated list item appearances) must be used to enhance user experience.
+*   **NFR-6.2: Technology Stack:**
+    *   **Frontend:** React (using hooks and functional components).
+    *   **Styling:** Tailwind CSS.
+    *   **AI Integration:** Google Gemini API.
+*   **NFR-6.3: Accessibility:** The application should adhere to web accessibility best practices, including semantic HTML (e.g., using `<button>` for clickable elements) and keyboard navigation.
+*   **NFR-6.4: Privacy:** A cookie consent banner must be displayed to new users, allowing them to accept or decline tracking. Consent status should be stored in the user's browser.
+
+---
+
+### 7. AI Integration Requirements
+
+*   **AI-7.1: Retention Strategy Generation:** The system will call the Gemini API with a prompt containing a member's profile data to generate three distinct retention strategies in markdown format.
+*   **AI-7.2: Loyalty Offer Generation:** The system will call the Gemini API with a prompt containing targeting criteria. The API will be constrained to return a structured JSON object containing an array of three loyalty offers.
+*   **AI-7.3: Conversational Agent (Acquisition):** The system will use the Gemini Chat API to power a conversational chatbot that follows a specific, multi-step flow for answering questions and booking tours.
+*   **AI-7.4: Workout Plan Generation:** The system will call the Gemini API with a prompt containing a member's fitness goals. The API will be constrained to return a structured JSON object representing a complete weekly workout plan.

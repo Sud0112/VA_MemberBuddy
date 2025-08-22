@@ -1,0 +1,66 @@
+
+# ClubPulse AI: Key User Flows
+
+**Version:** 1.0
+**Date:** August 21, 2025
+
+---
+
+### 1. Introduction
+This document outlines the primary user journeys for the three main personas of the ClubPulse AI application: the Prospective Member, the existing Club Member, and the Club Staff. Understanding these flows is crucial for grasping the intended user experience.
+
+---
+
+### Flow 1: Prospective Member Onboarding
+This flow describes the complete journey from a potential customer discovering the club to becoming a registered member.
+
+**Persona:** Prospective Member
+**Goal:** Learn about the club and sign up for a membership.
+
+1.  **Discovery:** The user arrives at the public **Landing Page (`/`)**.
+2.  **Information Gathering:** The user scrolls the page to learn about key features, facilities, and pricing tiers.
+3.  **Engagement (Optional):** The user sees the floating **AI Chatbot Widget**. They open it to ask a question, such as "What are your opening hours?". The chatbot provides a friendly, helpful answer.
+4.  **Initiate Onboarding:** The user clicks the "Sign Up" button in the header or on a pricing card.
+5.  **Navigation to Auth:** The user is taken to the **Login/Registration Page (`/login`)**.
+6.  **Registration:**
+    - The page defaults to "Sign In" mode. The user clicks the link to switch to **"Sign Up" mode**.
+    - The user fills in their full name, email address, and a password.
+    - Upon successful submission, the `register` function in `AuthContext` creates a new member profile for them.
+7.  **Login & Redirection:** The user is automatically logged in and redirected into the secure member area.
+8.  **Welcome:** The user is greeted by the **Member Portal (`/portal`)**.
+
+---
+
+### Flow 2: Member Creates a Personalized Workout Plan
+This flow describes how an existing member uses the platform's core AI feature to get a personalized workout plan.
+
+**Persona:** Club Member
+**Goal:** Get a new, tailored workout plan to follow at the gym.
+
+1.  **Login:** The member logs in and is directed to their **Member Portal (`/portal`)**.
+2.  **Navigation:** The member clicks on the **"💪 AI Workout Planner"** link in the sidebar.
+3.  **Goal Input:** On the **Workout Planner Page (`/workout-planner`)**, the member is prompted to describe their fitness goals in a text area.
+    - *Example input: "I want to build muscle in my upper body and improve my cardio. I can train 4 days a week."*
+4.  **Generation:** The member clicks the **"Create My Plan! ✨"** button.
+5.  **Loading State:** The UI shows a loading indicator while the `generateWorkoutPlan` service communicates with the Gemini API.
+6.  **View Plan:** The AI-generated workout plan appears on the page, neatly structured in an accordion view, with each day's routine detailed inside.
+
+---
+
+### Flow 3: Staff Manages an At-Risk Member
+This flow describes how a staff member uses the AI-powered dashboard to proactively retain a member.
+
+**Persona:** Club Staff
+**Goal:** Identify a high-risk member, understand their issues, and log a retention action.
+
+1.  **Login:** The staff member logs in with their staff credentials and is directed to the **Churn Prediction Page (`/churn-prediction`)**.
+2.  **Identify Member:** The staff member reviews the "High-Risk Members" list, which is sorted by churn risk. They click on a member (e.g., "Bob Williams") to investigate.
+3.  **View Details:** The main panel updates to show Bob's detailed profile, including his feedback ("Finds it too crowded") and any previously logged actions.
+4.  **Generate Strategies:** The staff member clicks the **"✨ Generate Strategies"** button. The application calls the Gemini API, which returns several personalized retention strategies based on Bob's profile.
+5.  **Take Action:** Based on the AI's suggestions, the staff member decides to call Bob.
+6.  **Log Action:**
+    - The staff member uses the **"✍️ Log Staff Outreach"** form on the page.
+    - They select "Call" as the action type.
+    - They add notes: *"Called Bob and offered him a complimentary off-peak personal training session to show him how quiet the gym can be."*
+    - They click **"Log Action"**.
+7.  **Confirmation:** The action is immediately added to the **"📜 Outreach History"** for Bob, providing a clear record of the interaction for the entire team.

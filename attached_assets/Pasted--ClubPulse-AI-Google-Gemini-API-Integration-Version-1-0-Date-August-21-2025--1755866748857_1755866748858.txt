@@ -1,0 +1,98 @@
+
+# ClubPulse AI: Google Gemini API Integration
+
+**Version:** 1.0
+**Date:** August 21, 2025
+
+---
+
+### 1. Introduction
+This document provides a detailed technical breakdown of how the ClubPulse AI application integrates with the Google Gemini API. All API communication is centralized within `services/geminiService.ts`.
+
+### 2. Setup and Authentication
+- **SDK:** The application uses the `@google/genai` npm package.
+- **API Key:** The API key is sourced from the `process.env.API_KEY` environment variable.
+- **Mock Fallback:** If the API key is not present, all service functions are designed to return mock data after a short delay. This allows for seamless UI development and testing without a live API connection.
+
+---
+
+### 3. API Service Functions
+
+#### 3.1 `generateRetentionStrategies`
+- **Purpose:** To generate personalized, actionable strategies for retaining a high-risk member.
+- **Model:** `gemini-2.5-flash`
+- **Prompt Structure:** A detailed text prompt is constructed that includes the member's profile data (name, membership type, tenure, feedback, etc.). The prompt instructs the AI to act as a retention specialist and generate three distinct strategies.
+- **Response Format:** The function expects a **plain text/markdown** response. The UI then uses `dangerouslySetInnerHTML` to render the formatted strategies.
+
+---
+
+#### 3.2 `generateLoyaltyOffers`
+- **Purpose:** To generate creative loyalty offers targeted at a specific member segment.
+- **Model:** `gemini-2.5-flash`
+- **Prompt Structure:** The prompt includes the staff member's natural language description of the target segment (e.g., "Members who attend morning yoga").
+- **Response Format:** The function requires a **structured JSON** response. This is enforced in the API call by setting `responseMimeType: "application/json"` and providing a strict `responseSchema`.
+- **JSON Schema:**
+  ```json
+  {
+    "type": "OBJECT",
+    "properties": {
+      "offers": {
+        "type": "ARRAY",
+        "items": {
+          "type": "OBJECT",
+          "properties": {
+            "id": { "type": "INTEGER" },
+            "title": { "type": "STRING" },
+            "description": { "type": "STRING" },
+            "points": { "type": "INTEGER" },
+            "category": { "type": "STRING" }
+          },
+          "required": ["id", "title", "description", "points", "category"]
+        }
+      }
+    },
+    "required": ["offers"]
+  }
+  ```
+
+---
+
+#### 3.3 `sendMessageToChat` (Member Acquisition Chatbot)
+- **Purpose:** To power the interactive, public-facing chatbot for prospective members.
+- **Model:** `gemini-2.5-flash` (using the `ai.chats.create` method for multi-turn conversation).
+- **System Instruction:** A comprehensive system prompt defines the AI's persona ("friendly sales assistant for ClubPulse") and a strict, multi-step conversational flow it must follow (greet, gather info, offer timeslots, confirm).
+- **Response Format:** The function expects a **plain text** response. The frontend code includes custom logic to parse a special tag, `[TIMESLOTS:...]`, which is used to extract timeslot suggestions and render them as interactive buttons in the UI.
+
+---
+
+#### 3.4 `generateWorkoutPlan`
+- **Purpose:** To create a personalized, weekly workout plan based on a member's stated goals.
+- **Model:** `gemini-2.5-flash`
+- **Prompt Structure:** The prompt includes the member's goals described in natural language (e.g., "I want to lose weight and can go to the gym 3 times a week"). It instructs the AI to act as an expert personal trainer.
+- **Response Format:** The function requires a **structured JSON** response, enforced via `responseMimeType` and `responseSchema`.
+- **JSON Schema:**
+  ```json
+  {
+    "type": "OBJECT",
+    "properties": {
+      "planTitle": { "type": "STRING" },
+      "weeklySchedule": {
+        "type": "ARRAY",
+        "items": {
+          "type": "OBJECT",
+          "properties": {
+            "day": { "type": "STRING" },
+            "focus": { "type": "STRING" },
+            "description": { "type": "STRING" },
+            "exercises": {
+              "type": "ARRAY",
+              "items": { "type": "STRING" }
+            }
+          },
+          "required": ["day", "focus", "description", "exercises"]
+        }
+      }
+    },
+    "required": ["planTitle", "weeklySchedule"]
+  }
+  ```

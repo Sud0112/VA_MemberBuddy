@@ -1,0 +1,55 @@
+
+# ClubPulse AI: Frontend Architecture
+
+**Version:** 1.0
+**Date:** August 21, 2025
+
+---
+
+### 1. Introduction
+This document provides a high-level overview of the frontend architecture for the ClubPulse AI application. It is intended to help developers understand the project's structure, patterns, and core technologies.
+
+### 2. Core Technologies
+The application is built as a modern single-page application (SPA) using the following technologies:
+- **Framework:** [React](https://react.dev/) (v18+) using functional components and hooks.
+- **Routing:** [React Router DOM](https://reactrouter.com/) for client-side routing and navigation.
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) for utility-first styling. The design system is heavily inspired by [ShadCN UI](https://ui.shadcn.com/).
+- **AI Integration:** [@google/genai](https://www.npmjs.com/package/@google/genai) SDK to communicate with the Google Gemini API.
+- **Animations:** [Framer Motion](https://www.framer.com/motion/) for page transitions and micro-interactions.
+
+### 3. Folder Structure
+The project is organized into the following key directories to maintain a clean and scalable codebase:
+
+- **`/components`**: Contains reusable React components used across multiple pages.
+  - **`/components/icons`**: SVG icon components.
+  - **`/components/ui`**: Base UI components (Button, Card, Input, etc.) that form the core of the ShadCN-inspired design system.
+- **`/contexts`**: Holds React Context providers for managing global state.
+- **`/data`**: Contains mock data used throughout the application for demonstration purposes.
+- **`/documents`**: Project documentation, including the BRD and technical guides.
+- **`/hooks`**: Custom React hooks that encapsulate reusable logic (e.g., `useAuth`).
+- **`/lib`**: Utility functions, like the `cn` helper for merging Tailwind classes.
+- **`/pages`**: Top-level components that represent a full page or view within the application.
+- **`/services`**: Modules responsible for communicating with external APIs, primarily `geminiService.ts`.
+
+### 4. State Management
+The application employs a hybrid state management strategy:
+- **Global State:** For application-wide data like authentication status, user information, and globally available loyalty offers, we use **React Context**. The `AuthContext` provides a centralized store and actions that can be accessed by any component wrapped within its provider. This avoids prop-drilling for common data.
+- **Local State:** For state that is specific to a single component or page (e.g., form inputs, UI toggles, loading states), we use the `useState` and `useCallback` hooks. This keeps state management simple and co-located with the components that use it.
+
+### 5. Routing
+Routing is managed by `react-router-dom` within the `App.tsx` component. The structure is designed to separate concerns:
+- **Public Routes (`/`, `/login`):** These are accessible to everyone and include the landing page and the login/registration screen.
+- **Protected Routes (`/*`):** These routes are wrapped in a `ProtectedRoute` component. This component checks for an authenticated user in the `AuthContext`. If the user is not logged in, they are redirected to `/login`. The protected area uses a nested layout (`AuthenticatedAppLayout`) that includes the main `Sidebar`.
+- **Role-Based Authorization:** The `ProtectedRoute` can also check for a specific user role (`staff` or `member`) to ensure users can only access pages relevant to their permissions.
+
+### 6. Component Design
+The UI is built on a custom, reusable component library located in `/components/ui`.
+- **Inspiration:** The components are styled to mimic the clean, modern aesthetic of **ShadCN UI**.
+- **Composition:** Components like `Card` are built with sub-components (`CardHeader`, `CardContent`) to allow for flexible and consistent layouts.
+- **Consistency:** Using this shared library ensures a consistent look and feel across the entire application and makes future redesigns or theme changes more manageable.
+
+### 7. External Service Integration
+All communication with the Google Gemini API is abstracted into a single service module: `services/geminiService.ts`.
+- **Single Responsibility:** This module is solely responsible for constructing prompts, making API calls, and parsing responses.
+- **Mocking:** The service is designed to fall back to a mock implementation if the `API_KEY` is not provided. This allows the UI to be developed and tested independently of a live API connection.
+- **Error Handling:** Each API call includes `try...catch` blocks to gracefully handle potential errors during communication with the AI service.
