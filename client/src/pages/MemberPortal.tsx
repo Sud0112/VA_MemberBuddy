@@ -118,7 +118,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                 />
               </div>
               {goalProgress >= 60 && (
-                <div className="text-xs text-blue-600 font-semibold animate-pulse">
+                <div className="text-xs text-blue-800 font-semibold animate-pulse bg-white/70 px-2 py-1 rounded shadow-sm">
                   ✨ Excellent progress!
                 </div>
               )}
@@ -142,7 +142,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               <TrendingUp className="h-4 w-4 text-green-500 animate-bounce" />
               <span className="text-sm text-green-600 font-medium">Personal best! 🔥</span>
             </div>
-            <div className="mt-3 text-xs text-orange-600 font-semibold">
+            <div className="mt-3 text-xs text-orange-800 font-semibold bg-white/70 px-2 py-1 rounded shadow-sm inline-block">
               Keep it up! 💪
             </div>
           </CardContent>
@@ -167,7 +167,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                 <Trophy className="h-4 w-4 text-yellow-500" />
                 <span className="text-sm text-gray-600">+150 this week ✨</span>
               </div>
-              <div className="text-xs text-purple-600 font-semibold">
+              <div className="text-xs text-purple-800 font-semibold bg-white/70 px-2 py-1 rounded shadow-sm">
                 VIP Status 🏆
               </div>
             </div>
@@ -191,7 +191,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                 <Clock className="h-4 w-4 text-blue-500" />
                 <span className="text-sm text-gray-600">Great consistency! 🎯</span>
               </div>
-              <div className="text-xs text-green-600 font-semibold">
+              <div className="text-xs text-green-800 font-semibold bg-white/70 px-2 py-1 rounded shadow-sm">
                 Optimal! ✅
               </div>
             </div>
@@ -248,14 +248,14 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            <div className="mt-4 flex items-center justify-between text-sm text-gray-600">
-              <div className="flex items-center gap-2">
+            <div className="mt-4 flex items-center justify-between text-sm">
+              <div className="flex items-center gap-2 bg-white/90 px-3 py-2 rounded shadow-sm">
                 <div className="w-3 h-3 bg-primary rounded-full"></div>
-                <span>Workout completed</span>
+                <span className="text-gray-800 font-medium">Workout completed</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
-                <span>Rest day</span>
+              <div className="flex items-center gap-2 bg-white/90 px-3 py-2 rounded shadow-sm">
+                <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+                <span className="text-gray-800 font-medium">Rest day</span>
               </div>
             </div>
           </CardContent>
@@ -302,15 +302,15 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
             </div>
             <div className="grid grid-cols-3 gap-4 mt-6">
               {workoutTypes.map((type, index) => (
-                <div key={index} className="text-center">
+                <div key={index} className="text-center bg-white/80 p-3 rounded-lg shadow-sm">
                   <div className="flex items-center justify-center gap-2 mb-1">
                     <div 
-                      className="w-3 h-3 rounded-full" 
+                      className="w-4 h-4 rounded-full border-2 border-white shadow-sm" 
                       style={{ backgroundColor: type.color }}
                     />
-                    <span className="text-xs font-medium text-gray-700">{type.name}</span>
+                    <span className="text-sm font-semibold text-gray-800">{type.name}</span>
                   </div>
-                  <div className="text-lg font-bold text-gray-900">{type.value}%</div>
+                  <div className="text-xl font-bold text-gray-900">{type.value}%</div>
                 </div>
               ))}
             </div>
@@ -328,7 +328,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                 <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
                   🤖 AI Workout Planner
                 </h3>
-                <p className="text-primary-foreground/80">Get a personalized workout plan tailored to your goals</p>
+                <p className="text-white/90">Get a personalized workout plan tailored to your goals</p>
               </div>
               <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
                 <Brain className="text-white h-6 w-6" />
@@ -343,7 +343,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               >
                 Create Plan ✨
               </Button>
-              <div className="text-xs text-primary-foreground/60 font-medium">
+              <div className="text-xs text-white/80 font-medium bg-white/10 px-2 py-1 rounded">
                 AI-powered recommendations
               </div>
             </div>
@@ -358,7 +358,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                 <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
                   🎁 Loyalty Rewards
                 </h3>
-                <p className="text-blue-100">Redeem your {user?.loyaltyPoints} points for exclusive rewards</p>
+                <p className="text-white/90">Redeem your {user?.loyaltyPoints} points for exclusive rewards</p>
               </div>
               <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
                 <Gift className="text-white h-6 w-6" />
@@ -373,7 +373,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               >
                 View Rewards 🏆
               </Button>
-              <div className="text-xs text-blue-100 font-medium">
+              <div className="text-xs text-white/90 font-medium bg-white/10 px-2 py-1 rounded">
                 8 rewards available
               </div>
             </div>
@@ -391,7 +391,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                 <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
                   📊 Workout History
                 </h3>
-                <p className="text-green-100">Track your progress and view past workouts</p>
+                <p className="text-white/90">Track your progress and view past workouts</p>
               </div>
               <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
                 <BarChart3 className="text-white h-6 w-6" />
@@ -406,7 +406,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               >
                 View History 📈
               </Button>
-              <div className="text-xs text-green-100 font-medium">
+              <div className="text-xs text-white/90 font-medium bg-white/10 px-2 py-1 rounded">
                 {currentVisits} workouts this month
               </div>
             </div>
