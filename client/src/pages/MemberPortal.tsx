@@ -249,11 +249,11 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               </ResponsiveContainer>
             </div>
             <div className="mt-4 flex items-center justify-between text-sm">
-              <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg shadow-md border">
+              <div className="flex items-center gap-2 bg-gradient-to-r from-white to-gray-50 px-3 py-2 rounded-lg shadow-md border">
                 <div className="w-3 h-3 bg-primary rounded-full"></div>
                 <span className="text-gray-900 font-semibold">Workout completed</span>
               </div>
-              <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg shadow-md border">
+              <div className="flex items-center gap-2 bg-gradient-to-r from-white to-gray-50 px-3 py-2 rounded-lg shadow-md border">
                 <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
                 <span className="text-gray-900 font-semibold">Rest day</span>
               </div>
@@ -302,7 +302,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
             </div>
             <div className="grid grid-cols-3 gap-4 mt-6">
               {workoutTypes.map((type, index) => (
-                <div key={index} className="text-center bg-white p-3 rounded-lg shadow-md border">
+                <div key={index} className="text-center bg-gradient-to-br from-white to-blue-50 p-3 rounded-lg shadow-md border">
                   <div className="flex items-center justify-center gap-2 mb-1">
                     <div 
                       className="w-4 h-4 rounded-full border border-gray-300 shadow-sm" 
@@ -338,7 +338,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               <Button
                 variant="secondary"
                 onClick={() => onTabChange("workout-planner")}
-                className="bg-white text-primary hover:bg-gray-50 font-semibold shadow-md"
+                className="bg-gradient-to-r from-white to-gray-50 text-primary hover:from-gray-50 hover:to-gray-100 font-semibold shadow-md"
                 data-testid="button-create-plan"
               >
                 Create Plan ✨
@@ -368,7 +368,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               <Button
                 variant="secondary"
                 onClick={() => onTabChange("loyalty-rewards")}
-                className="bg-white text-blue-600 hover:bg-gray-50 font-semibold shadow-md"
+                className="bg-gradient-to-r from-white to-gray-50 text-blue-600 hover:from-gray-50 hover:to-gray-100 font-semibold shadow-md"
                 data-testid="button-view-rewards"
               >
                 View Rewards 🏆
@@ -401,7 +401,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               <Button
                 variant="secondary"
                 onClick={() => onTabChange("workout-history")}
-                className="bg-white text-green-600 hover:bg-gray-50 font-semibold shadow-md"
+                className="bg-gradient-to-r from-white to-gray-50 text-green-600 hover:from-gray-50 hover:to-gray-100 font-semibold shadow-md"
                 data-testid="button-view-history"
               >
                 View History 📈

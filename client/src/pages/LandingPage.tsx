@@ -35,7 +35,7 @@ export function LandingPage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+      <header className="bg-gradient-to-r from-white/95 to-blue-50/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
@@ -108,7 +108,7 @@ export function LandingPage() {
                 alt="Modern gym interior with high-tech equipment"
                 className="rounded-2xl shadow-2xl w-full"
               />
-              <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg">
+              <div className="absolute -bottom-6 -left-6 bg-gradient-to-br from-white to-blue-50 p-4 rounded-xl shadow-lg">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
                     <Brain className="text-primary h-6 w-6" />
@@ -125,7 +125,7 @@ export function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
+      <section id="features" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
@@ -291,7 +291,7 @@ export function LandingPage() {
                 </ul>
                 <Button
                   variant="secondary"
-                  className="w-full bg-white text-primary hover:bg-gray-50"
+                  className="w-full bg-gradient-to-r from-white to-gray-50 text-primary hover:from-gray-50 hover:to-gray-100"
                   onClick={handleGetStarted}
                   data-testid="button-select-premium"
                 >
@@ -338,7 +338,7 @@ export function LandingPage() {
       </section>
 
       {/* Success Statistics */}
-      <section className="py-16 bg-white border-t border-gray-100">
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-purple-50 border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Trusted by Thousands</h2>
@@ -382,7 +382,7 @@ export function LandingPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Success Stories</h2>
@@ -390,7 +390,7 @@ export function LandingPage() {
           </div>
           
           <div className="grid lg:grid-cols-3 gap-8">
-            <Card className="bg-white hover:shadow-lg transition-shadow">
+            <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-8">
                 <div className="flex items-center mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -415,7 +415,7 @@ export function LandingPage() {
               </CardContent>
             </Card>
             
-            <Card className="bg-white hover:shadow-lg transition-shadow">
+            <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-8">
                 <div className="flex items-center mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -440,7 +440,7 @@ export function LandingPage() {
               </CardContent>
             </Card>
             
-            <Card className="bg-white hover:shadow-lg transition-shadow">
+            <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-8">
                 <div className="flex items-center mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -469,7 +469,7 @@ export function LandingPage() {
       </section>
 
       {/* Enhanced Features Showcase */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gradient-to-br from-purple-50 to-pink-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose Member Buddy?</h2>
@@ -518,7 +518,7 @@ export function LandingPage() {
                 alt="AI fitness technology in action"
                 className="rounded-xl shadow-lg w-full"
               />
-              <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-lg shadow-xl">
+              <div className="absolute -bottom-4 -right-4 bg-gradient-to-tl from-white to-purple-50 p-4 rounded-lg shadow-xl">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                   <span className="text-sm font-medium text-gray-900">AI Coach Online</span>

@@ -153,7 +153,7 @@ export function NotificationCenter({ userRole }: NotificationCenterProps) {
 
       {/* Notification Panel */}
       {isOpen && (
-        <div className="absolute right-0 top-12 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+        <div className="absolute right-0 top-12 w-80 bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-xl border border-gray-200 z-50">
           <Card className="border-0 shadow-none">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
