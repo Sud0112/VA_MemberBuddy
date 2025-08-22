@@ -658,19 +658,19 @@ function WorkoutHistory() {
                 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-3 text-sm">
                   <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-gray-400" />
+                    <Clock className="h-4 w-4 text-gray-600" />
                     <span className="text-gray-600">{workout.duration} minutes</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Activity className="h-4 w-4 text-gray-400" />
+                    <Activity className="h-4 w-4 text-gray-600" />
                     <span className="text-gray-600">{workout.exercises} exercises</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Flame className="h-4 w-4 text-gray-400" />
+                    <Flame className="h-4 w-4 text-gray-600" />
                     <span className="text-gray-600">{workout.caloriesBurned} calories</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Trophy className="h-4 w-4 text-gray-400" />
+                    <Trophy className="h-4 w-4 text-gray-600" />
                     <span className="text-gray-600">+{Math.round(workout.caloriesBurned / 10)} points</span>
                   </div>
                 </div>

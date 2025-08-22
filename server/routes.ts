@@ -35,6 +35,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Role toggle endpoint for testing personas
+  app.post('/api/user/toggle-role', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { role } = req.body;
+      
+      if (!role || !['member', 'staff'].includes(role)) {
+        return res.status(400).json({ message: 'Invalid role. Must be "member" or "staff"' });
+      }
+
+      const updatedUser = await storage.upsertUser({
+        id: userId,
+        role,
+        updatedAt: new Date()
+      });
+      
+      res.json({ message: 'Role updated successfully', user: updatedUser });
+    } catch (error) {
+      console.error('Error toggling user role:', error);
+      res.status(500).json({ message: 'Failed to update user role' });
+    }
+  });
+
   // Loyalty offers endpoints
   app.get('/api/loyalty-offers', isAuthenticated, async (req, res) => {
     try {
@@ -236,18 +259,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ message: "Member access required" });
       }
 
-      const { goals } = req.body;
+      const { goals, healthData } = req.body;
       if (!goals) {
         return res.status(400).json({ message: "Goals are required" });
       }
+      if (!healthData) {
+        return res.status(400).json({ message: "Health data is required" });
+      }
 
-      const workoutPlan = await generateWorkoutPlan(goals);
+      const workoutPlan = await generateWorkoutPlan(goals, healthData);
       
       // Save to database
       const planData = insertWorkoutPlanSchema.parse({
         userId,
         title: workoutPlan.planTitle,
-        goals,
+        goals: `${goals} | Health Profile: Age ${healthData.age}, Fitness Level: ${healthData.fitnessLevel}, Experience: ${healthData.exerciseExperience}${healthData.medicalConditions ? ', Medical Notes: ' + healthData.medicalConditions : ''}`,
         weeklySchedule: workoutPlan.weeklySchedule,
       });
 

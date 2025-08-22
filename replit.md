@@ -1,8 +1,8 @@
-# ClubPulse AI Platform
+# Member Buddy Platform
 
 ## Overview
 
-ClubPulse AI is a sophisticated, AI-powered web application for a premium health and wellness club. The platform serves three distinct user experiences: a public-facing website for lead generation, a secure member portal with personalized features, and a staff dashboard for member management and marketing campaigns. The application leverages Google Gemini AI to provide intelligent workout planning, retention strategies, and loyalty campaign generation.
+Member Buddy is a sophisticated, AI-powered web application for a premium health and wellness club. The platform serves three distinct user experiences: a public-facing website for lead generation, a secure member portal with personalized features, and a staff dashboard for member management and marketing campaigns. The application leverages Google Gemini AI to provide intelligent workout planning, retention strategies, and loyalty campaign generation.
 
 ## User Preferences
 

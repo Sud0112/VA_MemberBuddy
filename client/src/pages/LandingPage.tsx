@@ -42,7 +42,7 @@ export function LandingPage() {
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
                 <Dumbbell className="text-white h-4 w-4" />
               </div>
-              <span className="text-xl font-bold text-gray-900">ClubPulse AI</span>
+              <span className="text-xl font-bold text-gray-900">Member Buddy</span>
             </div>
             <nav className="hidden md:flex items-center gap-8">
               <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
@@ -472,7 +472,7 @@ export function LandingPage() {
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose ClubPulse AI?</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose Member Buddy?</h2>
             <p className="text-lg text-gray-600">Advanced technology meets premium fitness experience</p>
           </div>
           
@@ -538,7 +538,7 @@ export function LandingPage() {
                 <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
                   <Dumbbell className="text-white h-4 w-4" />
                 </div>
-                <span className="text-xl font-bold">ClubPulse AI</span>
+                <span className="text-xl font-bold">Member Buddy</span>
               </div>
               <p className="text-gray-400 mb-6">
                 The future of fitness, powered by AI and designed for your success.
@@ -592,7 +592,7 @@ export function LandingPage() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 ClubPulse AI. All rights reserved.</p>
+            <p>&copy; 2025 Member Buddy. All rights reserved.</p>
           </div>
         </div>
       </footer>

@@ -1,6 +1,7 @@
 import { Sidebar, SidebarContent, SidebarProvider, SidebarInset, SidebarHeader } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { 
   Dumbbell, 
   LayoutDashboard, 
@@ -10,10 +11,15 @@ import {
   TrendingUp,
   Megaphone,
   Users,
-  Shield
+  Shield,
+  ToggleLeft,
+  ToggleRight
 } from "lucide-react";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { NotificationCenter } from "@/components/NotificationCenter";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -24,10 +30,36 @@ interface LayoutProps {
 
 export function AppLayout({ children, activeTab, onTabChange, userRole }: LayoutProps) {
   const { user } = useAuthContext();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const handleSignOut = () => {
     window.location.href = "/api/logout";
   };
+
+  const toggleRoleMutation = useMutation({
+    mutationFn: async () => {
+      const newRole = user?.role === 'staff' ? 'member' : 'staff';
+      const response = await apiRequest('POST', '/api/user/toggle-role', { role: newRole });
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/auth/user'] });
+      toast({
+        title: 'Role Updated',
+        description: `Switched to ${user?.role === 'staff' ? 'Member' : 'Staff'} mode. Page will reload.`,
+      });
+      // Reload to update the interface
+      setTimeout(() => window.location.reload(), 1000);
+    },
+    onError: () => {
+      toast({
+        title: 'Error',
+        description: 'Failed to toggle role. Please try again.',
+        variant: 'destructive',
+      });
+    },
+  });
 
   const memberTabs = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -54,7 +86,7 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
               <Dumbbell className="text-white h-4 w-4" />
             </div>
-            <span className="text-xl font-bold text-gray-900">ClubPulse AI</span>
+            <span className="text-xl font-bold text-gray-900">Member Buddy</span>
           </div>
 
           {/* User Profile */}
@@ -85,6 +117,30 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
                 <span>Member Relations</span>
               </div>
             )}
+            
+            {/* Role Toggle for Testing - Development Only */}
+            <div className="mt-3 pt-3 border-t border-gray-200">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-gray-600">Persona Testing:</span>
+                <Badge variant={userRole === "staff" ? "default" : "secondary"} className="text-xs">
+                  {userRole === "staff" ? "Staff" : "Member"}
+                </Badge>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full mt-2 text-xs justify-start gap-2 text-gray-600 hover:text-gray-900"
+                onClick={() => toggleRoleMutation.mutate()}
+                disabled={toggleRoleMutation.isPending}
+                data-testid="button-toggle-role"
+              >
+                {user?.role === 'staff' ? <ToggleRight className="h-3 w-3" /> : <ToggleLeft className="h-3 w-3" />}
+                <span>
+                  {toggleRoleMutation.isPending ? 'Switching...' : 
+                   `Switch to ${user?.role === 'staff' ? 'Member' : 'Staff'}`}
+                </span>
+              </Button>
+            </div>
           </div>
         </SidebarHeader>
 

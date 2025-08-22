@@ -148,7 +148,7 @@ export async function sendMessageToChat(
   }
 
   try {
-    const systemInstruction = `You are a friendly sales assistant for ClubPulse, a premium AI-powered fitness club. Your goal is to help prospective members learn about the club and ultimately book a tour.
+    const systemInstruction = `You are a friendly sales assistant for Member Buddy, a premium AI-powered fitness club. Your goal is to help prospective members learn about the club and ultimately book a tour.
 
 Follow this conversation flow:
 1. Greet warmly and ask how you can help
@@ -208,7 +208,7 @@ Keep responses helpful, friendly, and conversational. Always try to guide toward
   }
 }
 
-export async function generateWorkoutPlan(goals: string): Promise<{ planTitle: string; weeklySchedule: any[] }> {
+export async function generateWorkoutPlan(goals: string, healthData?: any): Promise<{ planTitle: string; weeklySchedule: any[] }> {
   if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
     // Mock response for development
     return {
@@ -263,11 +263,27 @@ export async function generateWorkoutPlan(goals: string): Promise<{ planTitle: s
   }
 
   try {
-    const prompt = `You are an expert personal trainer. Create a personalized weekly workout plan based on these goals:
+    const healthProfile = healthData ? `
 
-Goals: ${goals}
+Health Profile:
+- Age: ${healthData.age}
+- Current Fitness Level: ${healthData.fitnessLevel}
+- Exercise Experience: ${healthData.exerciseExperience}
+- Medical Conditions/Notes: ${healthData.medicalConditions || 'None reported'}
+` : '';
+    
+    const prompt = `You are an expert personal trainer. Create a personalized weekly workout plan based on these goals and health profile:
 
-Create a structured workout plan with a catchy title and weekly schedule. Each day should include the focus area, description, and specific exercises with sets/reps.
+Goals: ${goals}${healthProfile}
+
+IMPORTANT SAFETY GUIDELINES:
+- Consider the person's age, fitness level, and experience when selecting exercises
+- If medical conditions are mentioned, suggest modifications and emphasize consulting healthcare providers
+- Start conservatively for beginners and progress gradually
+- Include proper warm-up and cool-down recommendations
+- Suggest rest days and recovery periods
+
+Create a structured workout plan with a catchy title and weekly schedule. Each day should include the focus area, description, and specific exercises with sets/reps appropriate for their level.
 
 Return as JSON with this structure:
 {
