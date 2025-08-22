@@ -224,4 +224,72 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
+// Seed data function
+export async function seedLoyaltyOffers() {
+  const storage = new DatabaseStorage();
+  
+  // Check if we already have offers
+  const existingOffers = await storage.getLoyaltyOffers();
+  if (existingOffers.length > 0) return;
+  
+  // Create attractive loyalty offers
+  const offers = [
+    {
+      title: "Premium Protein Shake",
+      description: "High-quality whey protein shake in your choice of flavor - perfect post-workout recovery",
+      points: 200,
+      category: "Nutrition"
+    },
+    {
+      title: "Personal Training Session",
+      description: "One-on-one 60-minute session with our certified personal trainers",
+      points: 800,
+      category: "Training"
+    },
+    {
+      title: "Wellness Massage (30 min)",
+      description: "Relaxing therapeutic massage to help with muscle recovery and stress relief",
+      points: 650,
+      category: "Wellness"
+    },
+    {
+      title: "Branded Gym Towel",
+      description: "High-quality ClubPulse branded microfiber towel - perfect for your workouts",
+      points: 150,
+      category: "Merchandise"
+    },
+    {
+      title: "Group Fitness Class (5-Pack)",
+      description: "Five additional group fitness classes - yoga, pilates, spin, or HIIT",
+      points: 400,
+      category: "Classes"
+    },
+    {
+      title: "Smoothie Bar Credit",
+      description: "$15 credit toward fresh smoothies and healthy snacks at our juice bar",
+      points: 300,
+      category: "Nutrition"
+    },
+    {
+      title: "Exclusive Workshop Access",
+      description: "Access to members-only wellness workshops on nutrition, mindfulness, and fitness",
+      points: 500,
+      category: "Education"
+    },
+    {
+      title: "Premium Water Bottle",
+      description: "Insulated stainless steel water bottle with ClubPulse logo - keeps drinks cold for 24 hours",
+      points: 250,
+      category: "Merchandise"
+    }
+  ];
+  
+  // Create all offers
+  for (const offer of offers) {
+    await storage.createLoyaltyOffer(offer);
+  }
+  
+  console.log(`✓ Seeded ${offers.length} loyalty offers`);
+}
+
 export const storage = new DatabaseStorage();

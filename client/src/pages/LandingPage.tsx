@@ -13,7 +13,12 @@ import {
   MapPin,
   Phone,
   Mail,
-  Check
+  Check,
+  Star,
+  Award,
+  Target,
+  Clock,
+  Quote
 } from "lucide-react";
 import { ChatBot } from "@/components/ChatBot";
 
@@ -328,6 +333,198 @@ export function LandingPage() {
                 </Button>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Success Statistics */}
+      <section className="py-16 bg-white border-t border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Trusted by Thousands</h2>
+            <p className="text-lg text-gray-600">Real results from our amazing community</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="text-blue-600 h-8 w-8" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">2,500+</div>
+              <div className="text-gray-600">Active Members</div>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Target className="text-green-600 h-8 w-8" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">89%</div>
+              <div className="text-gray-600">Goal Achievement Rate</div>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Award className="text-orange-600 h-8 w-8" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">4.9/5</div>
+              <div className="text-gray-600">Member Satisfaction</div>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="text-purple-600 h-8 w-8" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">5 Years</div>
+              <div className="text-gray-600">Average Membership</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Success Stories</h2>
+            <p className="text-lg text-gray-600">Hear from members who transformed their lives</p>
+          </div>
+          
+          <div className="grid lg:grid-cols-3 gap-8">
+            <Card className="bg-white hover:shadow-lg transition-shadow">
+              <CardContent className="p-8">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="text-yellow-400 h-5 w-5 fill-current" />
+                  ))}
+                </div>
+                <Quote className="text-primary h-8 w-8 mb-4" />
+                <p className="text-gray-700 mb-6 italic">
+                  "The AI coaching completely changed my approach to fitness. I've lost 30 pounds and feel stronger than ever. The personalized plans actually work!"
+                </p>
+                <div className="flex items-center gap-4">
+                  <img
+                    src="https://images.unsplash.com/photo-1494790108755-2616b612b377?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150"
+                    alt="Sarah M."
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <div className="font-semibold text-gray-900">Sarah M.</div>
+                    <div className="text-sm text-gray-600">Premium Member, 8 months</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-white hover:shadow-lg transition-shadow">
+              <CardContent className="p-8">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="text-yellow-400 h-5 w-5 fill-current" />
+                  ))}
+                </div>
+                <Quote className="text-primary h-8 w-8 mb-4" />
+                <p className="text-gray-700 mb-6 italic">
+                  "As a busy professional, I love how the AI adapts to my schedule. The loyalty rewards keep me motivated, and I've never been more consistent with working out."
+                </p>
+                <div className="flex items-center gap-4">
+                  <img
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150"
+                    alt="Michael R."
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <div className="font-semibold text-gray-900">Michael R.</div>
+                    <div className="text-sm text-gray-600">Premium Member, 1.5 years</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-white hover:shadow-lg transition-shadow">
+              <CardContent className="p-8">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="text-yellow-400 h-5 w-5 fill-current" />
+                  ))}
+                </div>
+                <Quote className="text-primary h-8 w-8 mb-4" />
+                <p className="text-gray-700 mb-6 italic">
+                  "The community here is incredible. Everyone supports each other, and the staff genuinely cares about your progress. It's more than just a gym!"
+                </p>
+                <div className="flex items-center gap-4">
+                  <img
+                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150"
+                    alt="Jessica L."
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <div className="font-semibold text-gray-900">Jessica L.</div>
+                    <div className="text-sm text-gray-600">Premium Member, 2 years</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Features Showcase */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose ClubPulse AI?</h2>
+            <p className="text-lg text-gray-600">Advanced technology meets premium fitness experience</p>
+          </div>
+          
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Smart AI Technology</h3>
+              <div className="space-y-6">
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Brain className="text-blue-600 h-6 w-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Adaptive Workout Plans</h4>
+                    <p className="text-gray-600">AI learns from your progress and adjusts plans in real-time for optimal results.</p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="text-green-600 h-6 w-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Progress Tracking</h4>
+                    <p className="text-gray-600">Detailed analytics and insights help you understand your fitness journey.</p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Gift className="text-orange-600 h-6 w-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Smart Rewards</h4>
+                    <p className="text-gray-600">Earn points for every visit and redeem them for exclusive perks and rewards.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="relative">
+              <img
+                src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400"
+                alt="AI fitness technology in action"
+                className="rounded-xl shadow-lg w-full"
+              />
+              <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-lg shadow-xl">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-sm font-medium text-gray-900">AI Coach Online</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
