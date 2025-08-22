@@ -1,7 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
-import { seedLoyaltyOffers } from "./storage";
+import { seedLoyaltyOffers, seedDummyUsers } from "./storage";
 
 const app = express();
 app.use(express.json());
@@ -40,6 +40,7 @@ app.use((req, res, next) => {
 (async () => {
   // Seed initial data
   await seedLoyaltyOffers();
+  await seedDummyUsers();
   
   const server = await registerRoutes(app);
 
