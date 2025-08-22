@@ -141,12 +141,28 @@ export function WorkoutPlanner() {
                     <AccordionContent className="px-4 pb-4 pt-2">
                       <p className="text-gray-600 mb-3">{day.description}</p>
                       <ul className="space-y-2">
-                        {day.exercises.map((exercise, exerciseIndex) => (
-                          <li key={exerciseIndex} className="flex items-center gap-2">
-                            <Dumbbell className="text-primary h-4 w-4" />
-                            <span>{exercise}</span>
-                          </li>
-                        ))}
+                        {day.exercises.map((exercise, exerciseIndex) => {
+                          // Get appropriate icon based on exercise type
+                          let icon = <Dumbbell className="text-primary h-4 w-4" />;
+                          if (exercise.toLowerCase().includes('push') || exercise.toLowerCase().includes('press')) {
+                            icon = <span className="text-base">💪</span>;
+                          } else if (exercise.toLowerCase().includes('run') || exercise.toLowerCase().includes('cardio')) {
+                            icon = <span className="text-base">🏃</span>;
+                          } else if (exercise.toLowerCase().includes('squat') || exercise.toLowerCase().includes('lunge')) {
+                            icon = <span className="text-base">🧿</span>;
+                          } else if (exercise.toLowerCase().includes('stretch') || exercise.toLowerCase().includes('yoga')) {
+                            icon = <span className="text-base">🧘</span>;
+                          } else if (exercise.toLowerCase().includes('jump') || exercise.toLowerCase().includes('burpee')) {
+                            icon = <span className="text-base">⚡</span>;
+                          }
+                          
+                          return (
+                            <li key={exerciseIndex} className="flex items-center gap-2">
+                              {icon}
+                              <span>{exercise}</span>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </AccordionContent>
                   </AccordionItem>

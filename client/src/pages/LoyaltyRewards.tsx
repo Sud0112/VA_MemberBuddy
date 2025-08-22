@@ -162,6 +162,11 @@ export function LoyaltyRewards() {
                         <p className="text-gray-600 text-sm">{offer.description}</p>
                       </div>
                       <Badge className={getCategoryColor(offer.category)}>
+                        {offer.category === 'Food' ? '🍽️ ' : 
+                         offer.category === 'Fitness' ? '💪 ' :
+                         offer.category === 'Apparel' ? '👕 ' :
+                         offer.category === 'Wellness' ? '🧘 ' :
+                         offer.category === 'Training' ? '🎯 ' : ''}
                         {offer.category}
                       </Badge>
                     </div>

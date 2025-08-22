@@ -89,7 +89,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Welcome back, <span data-testid="text-user-first-name">{user?.firstName}</span>!
         </h1>
-        <p className="text-gray-600">You're crushing it! Keep up the momentum 🔥</p>
+        <p className="text-gray-600">You're crushing it! Keep up the momentum 🔥 💪</p>
       </div>
 
       {/* Enhanced Stats Grid */}
@@ -390,8 +390,8 @@ function WorkoutHistory() {
   return (
     <div className="p-8 max-w-6xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Workout History</h1>
-        <p className="text-gray-600">Track your fitness journey and celebrate your progress</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">🏋️ Workout History</h1>
+        <p className="text-gray-600">Track your fitness journey and celebrate your progress 🎯</p>
       </div>
 
       {/* Progress Stats */}
@@ -461,7 +461,9 @@ function WorkoutHistory() {
       <div className="grid lg:grid-cols-2 gap-6 mb-8">
         <Card>
           <CardHeader>
-            <CardTitle>Weekly Progress</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              📈 Weekly Progress
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-64">
@@ -493,7 +495,9 @@ function WorkoutHistory() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Calories Burned Trend</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              🔥 Calories Burned Trend
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-64">
@@ -525,7 +529,9 @@ function WorkoutHistory() {
       {/* Workout History List */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent Workouts</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            🏆 Recent Workouts
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -534,7 +540,11 @@ function WorkoutHistory() {
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                      <span className="text-primary font-semibold text-sm">{totalWorkouts - index}</span>
+                      {workout.type.includes('Cardio') ? <span className="text-lg">🏃</span> : 
+                       workout.type.includes('Strength') ? <span className="text-lg">💪</span> :
+                       workout.type.includes('HIIT') ? <span className="text-lg">⚡</span> :
+                       workout.type.includes('Yoga') ? <span className="text-lg">🧘</span> :
+                       <span className="text-primary font-semibold text-sm">#{totalWorkouts - index}</span>}
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">{workout.type}</h3>

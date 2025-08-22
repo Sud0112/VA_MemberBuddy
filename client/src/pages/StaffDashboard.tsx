@@ -239,7 +239,9 @@ function MemberAnalytics() {
       <div className="grid lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-1">
           <CardHeader>
-            <CardTitle>Membership Distribution</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              📊 Membership Distribution
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-64 flex items-center justify-center">
@@ -269,7 +271,10 @@ function MemberAnalytics() {
                       className="w-3 h-3 rounded-full" 
                       style={{ backgroundColor: type.color }}
                     />
-                    <span className="text-sm font-medium">{type.name}</span>
+                    <span className="text-sm font-medium">
+                      {type.name === 'Premium' ? '⭐ ' : type.name === 'Basic' ? '🌱 ' : '🎓 '}
+                      {type.name}
+                    </span>
                   </div>
                   <span className="text-sm text-gray-600">{type.value} members</span>
                 </div>
@@ -280,7 +285,9 @@ function MemberAnalytics() {
 
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Revenue by Membership Type</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              💰 Revenue by Membership Type
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
