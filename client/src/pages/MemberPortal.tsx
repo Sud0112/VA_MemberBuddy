@@ -249,13 +249,13 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               </ResponsiveContainer>
             </div>
             <div className="mt-4 flex items-center justify-between text-sm">
-              <div className="flex items-center gap-2 bg-white/90 px-3 py-2 rounded shadow-sm">
+              <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg shadow-md border">
                 <div className="w-3 h-3 bg-primary rounded-full"></div>
-                <span className="text-gray-800 font-medium">Workout completed</span>
+                <span className="text-gray-900 font-semibold">Workout completed</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/90 px-3 py-2 rounded shadow-sm">
-                <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-                <span className="text-gray-800 font-medium">Rest day</span>
+              <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg shadow-md border">
+                <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+                <span className="text-gray-900 font-semibold">Rest day</span>
               </div>
             </div>
           </CardContent>
@@ -302,13 +302,13 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
             </div>
             <div className="grid grid-cols-3 gap-4 mt-6">
               {workoutTypes.map((type, index) => (
-                <div key={index} className="text-center bg-white/80 p-3 rounded-lg shadow-sm">
+                <div key={index} className="text-center bg-white p-3 rounded-lg shadow-md border">
                   <div className="flex items-center justify-center gap-2 mb-1">
                     <div 
-                      className="w-4 h-4 rounded-full border-2 border-white shadow-sm" 
+                      className="w-4 h-4 rounded-full border border-gray-300 shadow-sm" 
                       style={{ backgroundColor: type.color }}
                     />
-                    <span className="text-sm font-semibold text-gray-800">{type.name}</span>
+                    <span className="text-sm font-bold text-gray-900">{type.name}</span>
                   </div>
                   <div className="text-xl font-bold text-gray-900">{type.value}%</div>
                 </div>

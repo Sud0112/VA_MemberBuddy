@@ -232,9 +232,9 @@ export function LandingPage() {
               <CardContent className="p-8">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
-                  <p className="text-gray-600 mb-4">Perfect for getting started</p>
+                  <p className="text-gray-700 mb-4 font-medium">Perfect for getting started</p>
                   <div className="text-4xl font-bold text-gray-900">
-                    £22<span className="text-lg text-gray-600">/month</span>
+                    £22<span className="text-lg text-gray-700 font-semibold">/month</span>
                   </div>
                 </div>
                 <ul className="space-y-4 mb-8">
@@ -246,7 +246,7 @@ export function LandingPage() {
                   ].map((feature, index) => (
                     <li key={index} className="flex items-center gap-3">
                       <Check className="text-primary h-5 w-5" />
-                      <span className="text-gray-700">{feature}</span>
+                      <span className="text-gray-800 font-medium">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -263,8 +263,8 @@ export function LandingPage() {
 
             {/* Premium Plan */}
             <Card className="bg-gradient-to-br from-primary to-primary/90 text-white relative transform lg:scale-105 shadow-xl">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full text-sm font-bold shadow-xl border-3 border-white z-20">
-                <span className="drop-shadow-sm">Most Popular</span>
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-orange-600 to-red-600 text-white px-6 py-3 rounded-full text-sm font-bold shadow-2xl border-4 border-white z-20">
+                <span className="drop-shadow-md text-white font-black">Most Popular</span>
               </div>
               <CardContent className="p-8">
                 <div className="text-center mb-8">
@@ -305,9 +305,9 @@ export function LandingPage() {
               <CardContent className="p-8">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">Student</h3>
-                  <p className="text-gray-600 mb-4">Special pricing for students</p>
+                  <p className="text-gray-700 mb-4 font-medium">Special pricing for students</p>
                   <div className="text-4xl font-bold text-gray-900">
-                    £15<span className="text-lg text-gray-600">/month</span>
+                    £15<span className="text-lg text-gray-700 font-semibold">/month</span>
                   </div>
                 </div>
                 <ul className="space-y-4 mb-8">
@@ -319,7 +319,7 @@ export function LandingPage() {
                   ].map((feature, index) => (
                     <li key={index} className="flex items-center gap-3">
                       <Check className="text-primary h-5 w-5" />
-                      <span className="text-gray-700">{feature}</span>
+                      <span className="text-gray-800 font-medium">{feature}</span>
                     </li>
                   ))}
                 </ul>
