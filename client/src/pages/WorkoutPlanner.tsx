@@ -264,7 +264,7 @@ export function WorkoutPlanner() {
               
               <Button
                 onClick={handleHealthDataSubmit}
-                className="w-full flex items-center gap-2"
+                className="w-full flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold shadow-md"
                 data-testid="button-continue-health"
               >
                 <Shield className="h-4 w-4" />
@@ -295,6 +295,7 @@ export function WorkoutPlanner() {
                 <Button
                   variant="outline"
                   onClick={() => setCurrentStep(1)}
+                  className="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 border-gray-300 hover:from-gray-200 hover:to-gray-300 hover:text-gray-800 font-medium"
                   data-testid="button-back-health"
                 >
                   Back
@@ -302,7 +303,7 @@ export function WorkoutPlanner() {
                 <Button
                   onClick={handleGeneratePlan}
                   disabled={generatePlanMutation.isPending || !goals.trim()}
-                  className="flex items-center gap-2 flex-1"
+                  className="flex items-center gap-2 flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold shadow-md disabled:from-gray-400 disabled:to-gray-500"
                   data-testid="button-generate-plan"
                 >
                   <Sparkles className="h-4 w-4" />
@@ -419,6 +420,7 @@ export function WorkoutPlanner() {
                       personalTrainerConsent: false
                     });
                   }}
+                  className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white border-teal-500 hover:from-teal-600 hover:to-cyan-600 hover:border-teal-600 font-semibold shadow-md"
                   data-testid="button-new-plan"
                 >
                   Create New Plan

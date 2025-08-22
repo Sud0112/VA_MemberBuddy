@@ -61,7 +61,7 @@ export function ChatBot() {
       {/* Toggle Button */}
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 rounded-full shadow-lg hover:scale-110 transition-all duration-300"
+        className="w-14 h-14 rounded-full shadow-lg hover:scale-110 transition-all duration-300 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold"
         data-testid="button-toggle-chatbot"
       >
         {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
@@ -84,7 +84,7 @@ export function ChatBot() {
               variant="ghost"
               size="sm"
               onClick={() => setIsOpen(false)}
-              className="text-primary-foreground/80 hover:text-primary-foreground p-1"
+              className="text-primary-foreground/80 hover:text-primary-foreground p-1 bg-gradient-to-r from-red-100 to-red-200 text-red-700 hover:from-red-200 hover:to-red-300 hover:text-red-800"
               data-testid="button-close-chatbot"
             >
               <X className="h-4 w-4" />
@@ -152,6 +152,7 @@ export function ChatBot() {
                   onClick={sendMessage}
                   disabled={!input.trim() || isLoading}
                   size="sm"
+                  className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold shadow-md disabled:from-gray-400 disabled:to-gray-500"
                   data-testid="button-send-message"
                 >
                   <Send className="h-4 w-4" />

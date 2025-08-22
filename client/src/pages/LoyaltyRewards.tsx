@@ -249,6 +249,9 @@ export function LoyaltyRewards() {
                             disabled={isDisabled}
                             variant={status === "available" ? "default" : "secondary"}
                             size="sm"
+                            className={status === "available" 
+                              ? "bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-semibold shadow-md" 
+                              : "bg-gradient-to-r from-gray-400 to-gray-500 text-white font-medium"}
                             data-testid={`button-redeem-${offer.id}`}
                           >
                             {getOfferButtonText(status)}

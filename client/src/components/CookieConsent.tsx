@@ -38,6 +38,7 @@ export function CookieConsent() {
           <Button
             variant="ghost"
             size="sm"
+            className="bg-gradient-to-r from-red-100 to-red-200 text-red-700 hover:from-red-200 hover:to-red-300 hover:text-red-800 font-medium"
             onClick={handleDecline}
             data-testid="button-decline-cookies"
           >
@@ -45,6 +46,7 @@ export function CookieConsent() {
           </Button>
           <Button
             size="sm"
+            className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold shadow-md"
             onClick={handleAccept}
             data-testid="button-accept-cookies"
           >

@@ -338,7 +338,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               <Button
                 variant="secondary"
                 onClick={() => onTabChange("workout-planner")}
-                className="bg-gradient-to-r from-white to-gray-50 text-primary hover:from-gray-50 hover:to-gray-100 font-semibold shadow-md"
+                className="bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 font-semibold shadow-md"
                 data-testid="button-create-plan"
               >
                 Create Plan ✨
@@ -368,7 +368,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               <Button
                 variant="secondary"
                 onClick={() => onTabChange("loyalty-rewards")}
-                className="bg-gradient-to-r from-white to-gray-50 text-blue-600 hover:from-gray-50 hover:to-gray-100 font-semibold shadow-md"
+                className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 font-semibold shadow-md"
                 data-testid="button-view-rewards"
               >
                 View Rewards 🏆
@@ -401,7 +401,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               <Button
                 variant="secondary"
                 onClick={() => onTabChange("workout-history")}
-                className="bg-gradient-to-r from-white to-gray-50 text-green-600 hover:from-gray-50 hover:to-gray-100 font-semibold shadow-md"
+                className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white hover:from-purple-600 hover:to-indigo-600 font-semibold shadow-md"
                 data-testid="button-view-history"
               >
                 View History 📈

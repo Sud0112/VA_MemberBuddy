@@ -52,12 +52,14 @@ export function LandingPage() {
             <div className="flex items-center gap-3">
               <Button
                 variant="ghost"
+                className="bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 hover:from-purple-200 hover:to-blue-200 hover:text-purple-800 font-medium"
                 onClick={handleGetStarted}
                 data-testid="button-sign-in"
               >
                 Sign In
               </Button>
               <Button
+                className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold shadow-md"
                 onClick={handleGetStarted}
                 data-testid="button-get-started"
               >
@@ -87,7 +89,7 @@ export function LandingPage() {
                 <Button
                   size="lg"
                   onClick={handleGetStarted}
-                  className="transform hover:scale-105 transition-all duration-200 shadow-lg"
+                  className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold transform hover:scale-105 transition-all duration-200 shadow-lg"
                   data-testid="button-start-free-trial"
                 >
                   Start Free Trial
@@ -95,6 +97,7 @@ export function LandingPage() {
                 <Button
                   variant="outline"
                   size="lg"
+                  className="bg-gradient-to-r from-blue-500 to-purple-500 text-white border-blue-500 hover:from-blue-600 hover:to-purple-600 hover:border-blue-600 font-semibold shadow-md"
                   onClick={handleBookTour}
                   data-testid="button-book-tour"
                 >
@@ -228,7 +231,7 @@ export function LandingPage() {
 
           <div className="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {/* Basic Plan */}
-            <Card className="border hover:border-primary/20 hover:shadow-xl transition-all duration-300">
+            <Card className="bg-gradient-to-br from-blue-50 to-cyan-100 border-2 border-blue-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
@@ -252,7 +255,7 @@ export function LandingPage() {
                 </ul>
                 <Button
                   variant="outline"
-                  className="w-full"
+                  className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white border-green-500 hover:from-green-600 hover:to-emerald-600 hover:border-green-600 font-semibold shadow-md"
                   onClick={handleGetStarted}
                   data-testid="button-select-basic"
                 >
@@ -291,7 +294,7 @@ export function LandingPage() {
                 </ul>
                 <Button
                   variant="secondary"
-                  className="w-full bg-gradient-to-r from-white to-gray-50 text-primary hover:from-gray-50 hover:to-gray-100"
+                  className="w-full bg-gradient-to-r from-orange-400 to-red-400 text-white hover:from-orange-500 hover:to-red-500 font-bold shadow-lg"
                   onClick={handleGetStarted}
                   data-testid="button-select-premium"
                 >
@@ -301,7 +304,7 @@ export function LandingPage() {
             </Card>
 
             {/* Student Plan */}
-            <Card className="border hover:border-primary/20 hover:shadow-xl transition-all duration-300">
+            <Card className="bg-gradient-to-br from-blue-50 to-sky-100 border-2 border-sky-200 hover:border-sky-400 hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">Student</h3>
@@ -325,7 +328,7 @@ export function LandingPage() {
                 </ul>
                 <Button
                   variant="outline"
-                  className="w-full"
+                  className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white border-blue-500 hover:from-blue-600 hover:to-indigo-600 hover:border-blue-600 font-semibold shadow-md"
                   onClick={handleGetStarted}
                   data-testid="button-select-student"
                 >

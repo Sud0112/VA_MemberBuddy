@@ -166,7 +166,7 @@ export function NotificationCenter({ userRole }: NotificationCenterProps) {
                       variant="ghost"
                       size="sm"
                       onClick={markAllAsRead}
-                      className="text-xs"
+                      className="text-xs bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 hover:from-blue-200 hover:to-purple-200 hover:text-blue-800 font-medium"
                     >
                       Mark all read
                     </Button>
@@ -175,6 +175,7 @@ export function NotificationCenter({ userRole }: NotificationCenterProps) {
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsOpen(false)}
+                    className="bg-gradient-to-r from-red-100 to-red-200 text-red-700 hover:from-red-200 hover:to-red-300 hover:text-red-800 font-medium"
                   >
                     <X className="h-4 w-4" />
                   </Button>
@@ -235,7 +236,7 @@ export function NotificationCenter({ userRole }: NotificationCenterProps) {
                             e.stopPropagation();
                             removeNotification(notification.id);
                           }}
-                          className="flex-shrink-0 p-1 h-6 w-6"
+                          className="flex-shrink-0 p-1 h-6 w-6 bg-gradient-to-r from-red-100 to-red-200 text-red-600 hover:from-red-200 hover:to-red-300 hover:text-red-700"
                         >
                           <X className="h-3 w-3" />
                         </Button>
