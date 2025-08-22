@@ -263,8 +263,8 @@ export function LandingPage() {
 
             {/* Premium Plan */}
             <Card className="bg-gradient-to-br from-primary to-primary/90 text-white relative transform lg:scale-105 shadow-xl">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg border-2 border-white z-10">
-                Most Popular
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full text-sm font-bold shadow-xl border-3 border-white z-20">
+                <span className="drop-shadow-sm">Most Popular</span>
               </div>
               <CardContent className="p-8">
                 <div className="text-center mb-8">
