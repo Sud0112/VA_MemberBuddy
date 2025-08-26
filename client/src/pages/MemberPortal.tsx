@@ -90,7 +90,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
       <div className="mb-8 p-6 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-xl shadow-lg">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold mb-2">🎉 Welcome Back Marcus!</h2>
+            <h2 className="text-2xl font-bold mb-2">🎉 Welcome Back Prakhar!</h2>
             <p className="text-green-100">Our fitness coach called you yesterday about your premium membership. We have exclusive offers waiting for you!</p>
             <p className="text-sm text-green-200 mt-1">Premium Member since June 2023 • Strength Training Focus</p>
           </div>
@@ -105,7 +105,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
 
       <div className="mb-10 content-spacing">
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-700 to-blue-700 bg-clip-text text-transparent">
-          Welcome back, <span data-testid="text-user-first-name">Marcus</span>!
+          Welcome back, <span data-testid="text-user-first-name">Prakhar</span>!
         </h1>
         <p className="text-readable-secondary text-lg md:text-xl font-medium leading-relaxed">Ready to get back on track? We've got some great offers to help you reach your goals! 💪</p>
         <div className="mt-4 p-4 bg-gray-50 rounded-lg">
