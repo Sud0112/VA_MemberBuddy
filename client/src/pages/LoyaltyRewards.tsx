@@ -355,7 +355,7 @@ export function LoyaltyRewards() {
           }
           setCollectionDialog({ isOpen: open, offer: null });
         }}>
-          <AlertDialogContent className="max-w-md bg-white relative">
+          <AlertDialogContent className="max-w-md bg-white relative mx-auto">
             {/* Close Button */}
             <button
               onClick={() => {
