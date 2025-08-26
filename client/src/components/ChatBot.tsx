@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { MessageCircle, X, Send, Bot, User } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { apiRequest } from "@/lib/queryClient";
 
 interface Message {
@@ -59,13 +60,20 @@ export function ChatBot() {
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {/* Toggle Button */}
-      <Button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 rounded-full shadow-lg hover:scale-110 transition-all duration-300 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold"
-        data-testid="button-toggle-chatbot"
-      >
-        {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
-      </Button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            onClick={() => setIsOpen(!isOpen)}
+            className="w-14 h-14 rounded-full shadow-lg hover:scale-110 transition-all duration-300 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold"
+            data-testid="button-toggle-chatbot"
+          >
+            {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>💬 {isOpen ? "Close chat" : "Chat with our AI assistant!"}</p>
+        </TooltipContent>
+      </Tooltip>
 
       {/* Chat Window */}
       {isOpen && (
@@ -80,15 +88,22 @@ export function ChatBot() {
                 <p className="text-xs text-primary-foreground/80">Online now</p>
               </div>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsOpen(false)}
-              className="text-primary-foreground/80 hover:text-primary-foreground p-1 bg-gradient-to-r from-red-100 to-red-200 text-red-700 hover:from-red-200 hover:to-red-300 hover:text-red-800"
-              data-testid="button-close-chatbot"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsOpen(false)}
+                  className="text-primary-foreground/80 hover:text-primary-foreground p-1 bg-gradient-to-r from-red-100 to-red-200 text-red-700 hover:from-red-200 hover:to-red-300 hover:text-red-800"
+                  data-testid="button-close-chatbot"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>❌ Close chat window</p>
+              </TooltipContent>
+            </Tooltip>
           </CardHeader>
           
           <CardContent className="p-0">
@@ -148,15 +163,22 @@ export function ChatBot() {
                   disabled={isLoading}
                   data-testid="input-chat-message"
                 />
-                <Button
-                  onClick={sendMessage}
-                  disabled={!input.trim() || isLoading}
-                  size="sm"
-                  className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold shadow-md disabled:from-gray-400 disabled:to-gray-500"
-                  data-testid="button-send-message"
-                >
-                  <Send className="h-4 w-4" />
-                </Button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      onClick={sendMessage}
+                      disabled={!input.trim() || isLoading}
+                      size="sm"
+                      className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold shadow-md disabled:from-gray-400 disabled:to-gray-500"
+                      data-testid="button-send-message"
+                    >
+                      <Send className="h-4 w-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>📤 Send your message to the AI!</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
             </div>
           </CardContent>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AppLayout } from "@/components/ui/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 // Progress component implemented inline
 import { 
   Calendar, 
@@ -16,7 +17,7 @@ import {
   Clock,
   BarChart3
 } from "lucide-react";
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, Tooltip } from "recharts";
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, Tooltip as RechartsTooltip } from "recharts";
 import { WorkoutPlanner } from "@/pages/WorkoutPlanner";
 import { LoyaltyRewards } from "@/pages/LoyaltyRewards";
 import { useAuthContext } from "@/contexts/AuthContext";
@@ -224,7 +225,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                     tick={{ fontSize: 10, fill: '#6b7280' }}
                     domain={[0, 'dataMax + 0.5']}
                   />
-                  <Tooltip 
+                  <RechartsTooltip 
                     contentStyle={{
                       backgroundColor: '#1f2937',
                       border: 'none',
@@ -287,7 +288,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip 
+                  <RechartsTooltip 
                     contentStyle={{
                       backgroundColor: '#1f2937',
                       border: 'none',
@@ -335,14 +336,21 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <Button
-                variant="secondary"
-                onClick={() => onTabChange("workout-planner")}
-                className="bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 font-semibold shadow-md"
-                data-testid="button-create-plan"
-              >
-                Create Plan ✨
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="secondary"
+                    onClick={() => onTabChange("workout-planner")}
+                    className="bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 font-semibold shadow-md"
+                    data-testid="button-create-plan"
+                  >
+                    Create Plan ✨
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>🤖 Let AI design the perfect workout just for you!</p>
+                </TooltipContent>
+              </Tooltip>
               <div className="text-xs text-white/80 font-medium bg-white/10 px-2 py-1 rounded">
                 AI-powered recommendations
               </div>
@@ -365,14 +373,21 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <Button
-                variant="secondary"
-                onClick={() => onTabChange("loyalty-rewards")}
-                className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 font-semibold shadow-md"
-                data-testid="button-view-rewards"
-              >
-                View Rewards 🏆
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="secondary"
+                    onClick={() => onTabChange("loyalty-rewards")}
+                    className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 font-semibold shadow-md"
+                    data-testid="button-view-rewards"
+                  >
+                    View Rewards 🏆
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>🎁 Discover amazing perks you've earned!</p>
+                </TooltipContent>
+              </Tooltip>
               <div className="text-xs text-white/90 font-medium bg-white/10 px-2 py-1 rounded">
                 8 rewards available
               </div>
@@ -398,14 +413,21 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <Button
-                variant="secondary"
-                onClick={() => onTabChange("workout-history")}
-                className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white hover:from-purple-600 hover:to-indigo-600 font-semibold shadow-md"
-                data-testid="button-view-history"
-              >
-                View History 📈
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="secondary"
+                    onClick={() => onTabChange("workout-history")}
+                    className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white hover:from-purple-600 hover:to-indigo-600 font-semibold shadow-md"
+                    data-testid="button-view-history"
+                  >
+                    View History 📈
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>📊 See your incredible fitness journey progress!</p>
+                </TooltipContent>
+              </Tooltip>
               <div className="text-xs text-white/90 font-medium bg-white/10 px-2 py-1 rounded">
                 {currentVisits} workouts this month
               </div>
