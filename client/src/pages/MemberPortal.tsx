@@ -90,8 +90,9 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
       <div className="mb-8 p-6 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-xl shadow-lg">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold mb-2">🎉 Welcome Back Sarah!</h2>
-            <p className="text-green-100">Our fitness coach reached out to you yesterday. We have exclusive offers waiting for you!</p>
+            <h2 className="text-2xl font-bold mb-2">🎉 Welcome Back Marcus!</h2>
+            <p className="text-green-100">Our fitness coach called you yesterday about your premium membership. We have exclusive offers waiting for you!</p>
+            <p className="text-sm text-green-200 mt-1">Premium Member since June 2023 • Strength Training Focus</p>
           </div>
           <div className="hidden md:block">
             <div className="bg-white/20 rounded-lg p-3 text-center">
@@ -104,9 +105,29 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
 
       <div className="mb-10 content-spacing">
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-700 to-blue-700 bg-clip-text text-transparent">
-          Welcome back, <span data-testid="text-user-first-name">Sarah</span>!
+          Welcome back, <span data-testid="text-user-first-name">Marcus</span>!
         </h1>
-        <p className="text-readable-secondary text-lg md:text-xl font-medium leading-relaxed">We've missed you! Here are some special offers just for you 🎁</p>
+        <p className="text-readable-secondary text-lg md:text-xl font-medium leading-relaxed">Ready to get back on track? We've got some great offers to help you reach your goals! 💪</p>
+        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div>
+              <span className="font-semibold text-gray-700">Age:</span>
+              <span className="ml-1 text-gray-600">32</span>
+            </div>
+            <div>
+              <span className="font-semibold text-gray-700">Goal:</span>
+              <span className="ml-1 text-gray-600">Strength Training</span>
+            </div>
+            <div>
+              <span className="font-semibold text-gray-700">Plan:</span>
+              <span className="ml-1 text-gray-600">Premium</span>
+            </div>
+            <div>
+              <span className="font-semibold text-gray-700">Trainer:</span>
+              <span className="ml-1 text-gray-600">Alex Rodriguez</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Enhanced Stats Grid */}
@@ -170,22 +191,17 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center shadow-sm">
-                <Star className="text-purple-600 h-6 w-6" />
+                <Trophy className="text-purple-600 h-6 w-6" />
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-gray-900" data-testid="text-available-points">
-                  {user?.loyaltyPoints?.toLocaleString()}
-                </p>
-                <p className="text-sm text-gray-600">loyalty points ⭐</p>
+                <p className="text-3xl md:text-4xl font-bold text-readable-primary">Gold</p>
+                <p className="text-sm md:text-base text-readable-muted">Member Status</p>
               </div>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Trophy className="h-4 w-4 text-yellow-500" />
-                <span className="text-sm text-gray-600">+150 this week ✨</span>
-              </div>
-              <div className="text-xs text-purple-800 font-semibold bg-white/70 px-2 py-1 rounded shadow-sm">
-                VIP Status 🏆
+            <div className="space-y-2">
+              <div className="text-sm text-purple-700 font-medium">Premium Benefits Active</div>
+              <div className="text-xs text-purple-600 bg-white/70 px-2 py-1 rounded shadow-sm inline-block">
+                Personal Trainer Included 💪
               </div>
             </div>
           </CardContent>
