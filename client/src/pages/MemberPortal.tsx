@@ -86,15 +86,15 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-700 to-blue-700 bg-clip-text text-transparent mb-2">
+      <div className="mb-10 content-spacing">
+        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-700 to-blue-700 bg-clip-text text-transparent">
           Welcome back, <span data-testid="text-user-first-name">{user?.firstName}</span>!
         </h1>
-        <p className="text-gray-800 font-medium">You're crushing it! Keep up the momentum 🔥 💪</p>
+        <p className="text-readable-secondary text-lg md:text-xl font-medium leading-relaxed">You're crushing it! Keep up the momentum 🔥 💪</p>
       </div>
 
       {/* Enhanced Stats Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         <Card className="relative overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-blue-200 bg-gradient-to-br from-blue-100 via-cyan-50 to-purple-100">
           <div className="absolute -top-2 -right-2 w-20 h-20 bg-gradient-to-br from-blue-300/40 to-purple-300/40 rounded-full"></div>
           <CardContent className="p-6 relative">
@@ -103,8 +103,8 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                 <Calendar className="text-blue-700 h-6 w-6" />
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent" data-testid="text-monthly-visits">{currentVisits}</p>
-                <p className="text-sm font-medium text-gray-800">of {monthlyGoal} visits</p>
+                <p className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent" data-testid="text-monthly-visits">{currentVisits}</p>
+                <p className="text-sm md:text-base font-medium text-readable-muted">of {monthlyGoal} visits</p>
               </div>
             </div>
             <div className="space-y-2">
@@ -135,8 +135,8 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                 <Flame className="text-orange-600 h-6 w-6" />
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-gray-900" data-testid="text-current-streak">{currentStreak}</p>
-                <p className="text-sm text-gray-600">day streak 🔥</p>
+                <p className="text-3xl md:text-4xl font-bold text-readable-primary" data-testid="text-current-streak">{currentStreak}</p>
+                <p className="text-sm md:text-base text-readable-muted">day streak 🔥</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -233,7 +233,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                       color: 'white',
                       fontSize: '12px'
                     }}
-                    formatter={(value: any) => [`${value} visit${value !== 1 ? 's' : ''}`, 'Daily Activity']}
+                    formatter={(value) => [`${value} visit${value !== 1 ? 's' : ''}`, 'Daily Activity']}
                   />
                   <Bar 
                     dataKey="visits" 
@@ -296,7 +296,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                       color: 'white',
                       fontSize: '12px'
                     }}
-                    formatter={(value: any) => [`${value}%`, 'Workout Time']}
+                    formatter={(value) => [`${value}%`, 'Workout Time']}
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -321,7 +321,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
 
       {/* Enhanced Quick Actions */}
       <div className="grid md:grid-cols-2 gap-6">
-        <Card className="bg-gradient-to-br from-primary to-primary/90 text-white relative overflow-hidden hover:shadow-lg transition-shadow">
+        <Card className="bg-gradient-to-br from-primary/10 to-primary/20 text-gray-900 relative overflow-hidden hover:shadow-lg transition-shadow border-2 border-blue-200">
           <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-10 translate-x-10"></div>
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
@@ -329,10 +329,10 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                 <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
                   🤖 AI Workout Planner
                 </h3>
-                <p className="text-white/90">Get a personalized workout plan tailored to your goals</p>
+                <p className="text-gray-700">Get a personalized workout plan tailored to your goals</p>
               </div>
-              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                <Brain className="text-white h-6 w-6" />
+              <div className="w-12 h-12 bg-white/40 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                <Brain className="text-primary h-6 w-6" />
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -351,14 +351,14 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                   <p>🤖 Let AI design the perfect workout just for you!</p>
                 </TooltipContent>
               </Tooltip>
-              <div className="text-xs text-white/80 font-medium bg-white/10 px-2 py-1 rounded">
+              <div className="text-xs text-gray-700 font-medium bg-primary/5 border border-primary/20 px-2 py-1 rounded">
                 AI-powered recommendations
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white relative overflow-hidden hover:shadow-lg transition-shadow">
+        <Card className="bg-gradient-to-br from-blue/10 to-blue/20 text-gray-900 relative overflow-hidden hover:shadow-lg transition-shadow border-2 border-blue-200">
           <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/10 rounded-full -translate-y-8 -translate-x-8"></div>
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
@@ -366,10 +366,10 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                 <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
                   🎁 Loyalty Rewards
                 </h3>
-                <p className="text-white/90">Redeem your {user?.loyaltyPoints} points for exclusive rewards</p>
+                <p className="text-gray-700">Redeem your {user?.loyaltyPoints} points for exclusive rewards</p>
               </div>
-              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                <Gift className="text-white h-6 w-6" />
+              <div className="w-12 h-12 bg-white/40 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                <Gift className="text-blue-600 h-6 w-6" />
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -388,7 +388,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                   <p>🎁 Discover amazing perks you've earned!</p>
                 </TooltipContent>
               </Tooltip>
-              <div className="text-xs text-white/90 font-medium bg-white/10 px-2 py-1 rounded">
+              <div className="text-xs text-gray-700 font-medium bg-blue-50 border border-blue-200 px-2 py-1 rounded">
                 8 rewards available
               </div>
             </div>
@@ -398,7 +398,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
 
       {/* Enhanced Quick Access to Workout History */}
       <div className="mt-8">
-        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white relative overflow-hidden hover:shadow-lg transition-shadow">
+        <Card className="bg-gradient-to-br from-green-50 to-green-100 text-gray-900 relative overflow-hidden hover:shadow-lg transition-shadow border-2 border-green-200">
           <div className="absolute top-0 left-1/2 w-24 h-24 bg-white/10 rounded-full -translate-y-12 -translate-x-12"></div>
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
@@ -406,10 +406,10 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                 <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
                   📊 Workout History
                 </h3>
-                <p className="text-white/90">Track your progress and view past workouts</p>
+                <p className="text-gray-700">Track your progress and view past workouts</p>
               </div>
-              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                <BarChart3 className="text-white h-6 w-6" />
+              <div className="w-12 h-12 bg-white/60 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                <BarChart3 className="text-green-600 h-6 w-6" />
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -428,7 +428,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                   <p>📊 See your incredible fitness journey progress!</p>
                 </TooltipContent>
               </Tooltip>
-              <div className="text-xs text-white/90 font-medium bg-white/10 px-2 py-1 rounded">
+              <div className="text-xs text-gray-700 font-medium bg-green-50 border border-green-200 px-2 py-1 rounded">
                 {currentVisits} workouts this month
               </div>
             </div>
@@ -677,7 +677,7 @@ function WorkoutHistory() {
                     <p className="text-xs text-gray-600">{workout.caloriesBurned} calories</p>
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-3 text-sm">
                   <div className="flex items-center gap-2">
                     <Clock className="h-4 w-4 text-gray-600" />
@@ -696,7 +696,7 @@ function WorkoutHistory() {
                     <span className="text-gray-600">+{Math.round(workout.caloriesBurned / 10)} points</span>
                   </div>
                 </div>
-                
+
                 {workout.notes && (
                   <div className="bg-gray-50 rounded-lg p-3">
                     <p className="text-sm text-gray-700">{workout.notes}</p>
@@ -752,7 +752,7 @@ function ProfilePage() {
               </div>
             </div>
           </div>
-          
+
           <div className="pt-6 border-t">
             <div className="flex items-center justify-between">
               <div>

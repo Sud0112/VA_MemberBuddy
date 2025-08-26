@@ -120,8 +120,8 @@ export function WorkoutPlanner() {
   return (
     <div className="p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">AI Workout Planner</h1>
+        <div className="mb-12 content-spacing">
+          <h1 className="text-4xl md:text-5xl font-bold text-readable-primary">AI Workout Planner</h1>
           <p className="text-gray-600">
             Get a personalized workout plan designed with your health profile and goals in mind.
           </p>

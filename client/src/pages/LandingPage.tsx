@@ -131,17 +131,17 @@ export function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 pt-16 pb-20">
+      <section className="relative bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 section-spacing">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left">
-              <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="text-center lg:text-left content-spacing">
+              <h1 className="text-readable-primary mb-8">
                 Your AI-Powered{" "}
-                <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 bg-clip-text text-transparent font-black drop-shadow-sm">
+                <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 bg-clip-text text-transparent font-black drop-shadow-sm block lg:inline">
                   Fitness Journey
                 </span>
               </h1>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              <p className="text-xl md:text-2xl text-readable-secondary mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                 Experience the future of fitness with personalized AI coaching,
                 smart workout plans, and a premium wellness community designed
                 for your success.
@@ -210,11 +210,11 @@ export function LandingPage() {
         className="py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50"
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-700 to-blue-700 bg-clip-text text-transparent mb-4">
+          <div className="text-center mb-20">
+            <h2 className="text-readable-primary bg-gradient-to-r from-purple-700 to-blue-700 bg-clip-text text-transparent mb-6">
               Powered by AI, Designed for You
             </h2>
-            <p className="text-xl font-medium text-gray-800 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-readable-secondary max-w-3xl mx-auto leading-relaxed">
               Experience cutting-edge technology meets premium fitness
               facilities
             </p>
@@ -269,14 +269,14 @@ export function LandingPage() {
                 key={index}
                 className="bg-gradient-to-br from-white via-purple-50/30 to-blue-50/30 border-2 border-purple-100 hover:border-purple-300 hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
-                <CardContent className="p-8">
+                <CardContent className="p-8 content-spacing">
                   <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-blue-100 rounded-xl flex items-center justify-center mb-6 shadow-md">
                     <feature.icon className={`${feature.color} h-6 w-6`} />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  <h3 className="text-xl md:text-2xl font-bold text-readable-primary mb-4">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-700 font-medium leading-relaxed">
+                  <p className="text-readable-secondary text-base md:text-lg leading-relaxed">
                     {feature.description}
                   </p>
                 </CardContent>
@@ -316,13 +316,13 @@ export function LandingPage() {
         className="py-20 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50"
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-20">
+            <h2 className="text-readable-primary mb-6">
               Choose Your Membership
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl md:text-2xl text-readable-secondary max-w-3xl mx-auto leading-relaxed">
               Flexible plans designed to fit your lifestyle and fitness goals
-              (UK pricing)
+              <span className="block mt-2 text-lg text-readable-muted">(UK pricing)</span>
             </p>
           </div>
 
@@ -330,21 +330,21 @@ export function LandingPage() {
             {/* Basic Plan */}
             <Card className="bg-gradient-to-br from-blue-50 to-cyan-100 border-2 border-blue-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                <div className="text-center mb-8 content-spacing">
+                  <h3 className="text-2xl md:text-3xl font-bold text-readable-primary mb-3">
                     Basic
                   </h3>
-                  <p className="text-gray-700 mb-4 font-medium">
+                  <p className="text-readable-secondary mb-4 font-medium text-base md:text-lg">
                     Perfect for getting started
                   </p>
-                  <div className="text-4xl font-bold text-gray-900">
+                  <div className="text-4xl md:text-5xl font-bold text-readable-primary">
                     £22
-                    <span className="text-lg text-gray-700 font-semibold">
+                    <span className="text-lg md:text-xl text-readable-muted font-semibold">
                       /month
                     </span>
                   </div>
                 </div>
-                <ul className="space-y-4 mb-8">
+                <ul className="space-y-4 mb-10">
                   {[
                     "Gym access (6am-10pm)",
                     "Basic AI workout plans",
@@ -353,7 +353,7 @@ export function LandingPage() {
                   ].map((feature, index) => (
                     <li key={index} className="flex items-center gap-3">
                       <Check className="text-primary h-5 w-5" />
-                      <span className="text-gray-800 font-medium">
+                      <span className="text-readable-secondary font-medium text-base md:text-lg">
                         {feature}
                       </span>
                     </li>
