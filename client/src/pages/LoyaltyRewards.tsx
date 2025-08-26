@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Star, Clock, MapPin, Package, Calendar, CheckCircle } from "lucide-react";
+import { Star, Clock, MapPin, Package, Calendar, CheckCircle, X } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -17,6 +17,7 @@ export function LoyaltyRewards() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [collectionDialog, setCollectionDialog] = useState<{ isOpen: boolean; offer?: LoyaltyOffer | null }>({ isOpen: false, offer: null });
+  const [autoCloseTimer, setAutoCloseTimer] = useState<NodeJS.Timeout | null>(null);
 
   const { data: offers = [], isLoading: offersLoading } = useQuery({
     queryKey: ["/api/loyalty-offers"],
@@ -41,6 +42,12 @@ export function LoyaltyRewards() {
       const redeemedOffer = (offers as LoyaltyOffer[]).find(o => o.id === offerId);
       if (redeemedOffer) {
         setCollectionDialog({ isOpen: true, offer: redeemedOffer });
+        
+        // Set up auto-close timer for 10 seconds
+        const timer = setTimeout(() => {
+          setCollectionDialog({ isOpen: false, offer: null });
+        }, 10000);
+        setAutoCloseTimer(timer);
       }
       
       toast({
@@ -341,10 +348,32 @@ export function LoyaltyRewards() {
           </TabsContent>
         </Tabs>
         {/* Collection Instructions Dialog */}
-        <AlertDialog open={collectionDialog.isOpen} onOpenChange={(open) => setCollectionDialog({ isOpen: open, offer: null })}>
-          <AlertDialogContent className="max-w-md">
+        <AlertDialog open={collectionDialog.isOpen} onOpenChange={(open) => {
+          if (!open && autoCloseTimer) {
+            clearTimeout(autoCloseTimer);
+            setAutoCloseTimer(null);
+          }
+          setCollectionDialog({ isOpen: open, offer: null });
+        }}>
+          <AlertDialogContent className="max-w-md bg-white relative">
+            {/* Close Button */}
+            <button
+              onClick={() => {
+                if (autoCloseTimer) {
+                  clearTimeout(autoCloseTimer);
+                  setAutoCloseTimer(null);
+                }
+                setCollectionDialog({ isOpen: false, offer: null });
+              }}
+              className="absolute top-4 right-4 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+              data-testid="button-close-popup"
+            >
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </button>
+            
             <AlertDialogHeader>
-              <AlertDialogTitle className="flex items-center gap-2">
+              <AlertDialogTitle className="flex items-center gap-2 pr-8">
                 <Package className="h-5 w-5 text-primary" />
                 Reward Redeemed Successfully!
               </AlertDialogTitle>
