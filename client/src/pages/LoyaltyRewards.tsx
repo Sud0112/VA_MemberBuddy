@@ -17,7 +17,15 @@ export function LoyaltyRewards() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [collectionDialog, setCollectionDialog] = useState<{ isOpen: boolean; offer?: LoyaltyOffer | null }>({ isOpen: false, offer: null });
+  const [confirmDialog, setConfirmDialog] = useState<{ isOpen: boolean; offer?: LoyaltyOffer | null }>({ isOpen: false, offer: null });
   const [autoCloseTimer, setAutoCloseTimer] = useState<NodeJS.Timeout | null>(null);
+
+  const confirmRedeem = () => {
+    if (confirmDialog.offer) {
+      redeemOfferMutation.mutate(confirmDialog.offer.id);
+      setConfirmDialog({ isOpen: false, offer: null });
+    }
+  };
 
   const { data: offers = [], isLoading: offersLoading } = useQuery({
     queryKey: ["/api/loyalty-offers"],
@@ -252,7 +260,7 @@ export function LoyaltyRewards() {
                             <span className="font-semibold">{offer.points} points</span>
                           </div>
                           <Button
-                            onClick={() => redeemOfferMutation.mutate(offer.id)}
+                            onClick={() => setConfirmDialog({ isOpen: true, offer })}
                             disabled={isDisabled}
                             variant={status === "available" ? "default" : "secondary"}
                             size="sm"
@@ -355,7 +363,7 @@ export function LoyaltyRewards() {
           }
           setCollectionDialog({ isOpen: open, offer: null });
         }}>
-          <AlertDialogContent className="max-w-md bg-white relative z-[100] shadow-2xl">
+          <AlertDialogContent className="max-w-md bg-white z-[100] shadow-2xl sm:top-[50%] sm:left-[50%] sm:translate-x-[-50%] sm:translate-y-[-50%]">
             {/* Close Button */}
             <button
               onClick={() => {
@@ -411,6 +419,54 @@ export function LoyaltyRewards() {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogAction>Got it!</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* Confirmation Dialog */}
+        <AlertDialog open={confirmDialog.isOpen} onOpenChange={(open) => setConfirmDialog({ isOpen: open, offer: null })}>
+          <AlertDialogContent className="max-w-md bg-white z-[100] shadow-2xl">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="flex items-center gap-2">
+                <Package className="h-5 w-5 text-primary" />
+                Confirm Redemption
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                {confirmDialog.offer && (
+                  <div className="space-y-4">
+                    <div className="bg-blue-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 text-blue-800 mb-2">
+                        <CheckCircle className="h-4 w-4" />
+                        <span className="font-semibold">{confirmDialog.offer.title}</span>
+                      </div>
+                      <p className="text-blue-700 text-sm mb-3">{confirmDialog.offer.description}</p>
+                      <div className="flex items-center gap-2">
+                        <Star className="h-4 w-4 text-yellow-500" />
+                        <span className="font-semibold text-blue-800">{confirmDialog.offer.points} points</span>
+                      </div>
+                    </div>
+                    <p className="text-gray-600 text-sm">
+                      Are you sure you want to redeem this offer? This action cannot be undone and will deduct {confirmDialog.offer.points} points from your account.
+                    </p>
+                  </div>
+                )}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setConfirmDialog({ isOpen: false, offer: null })}
+                data-testid="button-cancel-redeem"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={confirmRedeem}
+                disabled={redeemOfferMutation.isPending}
+                data-testid="button-confirm-redeem"
+              >
+                {redeemOfferMutation.isPending ? 'Redeeming...' : 'Confirm Redemption'}
+              </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
