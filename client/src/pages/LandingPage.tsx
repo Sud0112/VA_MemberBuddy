@@ -19,6 +19,14 @@ import {
   Target,
   Clock,
   Quote,
+  Zap,
+  Shield,
+  Sparkles,
+  ArrowRight,
+  PlayCircle,
+  MessageCircle,
+  Trophy,
+  Rocket,
 } from "lucide-react";
 import { ChatBot } from "@/components/ChatBot";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -35,33 +43,39 @@ export function LandingPage() {
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="bg-gradient-to-r from-white/95 via-purple-50/95 to-blue-50/95 backdrop-blur-sm border-b border-purple-200 sticky top-0 z-40">
+      {/* Enhanced Header */}
+      <header className="bg-gradient-to-r from-slate-900/95 via-purple-900/95 to-indigo-900/95 backdrop-blur-lg border-b border-purple-300/30 sticky top-0 z-50 shadow-2xl">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center cursor-pointer">
-                    <Dumbbell className="text-white h-4 w-4" />
+                  <div className="w-10 h-10 bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600 rounded-xl flex items-center justify-center cursor-pointer transform hover:scale-110 transition-all duration-300 shadow-lg">
+                    <Dumbbell className="text-white h-5 w-5" />
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>🏋️ Your AI-powered fitness companion!</p>
                 </TooltipContent>
               </Tooltip>
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                Member Buddy
-              </span>
+              <div className="flex flex-col">
+                <span className="text-2xl font-black bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
+                  MEMBER BUDDY
+                </span>
+                <span className="text-xs text-purple-300 font-medium tracking-wider uppercase">
+                  AI Fitness Revolution
+                </span>
+              </div>
             </div>
             <nav className="hidden md:flex items-center gap-8">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <a
                     href="#features"
-                    className="text-gray-600 hover:text-gray-900 transition-colors"
+                    className="text-purple-200 hover:text-white transition-all duration-300 font-semibold relative group"
                   >
                     Features
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -72,9 +86,10 @@ export function LandingPage() {
                 <TooltipTrigger asChild>
                   <a
                     href="#pricing"
-                    className="text-gray-600 hover:text-gray-900 transition-colors"
+                    className="text-purple-200 hover:text-white transition-all duration-300 font-semibold relative group"
                   >
                     Pricing
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -84,10 +99,25 @@ export function LandingPage() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <a
+                    href="#success"
+                    className="text-purple-200 hover:text-white transition-all duration-300 font-semibold relative group"
+                  >
+                    Success Stories
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>🏆 See amazing transformations!</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a
                     href="#contact"
-                    className="text-gray-600 hover:text-gray-900 transition-colors"
+                    className="text-purple-200 hover:text-white transition-all duration-300 font-semibold relative group"
                   >
                     Contact
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -95,12 +125,12 @@ export function LandingPage() {
                 </TooltipContent>
               </Tooltip>
             </nav>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 hover:from-purple-200 hover:to-blue-200 hover:text-purple-800 font-medium"
+                    className="bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 border border-white/20 hover:border-white/40 font-semibold transition-all duration-300"
                     onClick={handleGetStarted}
                     data-testid="button-sign-in"
                   >
@@ -114,11 +144,12 @@ export function LandingPage() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
-                    className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold shadow-md"
+                    className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 hover:from-orange-600 hover:via-pink-600 hover:to-purple-700 text-white font-bold shadow-xl transform hover:scale-105 transition-all duration-300"
                     onClick={handleGetStarted}
                     data-testid="button-get-started"
                   >
-                    Get Started
+                    <Rocket className="w-4 h-4 mr-2" />
+                    Start Your Journey
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -130,36 +161,56 @@ export function LandingPage() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 section-spacing">
+      {/* Revolutionary Hero Section */}
+      <section className="relative bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 section-spacing overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-orange-400/20 to-pink-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-br from-purple-400/20 to-blue-500/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-pink-400/10 to-orange-400/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '0.5s'}}></div>
+        </div>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="text-center lg:text-left content-spacing">
-              <h1 className="text-readable-primary mb-8">
-                Your AI-Powered{" "}
-                <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 bg-clip-text text-transparent font-black drop-shadow-sm block lg:inline">
-                  Fitness Journey
+            <div className="text-center lg:text-left content-spacing relative z-10">
+              <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
+                <div className="px-4 py-2 bg-gradient-to-r from-orange-500/20 to-pink-500/20 backdrop-blur-sm border border-orange-400/30 rounded-full">
+                  <span className="text-orange-300 font-bold text-sm tracking-wider uppercase">
+                    <Sparkles className="w-4 h-4 inline mr-2" />
+                    AI-Powered Platform
+                  </span>
+                </div>
+              </div>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-tight">
+                Transform Your{" "}
+                <span className="bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                  Body & Mind
+                </span>
+                <span className="block text-4xl md:text-5xl lg:text-6xl mt-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                  with AI Precision
                 </span>
               </h1>
-              <p className="text-xl md:text-2xl text-readable-secondary mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                Experience the future of fitness with personalized AI coaching,
-                smart workout plans, and a premium wellness community designed
-                for your success.
+              <p className="text-xl md:text-2xl text-purple-200 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium">
+                Join the fitness revolution where artificial intelligence meets human potential. 
+                <span className="text-orange-300 font-semibold block mt-2">
+                  Personalized coaching • Smart analytics • Premium community
+                </span>
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start mb-8">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
                       size="lg"
                       onClick={handleGetStarted}
-                      className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold transform hover:scale-105 transition-all duration-200 shadow-lg"
+                      className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 hover:from-orange-600 hover:via-pink-600 hover:to-purple-700 text-white font-bold text-lg px-8 py-4 transform hover:scale-105 transition-all duration-300 shadow-2xl border-2 border-white/20 hover:border-white/40"
                       data-testid="button-start-free-trial"
                     >
-                      Start Free Trial
+                      <Rocket className="w-5 h-5 mr-3" />
+                      Start 7-Day FREE Trial
+                      <ArrowRight className="w-5 h-5 ml-3" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>🎉 Try everything FREE for 7 days - no commitments!</p>
+                    <p>🎉 Full access for 7 days - no commitments!</p>
                   </TooltipContent>
                 </Tooltip>
                 <Tooltip>
@@ -167,35 +218,70 @@ export function LandingPage() {
                     <Button
                       variant="outline"
                       size="lg"
-                      className="bg-gradient-to-r from-blue-500 to-purple-500 text-white border-blue-500 hover:from-blue-600 hover:to-purple-600 hover:border-blue-600 font-semibold shadow-md"
+                      className="bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 hover:bg-white/20 hover:border-white/50 font-semibold text-lg px-8 py-4 transition-all duration-300 shadow-xl"
                       onClick={handleBookTour}
                       data-testid="button-book-tour"
                     >
-                      Book a Tour
+                      <PlayCircle className="w-5 h-5 mr-3" />
+                      Watch Demo
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>🏢 Take a virtual tour of our amazing facilities!</p>
+                    <p>🎞️ See our AI technology in action!</p>
                   </TooltipContent>
                 </Tooltip>
               </div>
+              
+              {/* Trust Indicators */}
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 text-purple-200">
+                <div className="flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-green-400" />
+                  <span className="font-semibold">No Credit Card Required</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Star className="w-5 h-5 text-yellow-400" />
+                  <span className="font-semibold">4.9/5 Member Rating</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Users className="w-5 h-5 text-blue-400" />
+                  <span className="font-semibold">2,500+ Active Members</span>
+                </div>
+              </div>
             </div>
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600"
-                alt="Modern gym interior with high-tech equipment"
-                className="rounded-2xl shadow-2xl w-full"
-              />
-              <div className="absolute -bottom-6 -left-6 bg-gradient-to-br from-white via-purple-50 to-blue-100 p-4 rounded-xl shadow-lg border border-purple-200">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full flex items-center justify-center">
-                    <Brain className="text-purple-600 h-6 w-6" />
+            <div className="relative z-10">
+              <div className="relative group">
+                <img
+                  src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600"
+                  alt="Modern gym interior with high-tech equipment"
+                  className="rounded-3xl shadow-2xl w-full transform group-hover:scale-105 transition-all duration-500 border-4 border-white/20"
+                />
+                {/* Gradient overlay for better contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent rounded-3xl"></div>
+                
+                {/* Dynamic AI Status Card */}
+                <div className="absolute -bottom-8 -left-8 bg-gradient-to-br from-slate-800/90 via-purple-800/90 to-indigo-800/90 backdrop-blur-xl p-6 rounded-2xl shadow-2xl border border-purple-400/30">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-orange-400 to-pink-500 rounded-2xl flex items-center justify-center animate-pulse">
+                      <Brain className="text-white h-7 w-7" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-white text-lg">AI Coach Active</p>
+                      <p className="text-purple-300 font-medium flex items-center gap-2">
+                        <Zap className="w-4 h-4" />
+                        Analyzing your fitness data
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-bold text-purple-800">AI Coach Active</p>
-                    <p className="text-sm font-medium text-purple-600">
-                      Personalizing your workout
-                    </p>
+                </div>
+                
+                {/* Floating Achievement Badge */}
+                <div className="absolute -top-6 -right-6 bg-gradient-to-br from-orange-500 to-red-600 text-white p-4 rounded-2xl shadow-xl transform rotate-12 hover:rotate-0 transition-all duration-300">
+                  <div className="flex items-center gap-2">
+                    <Trophy className="w-6 h-6" />
+                    <div>
+                      <p className="font-bold text-sm">89% Success</p>
+                      <p className="text-xs opacity-90">Goal Achievement</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -204,107 +290,175 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Revolutionary Features Section */}
       <section
         id="features"
-        className="py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50"
+        className="py-24 bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 relative overflow-hidden"
       >
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-20 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-72 h-72 bg-orange-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse" style={{animationDelay: '2s'}}></div>
+          <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        </div>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-readable-primary bg-gradient-to-r from-purple-700 to-blue-700 bg-clip-text text-transparent mb-6">
-              Powered by AI, Designed for You
+          <div className="text-center mb-24 relative z-10">
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-orange-100 to-pink-100 rounded-full mb-6 border border-orange-200">
+              <Sparkles className="w-5 h-5 text-orange-600" />
+              <span className="text-orange-800 font-bold text-sm tracking-wider uppercase">Revolutionary Technology</span>
+            </div>
+            <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-8 leading-tight">
+              Where AI Meets{" "}
+              <span className="bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 bg-clip-text text-transparent">
+                Human Potential
+              </span>
             </h2>
-            <p className="text-xl md:text-2xl text-readable-secondary max-w-3xl mx-auto leading-relaxed">
-              Experience cutting-edge technology meets premium fitness
-              facilities
+            <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-medium">
+              Step into the future of fitness with our groundbreaking AI-powered platform.
+              <span className="block mt-3 text-orange-600 font-semibold">
+                Personalized • Intelligent • Transformative
+              </span>
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
             {[
               {
                 icon: Brain,
                 title: "AI Personal Trainer",
                 description:
-                  "Get personalized workout plans generated by our advanced AI that adapts to your goals, schedule, and fitness level.",
-                color: "text-primary",
+                  "Revolutionary AI technology creates personalized workout plans that evolve with your progress. Real-time form correction and motivation.",
+                color: "from-orange-500 to-red-500",
+                bgColor: "from-orange-50 to-red-50",
+                iconBg: "from-orange-100 to-red-100",
               },
               {
-                icon: Gift,
-                title: "Smart Rewards",
+                icon: Zap,
+                title: "Smart Analytics",
                 description:
-                  "Earn points for every workout and redeem them for exclusive perks, personal training sessions, and premium amenities.",
-                color: "text-blue-600",
+                  "Advanced performance tracking with predictive insights. Our AI analyzes patterns to optimize your results and prevent plateaus.",
+                color: "from-blue-500 to-purple-500",
+                bgColor: "from-blue-50 to-purple-50",
+                iconBg: "from-blue-100 to-purple-100",
               },
               {
-                icon: TrendingUp,
-                title: "Progress Tracking",
+                icon: Trophy,
+                title: "Gamified Rewards",
                 description:
-                  "Monitor your fitness journey with detailed analytics and insights powered by AI to optimize your results.",
-                color: "text-purple-600",
+                  "Earn points, unlock achievements, and climb leaderboards. Redeem rewards for premium services and exclusive member perks.",
+                color: "from-yellow-500 to-orange-500",
+                bgColor: "from-yellow-50 to-orange-50",
+                iconBg: "from-yellow-100 to-orange-100",
               },
               {
                 icon: Users,
-                title: "Premium Community",
+                title: "Elite Community",
                 description:
-                  "Join a community of like-minded fitness enthusiasts with exclusive events, challenges, and group training sessions.",
-                color: "text-orange-600",
+                  "Connect with motivated members, join exclusive challenges, and access expert-led group sessions in our premium environment.",
+                color: "from-green-500 to-emerald-500",
+                bgColor: "from-green-50 to-emerald-50",
+                iconBg: "from-green-100 to-emerald-100",
               },
               {
                 icon: Dumbbell,
                 title: "Premium Equipment",
                 description:
-                  "Access state-of-the-art fitness equipment and facilities designed for optimal performance and safety.",
-                color: "text-green-600",
+                  "State-of-the-art fitness technology with smart sensors. Equipment that adapts to your workout and tracks every rep automatically.",
+                color: "from-purple-500 to-pink-500",
+                bgColor: "from-purple-50 to-pink-50",
+                iconBg: "from-purple-100 to-pink-100",
               },
               {
                 icon: Heart,
-                title: "Wellness Support",
+                title: "Holistic Wellness",
                 description:
-                  "Comprehensive wellness support including nutrition guidance, recovery protocols, and mental health resources.",
-                color: "text-red-600",
+                  "Complete wellness ecosystem including nutrition AI, recovery optimization, stress management, and mental health support.",
+                color: "from-pink-500 to-rose-500",
+                bgColor: "from-pink-50 to-rose-50",
+                iconBg: "from-pink-100 to-rose-100",
               },
             ].map((feature, index) => (
               <Card
                 key={index}
-                className="bg-gradient-to-br from-white via-purple-50/30 to-blue-50/30 border-2 border-purple-100 hover:border-purple-300 hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                className={`group bg-gradient-to-br ${feature.bgColor} border-2 border-transparent hover:border-gray-200 hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden`}
               >
-                <CardContent className="p-8 content-spacing">
-                  <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-blue-100 rounded-xl flex items-center justify-center mb-6 shadow-md">
-                    <feature.icon className={`${feature.color} h-6 w-6`} />
+                {/* Hover glow effect */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
+                
+                <CardContent className="p-8 relative z-10">
+                  <div className={`w-16 h-16 bg-gradient-to-br ${feature.iconBg} rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110`}>
+                    <feature.icon className={`bg-gradient-to-br ${feature.color} bg-clip-text text-transparent h-8 w-8`} />
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-readable-primary mb-4">
+                  <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-4 group-hover:text-gray-700 transition-colors duration-300">
                     {feature.title}
                   </h3>
-                  <p className="text-readable-secondary text-base md:text-lg leading-relaxed">
+                  <p className="text-gray-600 text-lg leading-relaxed font-medium group-hover:text-gray-800 transition-colors duration-300">
                     {feature.description}
                   </p>
+                  
+                  {/* Animated arrow on hover */}
+                  <div className="mt-6 flex items-center text-gray-400 group-hover:text-gray-600 transition-all duration-300">
+                    <span className="text-sm font-semibold mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Learn more</span>
+                    <ArrowRight className="w-4 h-4 transform translate-x-0 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
                 </CardContent>
               </Card>
             ))}
           </div>
 
-          {/* Facility Showcase */}
-          <div className="mt-20">
-            <h3 className="text-2xl font-bold text-gray-900 text-center mb-12">
-              World-Class Facilities
-            </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <img
-                src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400"
-                alt="Cardio area with modern treadmills"
-                className="rounded-xl shadow-lg w-full h-64 object-cover"
-              />
-              <img
-                src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400"
-                alt="Weight training area with dumbbells"
-                className="rounded-xl shadow-lg w-full h-64 object-cover"
-              />
-              <img
-                src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400"
-                alt="Group fitness studio with yoga setup"
-                className="rounded-xl shadow-lg w-full h-64 object-cover"
-              />
+          {/* Immersive Facility Showcase */}
+          <div className="mt-24 relative z-10">
+            <div className="text-center mb-16">
+              <h3 className="text-4xl md:text-5xl font-black text-gray-900 mb-6">
+                Experience Our{" "}
+                <span className="bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
+                  Premium Facilities
+                </span>
+              </h3>
+              <p className="text-xl text-gray-600 font-medium max-w-2xl mx-auto">
+                State-of-the-art equipment and spaces designed for your success
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105">
+                <img
+                  src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400"
+                  alt="Cardio area with modern treadmills"
+                  className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute bottom-6 left-6 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+                  <h4 className="text-xl font-bold mb-2">Cardio Zone</h4>
+                  <p className="text-sm opacity-90">Smart treadmills with AI coaching</p>
+                </div>
+              </div>
+              
+              <div className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105">
+                <img
+                  src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400"
+                  alt="Weight training area with dumbbells"
+                  className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute bottom-6 left-6 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+                  <h4 className="text-xl font-bold mb-2">Strength Training</h4>
+                  <p className="text-sm opacity-90">Premium equipment with form tracking</p>
+                </div>
+              </div>
+              
+              <div className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105">
+                <img
+                  src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400"
+                  alt="Group fitness studio with yoga setup"
+                  className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute bottom-6 left-6 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+                  <h4 className="text-xl font-bold mb-2">Group Studios</h4>
+                  <p className="text-sm opacity-90">Classes with expert instructors</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -481,33 +635,48 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Success Statistics */}
-      <section className="py-16 bg-gradient-to-br from-orange-50 via-yellow-50 to-green-50 border-t border-purple-200">
+      {/* Dynamic Success Showcase */}
+      <section id="success" className="py-24 bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 w-64 h-64 bg-gradient-to-br from-orange-400/10 to-pink-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 w-80 h-80 bg-gradient-to-br from-purple-400/10 to-blue-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1.5s'}}></div>
+        </div>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Trusted by Thousands
+          <div className="text-center mb-20 relative z-10">
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-orange-500/20 to-pink-500/20 backdrop-blur-sm border border-orange-400/30 rounded-full mb-8">
+              <Trophy className="w-5 h-5 text-orange-300" />
+              <span className="text-orange-200 font-bold text-sm tracking-wider uppercase">Proven Results</span>
+            </div>
+            <h2 className="text-5xl md:text-6xl font-black text-white mb-8 leading-tight">
+              Join the{" "}
+              <span className="bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                Success Revolution
+              </span>
             </h2>
-            <p className="text-lg text-gray-600">
-              Real results from our amazing community
+            <p className="text-xl md:text-2xl text-purple-200 max-w-3xl mx-auto font-medium">
+              Real transformations from our elite community of achievers
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="text-center cursor-pointer">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Users className="text-blue-600 h-8 w-8" />
+                <div className="group text-center cursor-pointer bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-white/40 transition-all duration-300 hover:bg-white/15 transform hover:scale-105">
+                  <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-xl">
+                    <Users className="text-white h-10 w-10" />
                   </div>
-                  <div className="text-3xl font-bold text-gray-900 mb-2">
+                  <div className="text-4xl md:text-5xl font-black text-white mb-3 group-hover:text-blue-300 transition-colors duration-300">
                     2,500+
                   </div>
-                  <div className="text-gray-600">Active Members</div>
+                  <div className="text-purple-200 font-semibold text-lg">Elite Members</div>
+                  <div className="text-purple-300 text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Growing daily
+                  </div>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
-                <p>👥 Join our amazing fitness family!</p>
+                <p>👥 Join our exclusive fitness community!</p>
               </TooltipContent>
             </Tooltip>
 
