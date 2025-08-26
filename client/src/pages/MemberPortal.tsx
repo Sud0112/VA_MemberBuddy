@@ -79,18 +79,34 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
     { name: 'Flexibility', value: 20, color: '#f97316' }
   ];
 
-  const currentStreak = 7;
+  const currentStreak = 3;
   const monthlyGoal = 20;
-  const currentVisits = 12;
+  const currentVisits = 8;
   const goalProgress = (currentVisits / monthlyGoal) * 100;
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
+      {/* Special Welcome Back Banner */}
+      <div className="mb-8 p-6 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-xl shadow-lg">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold mb-2">🎉 Welcome Back Sarah!</h2>
+            <p className="text-green-100">Our fitness coach reached out to you yesterday. We have exclusive offers waiting for you!</p>
+          </div>
+          <div className="hidden md:block">
+            <div className="bg-white/20 rounded-lg p-3 text-center">
+              <p className="text-lg font-bold">275</p>
+              <p className="text-sm text-green-100">Loyalty Points</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="mb-10 content-spacing">
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-700 to-blue-700 bg-clip-text text-transparent">
-          Welcome back, <span data-testid="text-user-first-name">{user?.firstName}</span>!
+          Welcome back, <span data-testid="text-user-first-name">Sarah</span>!
         </h1>
-        <p className="text-readable-secondary text-lg md:text-xl font-medium leading-relaxed">You're crushing it! Keep up the momentum 🔥 💪</p>
+        <p className="text-readable-secondary text-lg md:text-xl font-medium leading-relaxed">We've missed you! Here are some special offers just for you 🎁</p>
       </div>
 
       {/* Enhanced Stats Grid */}
@@ -118,9 +134,9 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                   style={{ width: `${goalProgress}%` }}
                 />
               </div>
-              {goalProgress >= 60 && (
-                <div className="text-xs text-blue-800 font-semibold animate-pulse bg-white/70 px-2 py-1 rounded shadow-sm">
-                  ✨ Excellent progress!
+              {goalProgress < 50 && (
+                <div className="text-xs text-orange-800 font-semibold animate-pulse bg-white/70 px-2 py-1 rounded shadow-sm">
+                  💪 You've got this! Let's reach that goal!
                 </div>
               )}
             </div>
@@ -140,11 +156,11 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-green-500 animate-bounce" />
-              <span className="text-sm text-green-600 font-medium">Personal best! 🔥</span>
+              <Calendar className="h-4 w-4 text-orange-500" />
+              <span className="text-sm text-orange-600 font-medium">Restart your streak today!</span>
             </div>
             <div className="mt-3 text-xs text-orange-800 font-semibold bg-white/70 px-2 py-1 rounded shadow-sm inline-block">
-              Keep it up! 💪
+              Come back soon! 💪
             </div>
           </CardContent>
         </Card>
