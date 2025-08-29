@@ -466,7 +466,6 @@ export function LandingPage() {
             </h2>
             <p className="text-xl md:text-2xl text-readable-secondary max-w-3xl mx-auto leading-relaxed">
               Flexible plans designed to fit your lifestyle and fitness goals
-              <span className="block mt-2 text-lg text-readable-muted">(UK pricing)</span>
             </p>
           </div>
 
@@ -490,7 +489,7 @@ export function LandingPage() {
                 </div>
                 <ul className="space-y-4 mb-10">
                   {[
-                    "Gym access (6am-10pm)",
+                    "Gym access (06:00-22:00)",
                     "Basic AI workout plans",
                     "Locker room access",
                     "Mobile app access",
@@ -591,7 +590,7 @@ export function LandingPage() {
                 </div>
                 <ul className="space-y-4 mb-8">
                   {[
-                    "Gym access (6am-4pm)",
+                    "Gym access (06:00-16:00)",
                     "Basic AI workout plans",
                     "Study areas",
                     "Student community events",
@@ -1011,21 +1010,21 @@ export function LandingPage() {
               <ul className="space-y-3 text-gray-400">
                 <li className="flex items-center gap-2">
                   <MapPin className="h-4 w-4" />
-                  <span>123 Fitness Ave, Wellness City</span>
+                  <span>25 Canary Wharf, London E14 5AB</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Phone className="h-4 w-4" />
-                  <span>(555) 123-4567</span>
+                  <span>020 3837 4721</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Mail className="h-4 w-4" />
-                  <span>hello@clubpulse.ai</span>
+                  <span>hello@clubpulse.co.uk</span>
                 </li>
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 Member Buddy. All rights reserved.</p>
+            <p>&copy; 2025 ClubPulse. All rights reserved.</p>
           </div>
         </div>
       </footer>

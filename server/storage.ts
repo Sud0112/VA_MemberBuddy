@@ -277,7 +277,7 @@ export async function seedLoyaltyOffers() {
     },
     {
       title: "Branded Gym Towel",
-      description: "High-quality Member Buddy branded microfiber towel - perfect for your workouts",
+      description: "High-quality ClubPulse branded microfiber towel - perfect for your workouts",
       points: 150,
       category: "Merchandise"
     },
@@ -289,7 +289,7 @@ export async function seedLoyaltyOffers() {
     },
     {
       title: "Smoothie Bar Credit",
-      description: "$15 credit toward fresh smoothies and healthy snacks at our juice bar",
+      description: "£12 credit toward fresh smoothies and healthy snacks at our juice bar",
       points: 300,
       category: "Nutrition"
     },
@@ -301,7 +301,7 @@ export async function seedLoyaltyOffers() {
     },
     {
       title: "Premium Water Bottle",
-      description: "Insulated stainless steel water bottle with Member Buddy logo - keeps drinks cold for 24 hours",
+      description: "Insulated stainless steel water bottle with ClubPulse logo - keeps drinks cold for 24 hours",
       points: 250,
       category: "Merchandise"
     }
@@ -441,7 +441,7 @@ export async function seedDummyUsers() {
   const staffPersonas = [
     {
       id: 'staff-amanda-smith',
-      email: 'amanda.smith@clubpulse.com',
+      email: 'amanda.smith@clubpulse.co.uk',
       firstName: 'Amanda',
       lastName: 'Smith',
       role: 'staff' as const,
@@ -452,7 +452,7 @@ export async function seedDummyUsers() {
     },
     {
       id: 'staff-james-martinez',
-      email: 'james.martinez@clubpulse.com',
+      email: 'james.martinez@clubpulse.co.uk',
       firstName: 'James',
       lastName: 'Martinez', 
       role: 'staff' as const,
@@ -463,7 +463,7 @@ export async function seedDummyUsers() {
     },
     {
       id: 'staff-priya-singh',
-      email: 'priya.singh@clubpulse.com',
+      email: 'priya.singh@clubpulse.co.uk',
       firstName: 'Priya',
       lastName: 'Singh',
       role: 'staff' as const,
@@ -474,7 +474,7 @@ export async function seedDummyUsers() {
     },
     {
       id: 'staff-robert-jones',
-      email: 'robert.jones@clubpulse.com',
+      email: 'robert.jones@clubpulse.co.uk',
       firstName: 'Robert',
       lastName: 'Jones',
       role: 'staff' as const,

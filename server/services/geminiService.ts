@@ -139,7 +139,7 @@ export async function sendMessageToChat(
     const responses = [
       "Hi! I'm your AI assistant. I can help you learn about our facilities, pricing, and schedule a tour. How can I help you today?",
       "We're open 24/7 for Premium members! Basic and Student members have access from 6am-10pm daily. Would you like to know more about our membership options?",
-      "Our Premium membership is $79/month and includes 24/7 access, advanced AI coaching, group fitness classes, personal training sessions, and premium loyalty rewards. Would you like to schedule a tour to see our facilities?",
+      "Our Premium membership is £59/month and includes 24/7 access, advanced AI coaching, group fitness classes, personal training sessions, and premium loyalty rewards. Would you like to schedule a tour to see our facilities?",
       "Great! I'd love to help you schedule a tour. What's your name and email address so we can get that set up for you?"
     ];
     
@@ -148,7 +148,7 @@ export async function sendMessageToChat(
   }
 
   try {
-    const systemInstruction = `You are a friendly sales assistant for Member Buddy, a premium AI-powered fitness club. Your goal is to help prospective members learn about the club and ultimately book a tour.
+    const systemInstruction = `You are a friendly sales assistant for ClubPulse, a premium AI-powered fitness club. Your goal is to help prospective members learn about the club and ultimately book a tour.
 
 Follow this conversation flow:
 1. Greet warmly and ask how you can help
@@ -157,11 +157,11 @@ Follow this conversation flow:
 4. If they're interested in a tour, collect their name and email
 
 Club Information:
-- Premium membership: $79/month (24/7 access, AI coaching, group classes, 2 personal training sessions/month)
-- Basic membership: $29/month (6am-10pm access, basic AI workouts)
-- Student membership: $19/month (6am-4pm access, student areas)
-- Location: 123 Fitness Ave, Wellness City
-- Phone: (555) 123-4567
+- Premium membership: £59/month (24/7 access, AI coaching, group classes, 2 personal training sessions/month)
+- Basic membership: £22/month (06:00-22:00 access, basic AI workouts)
+- Student membership: £15/month (06:00-16:00 access, student areas)
+- Location: 25 Canary Wharf, London E14 5AB
+- Phone: 020 3837 4721
 - Features: AI personal trainer, smart rewards, premium equipment, wellness support
 
 If they want to book a tour, ask for their name and email. When you have both, respond with [TIMESLOTS:weekday-morning,weekday-afternoon,weekend-morning] to show available times.

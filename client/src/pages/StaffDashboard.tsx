@@ -58,22 +58,22 @@ function MemberAnalytics() {
   ];
 
   const peakHours = [
-    { time: '6 AM', members: 45 },
-    { time: '7 AM', members: 78 },
-    { time: '8 AM', members: 95 },
-    { time: '9 AM', members: 62 },
-    { time: '10 AM', members: 34 },
-    { time: '11 AM', members: 28 },
-    { time: '12 PM', members: 52 },
-    { time: '1 PM', members: 48 },
-    { time: '2 PM', members: 31 },
-    { time: '3 PM', members: 29 },
-    { time: '4 PM', members: 41 },
-    { time: '5 PM', members: 89 },
-    { time: '6 PM', members: 124 },
-    { time: '7 PM', members: 98 },
-    { time: '8 PM', members: 67 },
-    { time: '9 PM', members: 43 }
+    { time: '06:00', members: 45 },
+    { time: '07:00', members: 78 },
+    { time: '08:00', members: 95 },
+    { time: '09:00', members: 62 },
+    { time: '10:00', members: 34 },
+    { time: '11:00', members: 28 },
+    { time: '12:00', members: 52 },
+    { time: '13:00', members: 48 },
+    { time: '14:00', members: 31 },
+    { time: '15:00', members: 29 },
+    { time: '16:00', members: 41 },
+    { time: '17:00', members: 89 },
+    { time: '18:00', members: 124 },
+    { time: '19:00', members: 98 },
+    { time: '20:00', members: 67 },
+    { time: '21:00', members: 43 }
   ];
 
   const totalMembers = 641;
@@ -113,7 +113,7 @@ function MemberAnalytics() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Monthly Revenue</p>
-                <p className="text-2xl font-bold text-gray-900">${monthlyRevenue.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-gray-900">£{monthlyRevenue.toLocaleString()}</p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
                 <DollarSign className="text-green-600 h-6 w-6" />
