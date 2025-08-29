@@ -334,10 +334,10 @@ Keep responses helpful, friendly, and conversational. Always try to guide toward
 
     // Add conversation history
     for (const msg of conversationHistory) {
-      await chat.sendMessage(msg.content);
+      await chat.sendMessage({ message: msg.content });
     }
 
-    const response = await chat.sendMessage(message);
+    const response = await chat.sendMessage({ message: message });
     const content = response.text || "I'm sorry, I didn't understand that. Could you please rephrase?";
 
     // Parse special commands
