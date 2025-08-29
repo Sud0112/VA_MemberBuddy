@@ -96,7 +96,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
           </div>
           <div className="hidden md:block">
             <div className="bg-white/20 rounded-lg p-3 text-center">
-              <p className="text-lg font-bold">275</p>
+              <p className="text-lg font-bold">{user?.loyaltyPoints || 0}</p>
               <p className="text-sm text-green-100">Loyalty Points</p>
             </div>
           </div>
