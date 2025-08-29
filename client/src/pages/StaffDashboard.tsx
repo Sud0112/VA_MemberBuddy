@@ -87,18 +87,18 @@ function MemberAnalytics() {
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Member Analytics</h1>
-        <p className="text-gray-600">Comprehensive insights into member behavior and club performance</p>
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-slate-900 mb-3">Member Analytics</h1>
+        <p className="text-slate-600 text-base md:text-lg leading-relaxed max-w-2xl">Comprehensive insights into member behavior and club performance</p>
       </div>
 
       {/* Key Metrics */}
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <Card>
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Total Members</p>
-                <p className="text-2xl font-bold text-gray-900">{totalMembers}</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Members</p>
+                <p className="text-3xl font-bold text-slate-900">{totalMembers}</p>
               </div>
               <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
                 <Users className="text-blue-600 h-6 w-6" />
@@ -111,12 +111,12 @@ function MemberAnalytics() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Monthly Revenue</p>
-                <p className="text-2xl font-bold text-gray-900">£{monthlyRevenue.toLocaleString()}</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Monthly Revenue</p>
+                <p className="text-3xl font-bold text-slate-900">£{monthlyRevenue.toLocaleString()}</p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
                 <DollarSign className="text-green-600 h-6 w-6" />
@@ -129,12 +129,12 @@ function MemberAnalytics() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Avg Visits/Member</p>
-                <p className="text-2xl font-bold text-gray-900">{avgVisitsPerMember}</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Avg Visits/Member</p>
+                <p className="text-3xl font-bold text-slate-900">{avgVisitsPerMember}</p>
               </div>
               <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
                 <Activity className="text-purple-600 h-6 w-6" />
@@ -240,9 +240,9 @@ function MemberAnalytics() {
 
       {/* Membership Breakdown */}
       <div className="grid lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-1">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+        <Card className="lg:col-span-1 border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-semibold text-slate-900 flex items-center gap-2">
               📊 Membership Distribution
             </CardTitle>
           </CardHeader>
@@ -286,9 +286,9 @@ function MemberAnalytics() {
           </CardContent>
         </Card>
 
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+        <Card className="lg:col-span-2 border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-semibold text-slate-900 flex items-center gap-2">
               💰 Revenue by Membership Type
             </CardTitle>
           </CardHeader>

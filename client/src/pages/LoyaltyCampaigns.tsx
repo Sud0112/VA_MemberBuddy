@@ -168,16 +168,16 @@ export function LoyaltyCampaigns() {
     <div className="p-8">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Loyalty Campaign Management</h1>
-          <p className="text-gray-600">Create and manage AI-powered loyalty offers for members</p>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-slate-900 mb-3">Loyalty Campaign Management</h1>
+          <p className="text-slate-600 text-base md:text-lg leading-relaxed max-w-2xl">Create and manage AI-powered loyalty offers for members</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Create New Campaign */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Target className="h-5 w-5" />
+          <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+                <Target className="h-5 w-5 text-slate-600" />
                 Create New Campaign
               </CardTitle>
             </CardHeader>
@@ -215,12 +215,12 @@ export function LoyaltyCampaigns() {
                 <div className="space-y-4">
                   <h3 className="font-semibold text-gray-900">Generated Offers</h3>
                   {generatedOffers.map((offer) => (
-                    <Card key={offer.id} className="bg-gray-50">
+                    <Card key={offer.id} className="bg-slate-50/50 border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
                       <CardContent className="p-4">
                         <div className="flex items-start justify-between mb-3">
                           <div>
-                            <h4 className="font-semibold text-gray-900">{offer.title}</h4>
-                            <p className="text-sm text-gray-600">{offer.description}</p>
+                            <h4 className="font-semibold text-slate-900">{offer.title}</h4>
+                            <p className="text-sm text-slate-600 leading-relaxed">{offer.description}</p>
                           </div>
                           <Badge className={getCategoryColor(offer.category)}>
                             {offer.category}
@@ -247,10 +247,10 @@ export function LoyaltyCampaigns() {
           </Card>
 
           {/* Active Campaigns */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Megaphone className="h-5 w-5" />
+          <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+                <Megaphone className="h-5 w-5 text-slate-600" />
                 Active Campaigns
               </CardTitle>
             </CardHeader>
@@ -274,12 +274,12 @@ export function LoyaltyCampaigns() {
               ) : (
                 <div className="space-y-4">
                   {(activeOffers as LoyaltyOffer[]).map((offer: LoyaltyOffer) => (
-                    <Card key={offer.id} className="border">
+                    <Card key={offer.id} className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
                       <CardContent className="p-4">
                         <div className="flex items-start justify-between mb-3">
                           <div>
-                            <h4 className="font-semibold text-gray-900">{offer.title}</h4>
-                            <p className="text-sm text-gray-600">{offer.description}</p>
+                            <h4 className="font-semibold text-slate-900">{offer.title}</h4>
+                            <p className="text-sm text-slate-600 leading-relaxed">{offer.description}</p>
                           </div>
                           <Badge variant="secondary" className="bg-green-100 text-green-800">
                             Active

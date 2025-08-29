@@ -104,10 +104,10 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
       </div>
 
       <div className="mb-10 content-spacing">
-        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-700 to-blue-700 bg-clip-text text-transparent">
-          Welcome back, <span data-testid="text-user-first-name">Prakhar</span>!
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mb-3">
+          Welcome back, <span data-testid="text-user-first-name" className="text-red-600">Prakhar</span>!
         </h1>
-        <p className="text-readable-secondary text-lg md:text-xl font-medium leading-relaxed">Ready to get back on track? We've got some great offers to help you reach your goals! 💪</p>
+        <p className="text-slate-600 text-lg md:text-xl font-medium leading-relaxed max-w-3xl">Ready to get back on track? We've got some great offers to help you reach your goals! 💪</p>
         <div className="mt-4 p-4 bg-gray-50 rounded-lg">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>
@@ -132,7 +132,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
 
       {/* Enhanced Stats Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        <Card className="relative overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-blue-200 bg-gradient-to-br from-blue-100 via-cyan-50 to-purple-100">
+        <Card className="relative overflow-hidden hover:shadow-xl transition-all duration-300 border border-slate-200/60 shadow-sm hover:border-slate-300/80 bg-gradient-to-br from-blue-50/80 via-cyan-50/60 to-purple-50/40">
           <div className="absolute -top-2 -right-2 w-20 h-20 bg-gradient-to-br from-blue-300/40 to-purple-300/40 rounded-full"></div>
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
@@ -164,7 +164,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
           </CardContent>
         </Card>
 
-        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border-0 bg-gradient-to-br from-orange-50 to-orange-100">
+        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border border-slate-200/60 shadow-sm hover:border-orange-300/60 bg-gradient-to-br from-orange-50/80 to-orange-100/60">
           <div className="absolute -bottom-2 -left-2 w-16 h-16 bg-orange-200/30 rounded-full"></div>
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
@@ -186,7 +186,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
           </CardContent>
         </Card>
 
-        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border-0 bg-gradient-to-br from-purple-50 to-purple-100">
+        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border border-slate-200/60 shadow-sm hover:border-purple-300/60 bg-gradient-to-br from-purple-50/80 to-purple-100/60">
           <div className="absolute -top-3 -right-1 w-12 h-12 bg-purple-200/30 rounded-full"></div>
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
@@ -207,7 +207,7 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
           </CardContent>
         </Card>
 
-        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border-0 bg-gradient-to-br from-green-50 to-green-100">
+        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border border-slate-200/60 shadow-sm hover:border-green-300/60 bg-gradient-to-br from-green-50/80 to-green-100/60">
           <div className="absolute -bottom-1 -right-3 w-14 h-14 bg-green-200/30 rounded-full"></div>
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
@@ -234,10 +234,10 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
 
       {/* Progress Charts */}
       <div className="grid lg:grid-cols-2 gap-6 mb-8">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BarChart3 className="h-5 w-5" />
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+              <BarChart3 className="h-5 w-5 text-slate-600" />
               Weekly Activity
             </CardTitle>
           </CardHeader>
@@ -294,10 +294,10 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Target className="h-5 w-5" />
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+              <Target className="h-5 w-5 text-slate-600" />
               Workout Focus
             </CardTitle>
           </CardHeader>
@@ -353,15 +353,15 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
 
       {/* Enhanced Quick Actions */}
       <div className="grid md:grid-cols-2 gap-6">
-        <Card className="bg-gradient-to-br from-primary/10 to-primary/20 text-gray-900 relative overflow-hidden hover:shadow-lg transition-shadow border-2 border-blue-200">
+        <Card className="bg-gradient-to-br from-blue-50/80 to-cyan-50/60 text-gray-900 relative overflow-hidden hover:shadow-lg transition-all duration-300 border border-slate-200/60 shadow-sm hover:border-blue-300/60">
           <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-10 translate-x-10"></div>
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
+                <h3 className="text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
                   🤖 AI Workout Planner
                 </h3>
-                <p className="text-gray-700">Get a personalized workout plan tailored to your goals</p>
+                <p className="text-slate-600 text-sm leading-relaxed">Get a personalized workout plan tailored to your goals</p>
               </div>
               <div className="w-12 h-12 bg-white/40 rounded-xl flex items-center justify-center backdrop-blur-sm">
                 <Brain className="text-primary h-6 w-6" />
@@ -390,15 +390,15 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-blue/10 to-blue/20 text-gray-900 relative overflow-hidden hover:shadow-lg transition-shadow border-2 border-blue-200">
+        <Card className="bg-gradient-to-br from-indigo-50/80 to-blue-50/60 text-gray-900 relative overflow-hidden hover:shadow-lg transition-all duration-300 border border-slate-200/60 shadow-sm hover:border-indigo-300/60">
           <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/10 rounded-full -translate-y-8 -translate-x-8"></div>
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
+                <h3 className="text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
                   🎁 Loyalty Rewards
                 </h3>
-                <p className="text-gray-700">Redeem your {user?.loyaltyPoints} points for exclusive rewards</p>
+                <p className="text-slate-600 text-sm leading-relaxed">Redeem your {user?.loyaltyPoints} points for exclusive rewards</p>
               </div>
               <div className="w-12 h-12 bg-white/40 rounded-xl flex items-center justify-center backdrop-blur-sm">
                 <Gift className="text-blue-600 h-6 w-6" />
@@ -430,15 +430,15 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
 
       {/* Enhanced Quick Access to Workout History */}
       <div className="mt-8">
-        <Card className="bg-gradient-to-br from-green-50 to-green-100 text-gray-900 relative overflow-hidden hover:shadow-lg transition-shadow border-2 border-green-200">
+        <Card className="bg-gradient-to-br from-green-50/80 to-emerald-50/60 text-gray-900 relative overflow-hidden hover:shadow-lg transition-all duration-300 border border-slate-200/60 shadow-sm hover:border-green-300/60">
           <div className="absolute top-0 left-1/2 w-24 h-24 bg-white/10 rounded-full -translate-y-12 -translate-x-12"></div>
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
+                <h3 className="text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
                   📊 Workout History
                 </h3>
-                <p className="text-gray-700">Track your progress and view past workouts</p>
+                <p className="text-slate-600 text-sm leading-relaxed">Track your progress and view past workouts</p>
               </div>
               <div className="w-12 h-12 bg-white/60 rounded-xl flex items-center justify-center backdrop-blur-sm">
                 <BarChart3 className="text-green-600 h-6 w-6" />

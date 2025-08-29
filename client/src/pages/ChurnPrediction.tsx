@@ -188,21 +188,21 @@ export function ChurnPrediction() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Churn Prediction Dashboard</h1>
-        <p className="text-gray-600">Identify and retain at-risk members with AI-powered insights</p>
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-slate-900 mb-3">Churn Prediction Dashboard</h1>
+        <p className="text-slate-600 text-base md:text-lg leading-relaxed max-w-2xl">Identify and retain at-risk members with AI-powered insights</p>
       </div>
 
       {/* Key Metrics */}
       <div className="grid md:grid-cols-4 gap-6 mb-8">
-        <Card>
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
                 <Users className="text-blue-600 h-6 w-6" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">Total Members</h3>
-                <p className="text-2xl font-bold text-gray-900" data-testid="text-total-members">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Members</h3>
+                <p className="text-3xl font-bold text-slate-900" data-testid="text-total-members">
                   {(metrics as any)?.totalMembers || 0}
                 </p>
               </div>
@@ -210,15 +210,15 @@ export function ChurnPrediction() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
                 <AlertTriangle className="text-orange-600 h-6 w-6" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">At-Risk Members</h3>
-                <p className="text-2xl font-bold text-orange-600" data-testid="text-at-risk-members">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">At-Risk Members</h3>
+                <p className="text-3xl font-bold text-orange-600" data-testid="text-at-risk-members">
                   {(metrics as any)?.atRiskMembers || 0}
                 </p>
               </div>
@@ -226,15 +226,15 @@ export function ChurnPrediction() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
                 <TrendingDown className="text-red-600 h-6 w-6" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">Churn Rate</h3>
-                <p className="text-2xl font-bold text-red-600" data-testid="text-churn-rate">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">Churn Rate</h3>
+                <p className="text-3xl font-bold text-red-600" data-testid="text-churn-rate">
                   {(metrics as any)?.churnRate || "0%"}
                 </p>
               </div>
@@ -242,15 +242,15 @@ export function ChurnPrediction() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
                 <Phone className="text-green-600 h-6 w-6" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">Outreach Today</h3>
-                <p className="text-2xl font-bold text-green-600" data-testid="text-outreach-today">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">Outreach Today</h3>
+                <p className="text-3xl font-bold text-green-600" data-testid="text-outreach-today">
                   {(metrics as any)?.outreachToday || 0}
                 </p>
               </div>
@@ -262,10 +262,10 @@ export function ChurnPrediction() {
       <div className="grid lg:grid-cols-3 gap-8">
         {/* At-Risk Members List */}
         <div className="lg:col-span-1">
-          <Card>
-            <CardHeader>
-              <CardTitle>High-Risk Members</CardTitle>
-              <p className="text-gray-600 text-sm">Sorted by churn probability</p>
+          <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg font-semibold text-slate-900">High-Risk Members</CardTitle>
+              <p className="text-slate-600 text-sm leading-relaxed">Sorted by churn probability</p>
             </CardHeader>
             <CardContent className="p-0">
               <div className="max-h-96 overflow-y-auto">

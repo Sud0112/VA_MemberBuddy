@@ -375,7 +375,7 @@ export function LandingPage() {
             ].map((feature, index) => (
               <Card
                 key={index}
-                className="group bg-white border-2 border-gray-100 hover:border-red-200 hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 overflow-hidden"
+                className="group bg-white/95 backdrop-blur-sm border border-slate-200/60 shadow-sm hover:border-red-300/60 hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 overflow-hidden"
               >
                 <CardContent className="p-8">
                   <div
@@ -389,10 +389,10 @@ export function LandingPage() {
                       }}
                     />
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 group-hover:text-red-600 transition-colors duration-300">
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-slate-900 mb-4 group-hover:text-red-600 transition-colors duration-300">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600 text-base leading-relaxed font-medium group-hover:text-gray-700 transition-colors duration-300">
+                  <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium group-hover:text-slate-700 transition-colors duration-300">
                     {feature.description}
                   </p>
 
@@ -478,16 +478,16 @@ export function LandingPage() {
 
           <div className="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {/* Basic Plan */}
-            <Card className="bg-white border-2 border-gray-200 hover:border-red-300 hover:shadow-xl transition-all duration-300">
+            <Card className="bg-white/95 backdrop-blur-sm border border-slate-200/60 shadow-sm hover:border-red-300/60 hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3 uppercase tracking-wide">
+                  <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-3 uppercase tracking-wide">
                     Basic
                   </h3>
-                  <p className="text-gray-600 mb-6 font-medium">
+                  <p className="text-slate-600 mb-6 font-medium leading-relaxed">
                     Perfect for getting started
                   </p>
-                  <div className="text-4xl font-black text-gray-900">
+                  <div className="text-3xl md:text-4xl font-black text-slate-900">
                     £22
                     <span className="text-lg text-gray-600 font-semibold">
                       /month
@@ -528,7 +528,7 @@ export function LandingPage() {
             </Card>
 
             {/* Premium Plan */}
-            <Card className="bg-red-600 relative transform lg:scale-105 shadow-xl border-2 border-red-600" style={{ color: 'white' }}>
+            <Card className="bg-red-600 relative transform lg:scale-105 shadow-xl border border-red-500/80 backdrop-blur-sm" style={{ color: 'white' }}>
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-white text-red-600 px-6 py-2 rounded-full text-sm font-bold shadow-lg border-2 border-red-600">
                 MOST POPULAR
               </div>
@@ -580,16 +580,16 @@ export function LandingPage() {
             </Card>
 
             {/* Student Plan */}
-            <Card className="bg-white border-2 border-gray-200 hover:border-red-300 hover:shadow-xl transition-all duration-300">
+            <Card className="bg-white/95 backdrop-blur-sm border border-slate-200/60 shadow-sm hover:border-red-300/60 hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3 uppercase tracking-wide">
+                  <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-3 uppercase tracking-wide">
                     Student
                   </h3>
-                  <p className="text-gray-600 mb-6 font-medium">
+                  <p className="text-slate-600 mb-6 font-medium leading-relaxed">
                     Special pricing for students
                   </p>
-                  <div className="text-4xl font-black text-gray-900">
+                  <div className="text-3xl md:text-4xl font-black text-slate-900">
                     £15
                     <span className="text-lg text-gray-600 font-semibold">
                       /month
