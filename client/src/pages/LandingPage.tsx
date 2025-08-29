@@ -528,21 +528,21 @@ export function LandingPage() {
             </Card>
 
             {/* Premium Plan */}
-            <Card className="bg-red-600 text-white relative transform lg:scale-105 shadow-xl border-2 border-red-600">
+            <Card className="bg-red-600 relative transform lg:scale-105 shadow-xl border-2 border-red-600" style={{ color: 'white' }}>
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-white text-red-600 px-6 py-2 rounded-full text-sm font-bold shadow-lg border-2 border-red-600">
                 MOST POPULAR
               </div>
-              <CardContent className="p-8">
+              <CardContent className="p-8" style={{ color: 'white' }}>
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold mb-3 uppercase tracking-wide text-white">
+                  <h3 className="text-2xl font-bold mb-3 uppercase tracking-wide" style={{ color: 'white' }}>
                     Premium
                   </h3>
-                  <p className="text-red-100 mb-6 font-medium">
+                  <p className="mb-6 font-medium" style={{ color: '#fecaca' }}>
                     The complete experience
                   </p>
-                  <div className="text-4xl font-black text-white">
+                  <div className="text-4xl font-black" style={{ color: 'white' }}>
                     £59
-                    <span className="text-lg text-red-100 font-semibold">
+                    <span className="text-lg font-semibold" style={{ color: '#fecaca' }}>
                       /month
                     </span>
                   </div>
@@ -557,8 +557,8 @@ export function LandingPage() {
                     "Nutrition consultation",
                   ].map((feature, index) => (
                     <li key={index} className="flex items-center gap-3">
-                      <Check className="text-white h-5 w-5 flex-shrink-0" />
-                      <span className="text-white font-medium">{feature}</span>
+                      <Check className="h-5 w-5 flex-shrink-0" style={{ color: 'white' }} />
+                      <span className="font-medium" style={{ color: 'white' }}>{feature}</span>
                     </li>
                   ))}
                 </ul>
