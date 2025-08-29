@@ -11,6 +11,7 @@ import {
   TrendingUp,
   Megaphone,
   Users,
+  Mail,
   Shield,
   ToggleLeft,
   ToggleRight
