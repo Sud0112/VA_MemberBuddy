@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClubPulse AI - Premium Health & Wellness Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        primary: {
+                            50: '#ecfdf5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="font-inter bg-gray-50">
+    <!-- @STATE: currentPage:string = 'landing' -->
+    <!-- @STATE: isAuthenticated:boolean = false -->
+    <!-- @STATE: userRole:string = 'member' -->
+    <!-- @STATE: showChatbot:boolean = false -->
+    <!-- @STATE: showCookieConsent:boolean = true -->
+
+    <!-- Cookie Consent Banner -->
+    <!-- @COMPONENT: CookieConsentBanner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-50">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-sm text-gray-600">
+                <p>We use cookies to enhance your experience and analyze our traffic. 
+                <a href="#" class="text-primary-600 hover:underline">Learn more</a></p>
+            </div>
+            <div class="flex gap-3">
+                <button data-event="click:declineCookies" class="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors">
+                    Decline
+                </button>
+                <button data-event="click:acceptCookies" class="px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700 transition-colors">
+                    Accept All
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: CookieConsentBanner -->
+
+    <!-- Landing Page -->
+    <!-- @COMPONENT: LandingPage -->
+    <div id="landingPage" class="min-h-screen">
+        <!-- Header -->
+        <!-- @COMPONENT: PublicHeader -->
+        <header class="bg-white border-b border-gray-200 sticky top-0 z-40">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-dumbbell text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">ClubPulse AI</span>
+                    </div>
+                    <nav class="hidden md:flex items-center gap-8">
+                        <a href="#features" class="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
+                        <a href="#pricing" class="text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
+                        <a href="#contact" class="text-gray-600 hover:text-gray-900 transition-colors">Contact</a>
+                    </nav>
+                    <div class="flex items-center gap-3">
+                        <button data-event="click:showLoginModal" class="text-gray-600 hover:text-gray-900 transition-colors">
+                            Sign In
+                        </button>
+                        <button data-event="click:showSignupModal" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                            Get Started
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- @END_COMPONENT: PublicHeader -->
+
+        <!-- Hero Section -->
+        <!-- @COMPONENT: HeroSection -->
+        <section class="relative bg-gradient-to-br from-primary-50 via-white to-blue-50 pt-16 pb-20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="text-center lg:text-left">
+                        <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                            Your AI-Powered 
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-blue-600">
+                                Fitness Journey
+                            </span>
+                        </h1>
+                        <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                            Experience the future of fitness with personalized AI coaching, smart workout plans, 
+                            and a premium wellness community designed for your success.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                            <button data-event="click:startFreeTrial" class="bg-primary-600 text-white px-8 py-4 rounded-xl text-lg font-medium hover:bg-primary-700 transform hover:scale-105 transition-all duration-200 shadow-lg">
+                                Start Free Trial
+                            </button>
+                            <button data-event="click:bookTour" class="border border-gray-300 text-gray-700 px-8 py-4 rounded-xl text-lg font-medium hover:bg-gray-50 transition-colors">
+                                Book a Tour
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <!-- A modern gym interior with high-tech equipment and clean design -->
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" alt="Modern gym interior with high-tech equipment" class="rounded-2xl shadow-2xl w-full" />
+                        <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-robot text-primary-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">AI Coach Active</p>
+                                    <p class="text-sm text-gray-600">Personalizing your workout</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: HeroSection -->
+
+        <!-- Features Section -->
+        <!-- @COMPONENT: FeaturesSection -->
+        <section id="features" class="py-20 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                        Powered by AI, Designed for You
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Experience cutting-edge technology meets premium fitness facilities
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- @MAP: features.map(feature => ( -->
+                    <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-primary-200 hover:shadow-lg transition-all duration-300">
+                        <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fas fa-brain text-primary-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">AI Personal Trainer</h3>
+                        <p class="text-gray-600">Get personalized workout plans generated by our advanced AI that adapts to your goals, schedule, and fitness level.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-primary-200 hover:shadow-lg transition-all duration-300">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fas fa-gift text-blue-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Smart Rewards</h3>
+                        <p class="text-gray-600">Earn points for every workout and redeem them for exclusive perks, personal training sessions, and premium amenities.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-primary-200 hover:shadow-lg transition-all duration-300">
+                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fas fa-chart-line text-purple-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Progress Tracking</h3>
+                        <p class="text-gray-600">Monitor your fitness journey with detailed analytics and insights powered by AI to optimize your results.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-primary-200 hover:shadow-lg transition-all duration-300">
+                        <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fas fa-users text-orange-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Premium Community</h3>
+                        <p class="text-gray-600">Join a community of like-minded fitness enthusiasts with exclusive events, challenges, and group training sessions.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-primary-200 hover:shadow-lg transition-all duration-300">
+                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fas fa-dumbbell text-green-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Premium Equipment</h3>
+                        <p class="text-gray-600">Access state-of-the-art fitness equipment and facilities designed for optimal performance and safety.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-primary-200 hover:shadow-lg transition-all duration-300">
+                        <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fas fa-heart text-red-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Wellness Support</h3>
+                        <p class="text-gray-600">Comprehensive wellness support including nutrition guidance, recovery protocols, and mental health resources.</p>
+                    </div>
+                    <!-- @END_MAP )) -->
+                </div>
+
+                <!-- Facility Showcase -->
+                <div class="mt-20">
+                    <h3 class="text-2xl font-bold text-gray-900 text-center mb-12">World-Class Facilities</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Cardio area with treadmills and modern equipment -->
+                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" alt="Cardio area with modern treadmills" class="rounded-xl shadow-lg w-full h-64 object-cover" />
+                        
+                        <!-- Weight training area with dumbbells and machines -->
+                        <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" alt="Weight training area with dumbbells" class="rounded-xl shadow-lg w-full h-64 object-cover" />
+                        
+                        <!-- Group fitness studio with yoga mats and mirrors -->
+                        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" alt="Group fitness studio with yoga setup" class="rounded-xl shadow-lg w-full h-64 object-cover" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: FeaturesSection -->
+
+        <!-- Pricing Section -->
+        <!-- @COMPONENT: PricingSection -->
+        <section id="pricing" class="py-20 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                        Choose Your Membership
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        Flexible plans designed to fit your lifestyle and fitness goals
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <!-- Basic Plan -->
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200 hover:border-primary-200 hover:shadow-xl transition-all duration-300">
+                        <div class="text-center mb-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
+                            <p class="text-gray-600 mb-4">Perfect for getting started</p>
+                            <div class="text-4xl font-bold text-gray-900">
+                                $29<span class="text-lg text-gray-600">/month</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-primary-600"></i>
+                                <span class="text-gray-700">Gym access (6am-10pm)</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-primary-600"></i>
+                                <span class="text-gray-700">Basic AI workout plans</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-primary-600"></i>
+                                <span class="text-gray-700">Locker room access</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-primary-600"></i>
+                                <span class="text-gray-700">Mobile app access</span>
+                            </li>
+                        </ul>
+                        <button data-event="click:selectPlan" data-plan="basic" class="w-full bg-gray-200 text-gray-800 py-3 rounded-xl font-medium hover:bg-gray-300 transition-colors">
+                            Get Started
+                        </button>
+                    </div>
+
+                    <!-- Premium Plan (Featured) -->
+                    <div class="bg-gradient-to-br from-primary-500 to-primary-600 p-8 rounded-2xl text-white relative transform lg:scale-105 shadow-xl">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-medium">
+                            Most Popular
+                        </div>
+                        <div class="text-center mb-8">
+                            <h3 class="text-2xl font-bold mb-2">Premium</h3>
+                            <p class="text-primary-100 mb-4">The complete experience</p>
+                            <div class="text-4xl font-bold">
+                                $79<span class="text-lg text-primary-200">/month</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-white"></i>
+                                <span>24/7 gym access</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-white"></i>
+                                <span>Advanced AI coaching</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-white"></i>
+                                <span>Group fitness classes</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-white"></i>
+                                <span>Personal training sessions (2/month)</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-white"></i>
+                                <span>Premium loyalty rewards</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-white"></i>
+                                <span>Nutrition consultation</span>
+                            </li>
+                        </ul>
+                        <button data-event="click:selectPlan" data-plan="premium" class="w-full bg-white text-primary-600 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors">
+                            Start Premium
+                        </button>
+                    </div>
+
+                    <!-- Student Plan -->
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200 hover:border-primary-200 hover:shadow-xl transition-all duration-300">
+                        <div class="text-center mb-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Student</h3>
+                            <p class="text-gray-600 mb-4">Special pricing for students</p>
+                            <div class="text-4xl font-bold text-gray-900">
+                                $19<span class="text-lg text-gray-600">/month</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-primary-600"></i>
+                                <span class="text-gray-700">Gym access (6am-4pm)</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-primary-600"></i>
+                                <span class="text-gray-700">Basic AI workout plans</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-primary-600"></i>
+                                <span class="text-gray-700">Study areas</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check text-primary-600"></i>
+                                <span class="text-gray-700">Student community events</span>
+                            </li>
+                        </ul>
+                        <button data-event="click:selectPlan" data-plan="student" class="w-full bg-gray-200 text-gray-800 py-3 rounded-xl font-medium hover:bg-gray-300 transition-colors">
+                            Verify Student Status
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: PricingSection -->
+
+        <!-- Footer -->
+        <!-- @COMPONENT: PublicFooter -->
+        <footer class="bg-gray-900 text-white py-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div>
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-dumbbell text-white text-sm"></i>
+                            </div>
+                            <span class="text-xl font-bold">ClubPulse AI</span>
+                        </div>
+                        <p class="text-gray-400 mb-6">
+                            The future of fitness, powered by AI and designed for your success.
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Quick Links</h4>
+                        <ul class="space-y-3 text-gray-400">
+                            <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Classes</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Personal Training</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Membership</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Support</h4>
+                        <ul class="space-y-3 text-gray-400">
+                            <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Contact Info</h4>
+                        <ul class="space-y-3 text-gray-400">
+                            <li class="flex items-center gap-2">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>123 Fitness Ave, Wellness City</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fas fa-phone"></i>
+                                <span>(555) 123-4567</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fas fa-envelope"></i>
+                                <span>hello@clubpulse.ai</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                    <p>&copy; 2025 ClubPulse AI. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+        <!-- @END_COMPONENT: PublicFooter -->
+    </div>
+    <!-- @END_COMPONENT: LandingPage -->
+
+    <!-- AI Chatbot Widget -->
+    <!-- @COMPONENT: AIChatbotWidget [floating widget] -->
+    <div id="chatbotWidget" class="fixed bottom-6 right-6 z-50">
+        <!-- Chatbot Toggle Button -->
+        <button id="chatbotToggle" data-event="click:toggleChatbot" class="w-14 h-14 bg-primary-600 text-white rounded-full shadow-lg hover:bg-primary-700 transition-all duration-300 flex items-center justify-center hover:scale-110">
+            <i class="fas fa-comments text-xl"></i>
+        </button>
+
+        <!-- Chatbot Window (Hidden by default) -->
+        <div id="chatbotWindow" class="hidden absolute bottom-16 right-0 w-80 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+            <div class="bg-primary-600 text-white p-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold">AI Assistant</h4>
+                        <p class="text-xs text-primary-100">Online now</p>
+                    </div>
+                </div>
+                <button data-event="click:closeChatbot" class="text-white/80 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="h-96 overflow-y-auto p-4 space-y-4">
+                <!-- @FUNCTIONALITY: This chatbot should implement conversation flow using Gemini API -->
+                <div class="flex gap-3">
+                    <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-primary-600 text-sm"></i>
+                    </div>
+                    <div class="bg-gray-100 rounded-2xl rounded-tl-md p-3 max-w-64">
+                        <p class="text-sm text-gray-800">Hi! I'm your AI assistant. I can help you learn about our facilities, pricing, and schedule a tour. How can I help you today?</p>
+                    </div>
+                </div>
+
+                <!-- Example user message -->
+                <div class="flex gap-3 justify-end" data-mock="true">
+                    <div class="bg-primary-600 text-white rounded-2xl rounded-tr-md p-3 max-w-64">
+                        <p class="text-sm">What are your opening hours?</p>
+                    </div>
+                    <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-user text-gray-600 text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- Example AI response -->
+                <div class="flex gap-3" data-mock="true">
+                    <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-primary-600 text-sm"></i>
+                    </div>
+                    <div class="bg-gray-100 rounded-2xl rounded-tl-md p-3 max-w-64">
+                        <p class="text-sm text-gray-800">We're open 24/7 for Premium members! Basic and Student members have access from 6am-10pm daily. Would you like to know more about our membership options?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex gap-2">
+                    <input type="text" placeholder="Type your message..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent" data-implementation="Handle chat input and send to Gemini API" />
+                    <button data-event="click:sendChatMessage" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: AIChatbotWidget -->
+
+    <!-- Authentication Modal -->
+    <!-- @COMPONENT: AuthModal [modal overlay] -->
+    <div id="authModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+            <div class="p-8">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-dumbbell text-white text-2xl"></i>
+                    </div>
+                    <h2 id="authTitle" class="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h2>
+                    <p id="authSubtitle" class="text-gray-600">Sign in to your ClubPulse account</p>
+                </div>
+
+                <!-- Sign In Form -->
+                <form id="signInForm" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Enter your email" data-bind="email" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input type="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Enter your password" data-bind="password" />
+                    </div>
+                    <button type="submit" data-event="click:handleSignIn" class="w-full bg-primary-600 text-white py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors">
+                        Sign In
+                    </button>
+                </form>
+
+                <!-- Sign Up Form (Hidden by default) -->
+                <form id="signUpForm" class="hidden space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                        <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Enter your full name" data-bind="fullName" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Enter your email" data-bind="email" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input type="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Create a password" data-bind="password" />
+                    </div>
+                    <button type="submit" data-event="click:handleSignUp" class="w-full bg-primary-600 text-white py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors">
+                        Create Account
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <button id="authToggle" data-event="click:toggleAuthMode" class="text-primary-600 hover:text-primary-700 font-medium">
+                        Don't have an account? Sign up
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 p-4 text-center">
+                <button data-event="click:closeAuthModal" class="text-gray-600 hover:text-gray-800">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: AuthModal -->
+
+    <!-- Member Portal -->
+    <!-- @COMPONENT: MemberPortal [authenticated area] -->
+    <div id="memberPortal" class="hidden min-h-screen bg-gray-50">
+        <div class="flex">
+            <!-- Sidebar -->
+            <!-- @COMPONENT: MemberSidebar -->
+            <aside class="w-64 bg-white border-r border-gray-200 min-h-screen">
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-dumbbell text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">ClubPulse AI</span>
+                    </div>
+
+                    <!-- User Profile -->
+                    <div class="bg-gradient-to-br from-primary-50 to-blue-50 p-4 rounded-xl mb-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center text-white font-semibold">
+                                <span data-bind="user.initials">JD</span> <!-- JD is just a visual placeholder -->
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900" data-bind="user.name">John Doe</h3> <!-- John Doe is just a visual placeholder -->
+                                <p class="text-sm text-gray-600" data-bind="user.membershipType">Premium Member</p> <!-- Premium Member is just a visual placeholder -->
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-primary-700">
+                            <i class="fas fa-star"></i>
+                            <span data-bind="user.loyaltyPoints">1,250</span> <!-- 1,250 is just a visual placeholder -->
+                            <span>points</span>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <nav class="space-y-2">
+                        <a href="#" data-page="dashboard" class="nav-link active flex items-center gap-3 px-4 py-3 text-primary-600 bg-primary-50 rounded-lg font-medium">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="#" data-page="workout-planner" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
+                            <i class="fas fa-dumbbell"></i>
+                            <span>AI Workout Planner</span>
+                        </a>
+                        <a href="#" data-page="loyalty-rewards" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
+                            <i class="fas fa-gift"></i>
+                            <span>Loyalty Rewards</span>
+                        </a>
+                        <a href="#" data-page="profile" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                    </nav>
+
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <button data-event="click:signOut" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 rounded-lg transition-colors w-full">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </aside>
+            <!-- @END_COMPONENT: MemberSidebar -->
+
+            <!-- Main Content -->
+            <main class="flex-1">
+                <!-- Member Dashboard -->
+                <!-- @COMPONENT: MemberDashboard [default view] -->
+                <div id="memberDashboard" class="p-8">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, <span data-bind="user.firstName">John</span>!</h1> <!-- John is just a visual placeholder -->
+                        <p class="text-gray-600">Ready to crush your fitness goals today?</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                        <!-- Quick Stats -->
+                        <div class="bg-white p-6 rounded-xl border border-gray-200">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-calendar-check text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">This Month</h3>
+                                    <p class="text-2xl font-bold text-gray-900" data-bind="stats.monthlyVisits">12</p> <!-- 12 is just a visual placeholder -->
+                                    <p class="text-sm text-gray-600">gym visits</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl border border-gray-200">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-fire text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Streak</h3>
+                                    <p class="text-2xl font-bold text-gray-900" data-bind="stats.currentStreak">7</p> <!-- 7 is just a visual placeholder -->
+                                    <p class="text-sm text-gray-600">days active</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl border border-gray-200">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-star text-primary-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Points Available</h3>
+                                    <p class="text-2xl font-bold text-gray-900" data-bind="user.loyaltyPoints">1,250</p> <!-- 1,250 is just a visual placeholder -->
+                                    <p class="text-sm text-gray-600">loyalty points</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-br from-primary-500 to-primary-600 p-6 rounded-xl text-white">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-xl font-semibold mb-2">AI Workout Planner</h3>
+                                    <p class="text-primary-100">Get a personalized workout plan</p>
+                                </div>
+                                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-brain text-white"></i>
+                                </div>
+                            </div>
+                            <button data-page="workout-planner" class="bg-white text-primary-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+                                Create Plan
+                            </button>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl text-white">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-xl font-semibold mb-2">Loyalty Rewards</h3>
+                                    <p class="text-blue-100">Redeem your points for rewards</p>
+                                </div>
+                                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-gift text-white"></i>
+                                </div>
+                            </div>
+                            <button data-page="loyalty-rewards" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+                                View Rewards
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: MemberDashboard -->
+
+                <!-- AI Workout Planner -->
+                <!-- @COMPONENT: WorkoutPlanner [page] -->
+                <div id="workoutPlanner" class="hidden p-8">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="mb-8">
+                            <h1 class="text-3xl font-bold text-gray-900 mb-2">AI Workout Planner</h1>
+                            <p class="text-gray-600">Describe your fitness goals and let our AI create a personalized workout plan for you.</p>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-gray-200 p-6 mb-8">
+                            <h2 class="text-xl font-semibold text-gray-900 mb-4">Tell us about your goals</h2>
+                            <textarea 
+                                placeholder="Example: I want to build muscle in my upper body and improve my cardio. I can train 4 days a week and have about 1 hour per session."
+                                class="w-full h-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                                data-bind="workoutGoals"
+                                data-implementation="Capture user's fitness goals for AI processing"
+                            ></textarea>
+                            <button data-event="click:generateWorkoutPlan" class="mt-4 bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors flex items-center gap-2">
+                                <i class="fas fa-magic"></i>
+                                Create My Plan! ✨
+                            </button>
+                        </div>
+
+                        <!-- Loading State -->
+                        <div id="workoutPlanLoading" class="hidden bg-white rounded-xl border border-gray-200 p-8 text-center">
+                            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mb-4"></div>
+                            <p class="text-gray-600">Our AI is creating your personalized workout plan...</p>
+                        </div>
+
+                        <!-- Generated Workout Plan -->
+                        <!-- @COMPONENT: WorkoutPlanDisplay [AI generated content] -->
+                        <div id="workoutPlanDisplay" class="hidden bg-white rounded-xl border border-gray-200 overflow-hidden">
+                            <div class="bg-gradient-to-r from-primary-500 to-primary-600 text-white p-6">
+                                <h2 class="text-2xl font-bold mb-2" data-bind="workoutPlan.title">Strength & Cardio Building Program</h2> <!-- Strength & Cardio Building Program is just a visual placeholder -->
+                                <p class="text-primary-100">Customized for your goals and schedule</p>
+                            </div>
+                            
+                            <div class="p-6">
+                                <!-- @FUNCTIONALITY: This should display the AI-generated workout plan from Gemini API -->
+                                <div class="space-y-4" data-mock="true">
+                                    <!-- @MAP: workoutPlan.weeklySchedule.map(day => ( -->
+                                    <details class="bg-gray-50 rounded-lg">
+                                        <summary class="p-4 cursor-pointer font-semibold text-gray-900 hover:bg-gray-100 rounded-lg">
+                                            <span class="flex items-center justify-between">
+                                                Monday - Upper Body Strength
+                                                <i class="fas fa-chevron-down"></i>
+                                            </span>
+                                        </summary>
+                                        <div class="px-4 pb-4 pt-2">
+                                            <p class="text-gray-600 mb-3">Focus on building upper body strength with compound movements</p>
+                                            <ul class="space-y-2">
+                                                <li class="flex items-center gap-2">
+                                                    <i class="fas fa-dumbbell text-primary-600 text-sm"></i>
+                                                    <span>Bench Press - 4 sets x 8-10 reps</span>
+                                                </li>
+                                                <li class="flex items-center gap-2">
+                                                    <i class="fas fa-dumbbell text-primary-600 text-sm"></i>
+                                                    <span>Pull-ups - 3 sets x 6-8 reps</span>
+                                                </li>
+                                                <li class="flex items-center gap-2">
+                                                    <i class="fas fa-dumbbell text-primary-600 text-sm"></i>
+                                                    <span>Shoulder Press - 3 sets x 10-12 reps</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </details>
+
+                                    <details class="bg-gray-50 rounded-lg">
+                                        <summary class="p-4 cursor-pointer font-semibold text-gray-900 hover:bg-gray-100 rounded-lg">
+                                            <span class="flex items-center justify-between">
+                                                Tuesday - Cardio & Core
+                                                <i class="fas fa-chevron-down"></i>
+                                            </span>
+                                        </summary>
+                                        <div class="px-4 pb-4 pt-2">
+                                            <p class="text-gray-600 mb-3">Improve cardiovascular fitness and core stability</p>
+                                            <ul class="space-y-2">
+                                                <li class="flex items-center gap-2">
+                                                    <i class="fas fa-running text-primary-600 text-sm"></i>
+                                                    <span>Treadmill Run - 30 minutes moderate pace</span>
+                                                </li>
+                                                <li class="flex items-center gap-2">
+                                                    <i class="fas fa-running text-primary-600 text-sm"></i>
+                                                    <span>Plank - 3 sets x 45 seconds</span>
+                                                </li>
+                                                <li class="flex items-center gap-2">
+                                                    <i class="fas fa-running text-primary-600 text-sm"></i>
+                                                    <span>Russian Twists - 3 sets x 20 reps</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </details>
+                                    <!-- @END_MAP )) -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- @END_COMPONENT: WorkoutPlanDisplay -->
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: WorkoutPlanner -->
+
+                <!-- Loyalty Rewards -->
+                <!-- @COMPONENT: LoyaltyRewards [page] -->
+                <div id="loyaltyRewards" class="hidden p-8">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h1 class="text-3xl font-bold text-gray-900 mb-2">Loyalty Rewards</h1>
+                                <p class="text-gray-600">Redeem your points for exclusive rewards and perks</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-primary-500 to-primary-600 text-white px-6 py-4 rounded-xl">
+                                <p class="text-sm text-primary-100">Available Points</p>
+                                <p class="text-2xl font-bold" data-bind="user.loyaltyPoints">1,250</p> <!-- 1,250 is just a visual placeholder -->
+                            </div>
+                        </div>
+
+                        <!-- Available Rewards -->
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- @MAP: loyaltyOffers.map(offer => ( -->
+                            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow" data-mock="true">
+                                <div class="p-6">
+                                    <div class="flex items-start justify-between mb-4">
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-gray-900 mb-1">Free Personal Training Session</h3>
+                                            <p class="text-gray-600 text-sm">One-on-one session with certified trainer</p>
+                                        </div>
+                                        <span class="bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm font-medium">Fitness</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-primary-600">
+                                            <i class="fas fa-star"></i>
+                                            <span class="font-semibold">500 points</span>
+                                        </div>
+                                        <button data-event="click:redeemOffer" data-offer-id="1" class="bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors">
+                                            Redeem
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow" data-mock="true">
+                                <div class="p-6">
+                                    <div class="flex items-start justify-between mb-4">
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-gray-900 mb-1">Protein Smoothie</h3>
+                                            <p class="text-gray-600 text-sm">Fresh protein smoothie from our juice bar</p>
+                                        </div>
+                                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Nutrition</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-primary-600">
+                                            <i class="fas fa-star"></i>
+                                            <span class="font-semibold">200 points</span>
+                                        </div>
+                                        <button data-event="click:redeemOffer" data-offer-id="2" class="bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors">
+                                            Redeem
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow" data-mock="true">
+                                <div class="p-6">
+                                    <div class="flex items-start justify-between mb-4">
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-gray-900 mb-1">Guest Pass</h3>
+                                            <p class="text-gray-600 text-sm">Bring a friend for a free day pass</p>
+                                        </div>
+                                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">Social</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-primary-600">
+                                            <i class="fas fa-star"></i>
+                                            <span class="font-semibold">300 points</span>
+                                        </div>
+                                        <button data-event="click:redeemOffer" data-offer-id="3" class="bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors">
+                                            Redeem
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-gray-100 rounded-xl border border-gray-200 overflow-hidden opacity-60" data-mock="true">
+                                <div class="p-6">
+                                    <div class="flex items-start justify-between mb-4">
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-gray-700 mb-1">Massage Therapy Session</h3>
+                                            <p class="text-gray-500 text-sm">60-minute therapeutic massage</p>
+                                        </div>
+                                        <span class="bg-gray-200 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">Wellness</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-gray-500">
+                                            <i class="fas fa-star"></i>
+                                            <span class="font-semibold">1,500 points</span>
+                                        </div>
+                                        <button disabled class="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg text-sm font-medium cursor-not-allowed">
+                                            Insufficient Points
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: LoyaltyRewards -->
+            </main>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: MemberPortal -->
+
+    <!-- Staff Dashboard -->
+    <!-- @COMPONENT: StaffDashboard [authenticated area] -->
+    <div id="staffDashboard" class="hidden min-h-screen bg-gray-50">
+        <div class="flex">
+            <!-- Staff Sidebar -->
+            <!-- @COMPONENT: StaffSidebar -->
+            <aside class="w-64 bg-white border-r border-gray-200 min-h-screen">
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-dumbbell text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">ClubPulse AI</span>
+                    </div>
+
+                    <!-- Staff Profile -->
+                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-4 rounded-xl mb-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                                <span data-bind="staff.initials">SM</span> <!-- SM is just a visual placeholder -->
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900" data-bind="staff.name">Sarah Miller</h3> <!-- Sarah Miller is just a visual placeholder -->
+                                <p class="text-sm text-gray-600">Staff Member</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-blue-700">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Member Relations</span>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <nav class="space-y-2">
+                        <a href="#" data-staff-page="churn-prediction" class="staff-nav-link active flex items-center gap-3 px-4 py-3 text-blue-600 bg-blue-50 rounded-lg font-medium">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Churn Prediction</span>
+                        </a>
+                        <a href="#" data-staff-page="loyalty-campaigns" class="staff-nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
+                            <i class="fas fa-bullhorn"></i>
+                            <span>Loyalty Campaigns</span>
+                        </a>
+                        <a href="#" data-staff-page="member-analytics" class="staff-nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
+                            <i class="fas fa-users"></i>
+                            <span>Member Analytics</span>
+                        </a>
+                    </nav>
+
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <button data-event="click:staffSignOut" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 rounded-lg transition-colors w-full">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </aside>
+            <!-- @END_COMPONENT: StaffSidebar -->
+
+            <!-- Staff Main Content -->
+            <main class="flex-1">
+                <!-- Churn Prediction Dashboard -->
+                <!-- @COMPONENT: ChurnPrediction [default staff view] -->
+                <div id="churnPrediction" class="p-8">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Churn Prediction Dashboard</h1>
+                        <p class="text-gray-600">Identify and retain at-risk members with AI-powered insights</p>
+                    </div>
+
+                    <!-- Key Metrics -->
+                    <div class="grid md:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-xl border border-gray-200">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-users text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Total Members</h3>
+                                    <p class="text-2xl font-bold text-gray-900" data-bind="metrics.totalMembers">2,847</p> <!-- 2,847 is just a visual placeholder -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl border border-gray-200">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-exclamation-triangle text-orange-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">At-Risk Members</h3>
+                                    <p class="text-2xl font-bold text-orange-600" data-bind="metrics.atRiskMembers">23</p> <!-- 23 is just a visual placeholder -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl border border-gray-200">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-chart-line-down text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Churn Rate</h3>
+                                    <p class="text-2xl font-bold text-red-600" data-bind="metrics.churnRate">3.2%</p> <!-- 3.2% is just a visual placeholder -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl border border-gray-200">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-phone text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Outreach Today</h3>
+                                    <p class="text-2xl font-bold text-green-600" data-bind="metrics.outreachToday">8</p> <!-- 8 is just a visual placeholder -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <!-- At-Risk Members List -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                                <div class="p-6 border-b border-gray-200">
+                                    <h2 class="text-xl font-semibold text-gray-900">High-Risk Members</h2>
+                                    <p class="text-gray-600 text-sm">Sorted by churn probability</p>
+                                </div>
+                                <div class="max-h-96 overflow-y-auto">
+                                    <!-- @MAP: atRiskMembers.map(member => ( -->
+                                    <div class="member-item p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors" data-member-id="1" data-mock="true">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h3 class="font-semibold text-gray-900">Bob Williams</h3>
+                                                <p class="text-sm text-gray-600">Premium Member • 8 months</p>
+                                                <p class="text-xs text-orange-600 mt-1">Risk: 89% • Last visit: 12 days ago</p>
+                                            </div>
+                                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="member-item p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors" data-member-id="2" data-mock="true">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h3 class="font-semibold text-gray-900">Lisa Chen</h3>
+                                                <p class="text-sm text-gray-600">Basic Member • 3 months</p>
+                                                <p class="text-xs text-orange-600 mt-1">Risk: 76% • Last visit: 8 days ago</p>
+                                            </div>
+                                            <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="member-item p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors" data-member-id="3" data-mock="true">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h3 class="font-semibold text-gray-900">Mike Rodriguez</h3>
+                                                <p class="text-sm text-gray-600">Premium Member • 1 year</p>
+                                                <p class="text-xs text-orange-600 mt-1">Risk: 65% • Last visit: 5 days ago</p>
+                                            </div>
+                                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    <!-- @END_MAP )) -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Member Details & Actions -->
+                        <div class="lg:col-span-2">
+                            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                                <!-- Selected Member Profile -->
+                                <!-- @COMPONENT: MemberProfile [selected member details] -->
+                                <div id="memberProfile" class="p-6 border-b border-gray-200" data-mock="true">
+                                    <div class="flex items-start gap-6 mb-6">
+                                        <div class="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-semibold text-xl">
+                                            <span data-bind="selectedMember.initials">BW</span> <!-- BW is just a visual placeholder -->
+                                        </div>
+                                        <div class="flex-1">
+                                            <h2 class="text-2xl font-bold text-gray-900 mb-2" data-bind="selectedMember.name">Bob Williams</h2> <!-- Bob Williams is just a visual placeholder -->
+                                            <div class="grid md:grid-cols-2 gap-4 text-sm">
+                                                <div>
+                                                    <p class="text-gray-600">Membership: <span class="font-medium text-gray-900" data-bind="selectedMember.membershipType">Premium</span></p> <!-- Premium is just a visual placeholder -->
+                                                    <p class="text-gray-600">Member since: <span class="font-medium text-gray-900" data-bind="selectedMember.joinDate">March 2024</span></p> <!-- March 2024 is just a visual placeholder -->
+                                                    <p class="text-gray-600">Last visit: <span class="font-medium text-gray-900" data-bind="selectedMember.lastVisit">12 days ago</span></p> <!-- 12 days ago is just a visual placeholder -->
+                                                </div>
+                                                <div>
+                                                    <p class="text-gray-600">Churn risk: <span class="font-medium text-red-600" data-bind="selectedMember.churnRisk">89%</span></p> <!-- 89% is just a visual placeholder -->
+                                                    <p class="text-gray-600">Avg visits/month: <span class="font-medium text-gray-900" data-bind="selectedMember.avgVisits">8</span></p> <!-- 8 is just a visual placeholder -->
+                                                    <p class="text-gray-600">Feedback: <span class="font-medium text-gray-900" data-bind="selectedMember.feedback">"Finds it too crowded"</span></p> <!-- "Finds it too crowded" is just a visual placeholder -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- AI Retention Strategies -->
+                                    <!-- @COMPONENT: RetentionStrategies [AI generated] -->
+                                    <div class="mb-6">
+                                        <div class="flex items-center justify-between mb-4">
+                                            <h3 class="text-lg font-semibold text-gray-900">AI Retention Strategies</h3>
+                                            <button data-event="click:generateRetentionStrategies" class="bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors flex items-center gap-2">
+                                                <i class="fas fa-magic"></i>
+                                                Generate Strategies
+                                            </button>
+                                        </div>
+                                        
+                                        <!-- Loading State -->
+                                        <div id="strategiesLoading" class="hidden p-4 bg-gray-50 rounded-lg text-center">
+                                            <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600 mb-2"></div>
+                                            <p class="text-sm text-gray-600">AI is analyzing member profile and generating strategies...</p>
+                                        </div>
+
+                                        <!-- Generated Strategies -->
+                                        <div id="generatedStrategies" class="bg-gray-50 rounded-lg p-4" data-mock="true" data-implementation="Content will be populated by Gemini API response">
+                                            <div class="space-y-4">
+                                                <div class="bg-white p-4 rounded-lg border-l-4 border-primary-500">
+                                                    <h4 class="font-semibold text-gray-900 mb-2">📞 Personal Outreach Strategy</h4>
+                                                    <p class="text-gray-700 text-sm">Call Bob personally to address his crowding concerns. Offer complimentary off-peak personal training sessions during quieter hours (2-4 PM). Highlight the personalized attention and spacious environment during these times.</p>
+                                                </div>
+                                                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                                                    <h4 class="font-semibold text-gray-900 mb-2">🎯 Targeted Incentives</h4>
+                                                    <p class="text-gray-700 text-sm">Provide Bob with a "VIP Access Pass" that allows him to book equipment in advance during peak hours. Also offer a 20% discount on personal training packages to create a more exclusive, less crowded experience.</p>
+                                                </div>
+                                                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                                                    <h4 class="font-semibold text-gray-900 mb-2">🏋️ Alternative Solutions</h4>
+                                                    <p class="text-gray-700 text-sm">Introduce Bob to our new "Premium Quiet Zone" - a dedicated area for focused workouts. Schedule a tour to show him this space and explain how it addresses his specific concerns about overcrowding.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- @END_COMPONENT: RetentionStrategies -->
+
+                                    <!-- Staff Action Logging -->
+                                    <!-- @COMPONENT: StaffActionLogging -->
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-gray-900 mb-4">✍️ Log Staff Outreach</h3>
+                                            <form class="space-y-4">
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Action Type</label>
+                                                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent" data-bind="actionType">
+                                                        <option value="call">Phone Call</option>
+                                                        <option value="email">Email</option>
+                                                        <option value="in-person">In-Person Meeting</option>
+                                                        <option value="offer">Special Offer</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+                                                    <textarea 
+                                                        placeholder="Describe the action taken and member response..."
+                                                        class="w-full h-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                                                        data-bind="actionNotes"
+                                                    ></textarea>
+                                                </div>
+                                                <button type="submit" data-event="click:logAction" class="w-full bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-700 transition-colors">
+                                                    Log Action
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-gray-900 mb-4">📜 Outreach History</h3>
+                                            <div class="space-y-3 max-h-64 overflow-y-auto">
+                                                <!-- @MAP: memberOutreachHistory.map(action => ( -->
+                                                <div class="bg-gray-50 p-3 rounded-lg" data-mock="true">
+                                                    <div class="flex items-center justify-between mb-2">
+                                                        <span class="text-sm font-medium text-gray-900">📞 Phone Call</span>
+                                                        <span class="text-xs text-gray-500">2 days ago</span>
+                                                    </div>
+                                                    <p class="text-sm text-gray-700">Called Bob about crowding concerns. Offered off-peak training session. He seemed interested and will consider it.</p>
+                                                    <p class="text-xs text-gray-500 mt-1">by Sarah Miller</p>
+                                                </div>
+
+                                                <div class="bg-gray-50 p-3 rounded-lg" data-mock="true">
+                                                    <div class="flex items-center justify-between mb-2">
+                                                        <span class="text-sm font-medium text-gray-900">📧 Email</span>
+                                                        <span class="text-xs text-gray-500">1 week ago</span>
+                                                    </div>
+                                                    <p class="text-sm text-gray-700">Sent information about off-peak hours and new quiet zone. No response yet.</p>
+                                                    <p class="text-xs text-gray-500 mt-1">by Mike Johnson</p>
+                                                </div>
+                                                <!-- @END_MAP )) -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- @END_COMPONENT: StaffActionLogging -->
+                                </div>
+                                <!-- @END_COMPONENT: MemberProfile -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: ChurnPrediction -->
+
+                <!-- Loyalty Campaigns Management -->
+                <!-- @COMPONENT: LoyaltyCampaigns [staff page] -->
+                <div id="loyaltyCampaigns" class="hidden p-8">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="mb-8">
+                            <h1 class="text-3xl font-bold text-gray-900 mb-2">Loyalty Campaign Management</h1>
+                            <p class="text-gray-600">Create and manage AI-powered loyalty offers for members</p>
+                        </div>
+
+                        <div class="grid lg:grid-cols-2 gap-8">
+                            <!-- Create New Campaign -->
+                            <div class="bg-white rounded-xl border border-gray-200 p-6">
+                                <h2 class="text-xl font-semibold text-gray-900 mb-4">🎯 Create New Campaign</h2>
+                                
+                                <div class="space-y-4 mb-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Target Audience</label>
+                                        <textarea 
+                                            placeholder="Example: Members who attend morning yoga classes and have been members for over 6 months"
+                                            class="w-full h-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                                            data-bind="campaignCriteria"
+                                        ></textarea>
+                                    </div>
+                                    <button data-event="click:generateLoyaltyOffers" class="w-full bg-primary-600 text-white py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors flex items-center justify-center gap-2">
+                                        <i class="fas fa-magic"></i>
+                                        Generate AI Offers
+                                    </button>
+                                </div>
+
+                                <!-- Loading State -->
+                                <div id="offersLoading" class="hidden p-4 bg-gray-50 rounded-lg text-center mb-6">
+                                    <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600 mb-2"></div>
+                                    <p class="text-sm text-gray-600">AI is creating targeted loyalty offers...</p>
+                                </div>
+
+                                <!-- Generated Offers -->
+                                <div id="generatedOffers" class="space-y-4" data-mock="true" data-implementation="Content will be populated by Gemini API response">
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div>
+                                                <h3 class="font-semibold text-gray-900">Free Yoga Mat</h3>
+                                                <p class="text-sm text-gray-600">Premium branded yoga mat for dedicated practitioners</p>
+                                            </div>
+                                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Wellness</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-primary-600 font-semibold">400 points</span>
+                                            <button data-event="click:publishOffer" class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 transition-colors">
+                                                Publish
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div>
+                                                <h3 class="font-semibold text-gray-900">Morning Yoga Package</h3>
+                                                <p class="text-sm text-gray-600">5 additional morning yoga classes</p>
+                                            </div>
+                                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Classes</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-primary-600 font-semibold">600 points</span>
+                                            <button data-event="click:publishOffer" class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 transition-colors">
+                                                Publish
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Active Campaigns -->
+                            <div class="bg-white rounded-xl border border-gray-200 p-6">
+                                <h2 class="text-xl font-semibold text-gray-900 mb-4">📋 Active Campaigns</h2>
+                                
+                                <div class="space-y-4">
+                                    <!-- @MAP: activeCampaigns.map(campaign => ( -->
+                                    <div class="border border-gray-200 rounded-lg p-4" data-mock="true">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div>
+                                                <h3 class="font-semibold text-gray-900">Free Personal Training Session</h3>
+                                                <p class="text-sm text-gray-600">One-on-one session with certified trainer</p>
+                                            </div>
+                                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Active</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <div class="flex items-center gap-4">
+                                                <span class="text-primary-600 font-semibold">500 points</span>
+                                                <span class="text-gray-600">Redeemed: 23 times</span>
+                                            </div>
+                                            <button data-event="click:deactivateOffer" class="text-red-600 hover:text-red-700">
+                                                Deactivate
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="border border-gray-200 rounded-lg p-4" data-mock="true">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div>
+                                                <h3 class="font-semibold text-gray-900">Protein Smoothie</h3>
+                                                <p class="text-sm text-gray-600">Fresh protein smoothie from our juice bar</p>
+                                            </div>
+                                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Active</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <div class="flex items-center gap-4">
+                                                <span class="text-primary-600 font-semibold">200 points</span>
+                                                <span class="text-gray-600">Redeemed: 156 times</span>
+                                            </div>
+                                            <button data-event="click:deactivateOffer" class="text-red-600 hover:text-red-700">
+                                                Deactivate
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="border border-gray-200 rounded-lg p-4" data-mock="true">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div>
+                                                <h3 class="font-semibold text-gray-900">Guest Pass</h3>
+                                                <p class="text-sm text-gray-600">Bring a friend for a free day pass</p>
+                                            </div>
+                                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Active</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <div class="flex items-center gap-4">
+                                                <span class="text-primary-600 font-semibold">300 points</span>
+                                                <span class="text-gray-600">Redeemed: 89 times</span>
+                                            </div>
+                                            <button data-event="click:deactivateOffer" class="text-red-600 hover:text-red-700">
+                                                Deactivate
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- @END_MAP )) -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: LoyaltyCampaigns -->
+            </main>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: StaffDashboard -->
+
+    <script>
+        // TODO: Implement business logic, API calls, and state management
+        (function() {
+            'use strict';
+            
+            // Application state
+            let appState = {
+                currentPage: 'landing',
+                isAuthenticated: false,
+                userRole: 'member', // 'member' or 'staff'
+                user: null,
+                showChatbot: false,
+                showCookieConsent: true
+            };
+
+            // DOM elements
+            const elements = {
+                landingPage: document.getElementById('landingPage'),
+                memberPortal: document.getElementById('memberPortal'),
+                staffDashboard: document.getElementById('staffDashboard'),
+                authModal: document.getElementById('authModal'),
+                chatbotWidget: document.getElementById('chatbotWidget'),
+                cookieConsent: document.getElementById('cookieConsent')
+            };
+
+            // Initialize app
+            function initApp() {
+                setupEventListeners();
+                showLandingPage();
+            }
+
+            // Event listeners
+            function setupEventListeners() {
+                // Cookie consent
+                document.addEventListener('click', function(e) {
+                    if (e.target.matches('[data-event="click:acceptCookies"]')) {
+                        hideCookieConsent();
+                    }
+                    if (e.target.matches('[data-event="click:declineCookies"]')) {
+                        hideCookieConsent();
+                    }
+                });
+
+                // Auth modal controls
+                document.addEventListener('click', function(e) {
+                    if (e.target.matches('[data-event="click:showLoginModal"]')) {
+                        showAuthModal('signin');
+                    }
+                    if (e.target.matches('[data-event="click:showSignupModal"]')) {
+                        showAuthModal('signup');
+                    }
+                    if (e.target.matches('[data-event="click:closeAuthModal"]')) {
+                        hideAuthModal();
+                    }
+                    if (e.target.matches('#authToggle')) {
+                        toggleAuthMode();
+                    }
+                });
+
+                // Chatbot controls
+                document.addEventListener('click', function(e) {
+                    if (e.target.matches('#chatbotToggle')) {
+                        toggleChatbot();
+                    }
+                    if (e.target.matches('[data-event="click:closeChatbot"]')) {
+                        closeChatbot();
+                    }
+                });
+
+                // Navigation
+                document.addEventListener('click', function(e) {
+                    if (e.target.matches('.nav-link')) {
+                        e.preventDefault();
+                        switchMemberPage(e.target.dataset.page);
+                    }
+                    if (e.target.matches('.staff-nav-link')) {
+                        e.preventDefault();
+                        switchStaffPage(e.target.dataset.staffPage);
+                    }
+                });
+
+                // Demo authentication
+                document.addEventListener('click', function(e) {
+                    if (e.target.matches('[data-event="click:handleSignIn"]')) {
+                        e.preventDefault();
+                        authenticateUser('member');
+                    }
+                    if (e.target.matches('[data-event="click:handleSignUp"]')) {
+                        e.preventDefault();
+                        authenticateUser('member');
+                    }
+                });
+
+                // Sign out
+                document.addEventListener('click', function(e) {
+                    if (e.target.matches('[data-event="click:signOut"]') || e.target.matches('[data-event="click:staffSignOut"]')) {
+                        signOut();
+                    }
+                });
+
+                // Demo staff login (for testing)
+                document.addEventListener('keydown', function(e) {
+                    if (e.ctrlKey && e.shiftKey && e.key === 'S') {
+                        authenticateUser('staff');
+                    }
+                });
+            }
+
+            // Page navigation functions
+            function showLandingPage() {
+                hideAllPages();
+                elements.landingPage.classList.remove('hidden');
+                appState.currentPage = 'landing';
+            }
+
+            function showMemberPortal() {
+                hideAllPages();
+                elements.memberPortal.classList.remove('hidden');
+                appState.currentPage = 'member';
+            }
+
+            function showStaffDashboard() {
+                hideAllPages();
+                elements.staffDashboard.classList.remove('hidden');
+                appState.currentPage = 'staff';
+            }
+
+            function hideAllPages() {
+                elements.landingPage.classList.add('hidden');
+                elements.memberPortal.classList.add('hidden');
+                elements.staffDashboard.classList.add('hidden');
+            }
+
+            // Member portal navigation
+            function switchMemberPage(page) {
+                // Hide all member pages
+                document.querySelectorAll('#memberPortal main > div').forEach(div => {
+                    div.classList.add('hidden');
+                });
+                
+                // Show selected page
+                const targetPage = document.getElementById(page === 'dashboard' ? 'memberDashboard' : page);
+                if (targetPage) {
+                    targetPage.classList.remove('hidden');
+                }
+
+                // Update navigation
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active', 'text-primary-600', 'bg-primary-50');
+                    link.classList.add('text-gray-600');
+                });
+                
+                const activeLink = document.querySelector(`[data-page="${page}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active', 'text-primary-600', 'bg-primary-50');
+                    activeLink.classList.remove('text-gray-600');
+                }
+            }
+
+            // Staff dashboard navigation
+            function switchStaffPage(page) {
+                // Hide all staff pages
+                document.querySelectorAll('#staffDashboard main > div').forEach(div => {
+                    div.classList.add('hidden');
+                });
+                
+                // Show selected page
+                const targetPage = document.getElementById(page);
+                if (targetPage) {
+                    targetPage.classList.remove('hidden');
+                }
+
+                // Update navigation
+                document.querySelectorAll('.staff-nav-link').forEach(link => {
+                    link.classList.remove('active', 'text-blue-600', 'bg-blue-50');
+                    link.classList.add('text-gray-600');
+                });
+                
+                const activeLink = document.querySelector(`[data-staff-page="${page}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active', 'text-blue-600', 'bg-blue-50');
+                    activeLink.classList.remove('text-gray-600');
+                }
+            }
+
+            // Authentication functions
+            function authenticateUser(role) {
+                appState.isAuthenticated = true;
+                appState.userRole = role;
+                appState.user = {
+                    name: role === 'staff' ? 'Sarah Miller' : 'John Doe',
+                    email: role === 'staff' ? 'sarah@clubpulse.ai' : 'john@example.com'
+                };
+
+                hideAuthModal();
+                
+                if (role === 'staff') {
+                    showStaffDashboard();
+                } else {
+                    showMemberPortal();
+                }
+            }
+
+            function signOut() {
+                appState.isAuthenticated = false;
+                appState.userRole = null;
+                appState.user = null;
+                showLandingPage();
+            }
+
+            // Modal functions
+            function showAuthModal(mode) {
+                const modal = elements.authModal;
+                const signInForm = document.getElementById('signInForm');
+                const signUpForm = document.getElementById('signUpForm');
+                const authTitle = document.getElementById('authTitle');
+                const authSubtitle = document.getElementById('authSubtitle');
+                const authToggle = document.getElementById('authToggle');
+
+                if (mode === 'signup') {
+                    signInForm.classList.add('hidden');
+                    signUpForm.classList.remove('hidden');
+                    authTitle.textContent = 'Join ClubPulse';
+                    authSubtitle.textContent = 'Create your account to get started';
+                    authToggle.textContent = 'Already have an account? Sign in';
+                } else {
+                    signInForm.classList.remove('hidden');
+                    signUpForm.classList.add('hidden');
+                    authTitle.textContent = 'Welcome Back';
+                    authSubtitle.textContent = 'Sign in to your ClubPulse account';
+                    authToggle.textContent = "Don't have an account? Sign up";
+                }
+
+                modal.classList.remove('hidden');
+            }
+
+            function hideAuthModal() {
+                elements.authModal.classList.add('hidden');
+            }
+
+            function toggleAuthMode() {
+                const signInForm = document.getElementById('signInForm');
+                const isSignUp = signInForm.classList.contains('hidden');
+                showAuthModal(isSignUp ? 'signin' : 'signup');
+            }
+
+            // Chatbot functions
+            function toggleChatbot() {
+                const chatbotWindow = document.getElementById('chatbotWindow');
+                chatbotWindow.classList.toggle('hidden');
+                appState.showChatbot = !chatbotWindow.classList.contains('hidden');
+            }
+
+            function closeChatbot() {
+                document.getElementById('chatbotWindow').classList.add('hidden');
+                appState.showChatbot = false;
+            }
+
+            // Cookie consent
+            function hideCookieConsent() {
+                elements.cookieConsent.classList.add('hidden');
+                appState.showCookieConsent = false;
+            }
+
+            // Initialize the application
+            initApp();
+        })();
+    </script>
+</body>
+</html>
