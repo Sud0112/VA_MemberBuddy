@@ -47,6 +47,163 @@ Please provide 3 actionable retention strategies in markdown format with headers
   }
 }
 
+export async function generateChurnPreventionEmail(memberProfile: any, riskLevel: string, currentRiskBand: string, previousRiskBand?: string): Promise<{ subject: string; content: string }> {
+  if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
+    // Mock response for development
+    const memberName = `${memberProfile.firstName} ${memberProfile.lastName}`;
+    const mockEmails = {
+      high: {
+        subject: `We miss you at ClubPulse, ${memberProfile.firstName}! Let's get back on track 💪`,
+        content: `Dear ${memberName},
+
+We've noticed you haven't visited ClubPulse in a while, and we want to make sure everything is alright. As a valued ${memberProfile.membershipType} member, you're important to us!
+
+**Your Current Membership Benefits:**
+• 24/7 access to all premium facilities
+• Unlimited group fitness classes
+• Access to our AI-powered workout recommendations
+• Complimentary towel service
+
+**Special Comeback Offer - Just for You:**
+To help you get back into your routine, we're offering:
+• FREE personal training session (worth £65)
+• 50% off next month's supplements
+• Priority booking for popular classes
+
+Your wellness journey matters to us. Our team would love to understand any challenges you're facing and help create a plan that works better for your lifestyle.
+
+**Ready to return?** Simply reply to this email or call us at 020 3837 4721.
+
+Stay strong,
+The ClubPulse Team
+
+P.S. Don't forget - your membership includes unlimited access to our new meditation room and recovery zone!`
+      },
+      medium: {
+        subject: `${memberProfile.firstName}, let's keep your momentum going! 🏃‍♀️`,
+        content: `Hi ${memberName},
+
+We've noticed a slight change in your visit pattern recently. As someone who's been crushing their fitness goals, we want to help you maintain that amazing momentum!
+
+**Your Recent Progress:**
+• Member since ${new Date(memberProfile.joinDate).toLocaleDateString('en-GB')}
+• ${memberProfile.membershipType} membership benefits
+• Previously averaging regular visits
+
+**To keep you motivated:**
+• NEW: Try our just-launched HIIT classes (perfect for busy schedules!)
+• Book a complimentary fitness assessment to update your goals
+• 20% off personal training packages this month
+
+Sometimes life gets busy - that's completely normal! Our flexible class schedule and 24/7 access are designed to work around your lifestyle.
+
+**Let's catch up:** Pop in this week for a quick chat with our wellness team. We're here to support your journey!
+
+Best regards,
+Your ClubPulse Family
+
+*Remember: Consistency beats perfection. Even 20 minutes counts!*`
+      },
+      low: {
+        subject: `New classes and features await you, ${memberProfile.firstName}! ✨`,
+        content: `Hello ${memberName},
+
+Hope you're doing well! We've added some exciting new features and classes that we think you'll love.
+
+**What's New at ClubPulse:**
+• Fresh morning yoga sessions (perfect for starting the day right)
+• Advanced strength training equipment in the new zone
+• Nutrition workshops every Saturday morning
+• Updated AI workout recommendations based on your preferences
+
+**Your Membership Perks:**
+As a ${memberProfile.membershipType} member, you have full access to all these new offerings at no extra cost!
+
+**This Week's Highlights:**
+• Monday: Power Yoga with Sarah (7:00 AM)
+• Wednesday: Strength & Conditioning masterclass
+• Friday: Nutrition Q&A session
+
+We'd love to see you soon and hear about your current fitness goals. Our team is always here to help you make the most of your membership.
+
+See you soon!
+The ClubPulse Team
+
+*Your next visit is going to be amazing - we've got everything ready for you!*`
+      }
+    };
+
+    return mockEmails[riskLevel as keyof typeof mockEmails] || mockEmails.medium;
+  }
+
+  try {
+    const memberName = `${memberProfile.firstName} ${memberProfile.lastName}`;
+    const daysSinceLastVisit = memberProfile.lastVisit 
+      ? Math.floor((Date.now() - new Date(memberProfile.lastVisit).getTime()) / (1000 * 60 * 60 * 24))
+      : 999;
+
+    const prompt = `You are writing a personalized churn prevention email for a UK fitness club called ClubPulse. Write a warm, encouraging email that doesn't feel pushy or desperate.
+
+Member Details:
+- Name: ${memberName}
+- Membership Type: ${memberProfile.membershipType}
+- Member Since: ${memberProfile.joinDate}
+- Last Visit: ${memberProfile.lastVisit ? `${daysSinceLastVisit} days ago` : 'Never visited'}
+- Current Risk Level: ${riskLevel}
+- Risk Band Change: ${previousRiskBand ? `Moving from ${previousRiskBand} to ${currentRiskBand}` : `Currently in ${currentRiskBand} band`}
+
+Club Details:
+- Location: 25 Canary Wharf, London E14 5AB
+- Phone: 020 3837 4721
+- Premium membership: £59/month (24/7 access, AI coaching, group classes, 2 personal training sessions/month)
+- Basic membership: £22/month (06:00-22:00 access, basic AI workouts)
+- Student membership: £15/month (06:00-16:00 access, student areas)
+
+Email Guidelines:
+1. Use UK English spelling and tone
+2. Include specific member benefits and club features
+3. Offer relevant incentives based on risk level:
+   - High risk (not visited 10+ days): Strong comeback offer (free PT session, discounts)
+   - Medium risk (7-10 days): Motivational check-in with mild incentives
+   - Low risk (5-7 days): New features and gentle engagement
+4. Keep tone positive, supportive, and personal
+5. Include call-to-action (phone, email, or visit)
+6. Mention UK-specific details (opening hours, pricing in GBP)
+7. Professional yet friendly closing
+
+Return format:
+{
+  "subject": "Email subject line here",
+  "content": "Full email content here"
+}`;
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+    });
+
+    const emailText = response.text || "";
+    
+    // Try to parse as JSON, fallback to structured format
+    try {
+      return JSON.parse(emailText);
+    } catch {
+      // If not JSON, extract subject and content manually
+      const lines = emailText.split('\n');
+      const subjectLine = lines.find(line => line.toLowerCase().includes('subject:'));
+      const subject = subjectLine ? subjectLine.replace(/subject:\s*/i, '').trim() : `We miss you at ClubPulse, ${memberProfile.firstName}!`;
+      
+      const contentStart = lines.findIndex(line => line.toLowerCase().includes('content:'));
+      const content = contentStart > -1 ? lines.slice(contentStart + 1).join('\n').trim() : emailText;
+      
+      return { subject, content };
+    }
+  } catch (error) {
+    console.error("Error generating churn prevention email:", error);
+    throw new Error("Failed to generate churn prevention email");
+  }
+}
+
 export async function generateLoyaltyOffers(targetCriteria: string): Promise<{ offers: any[] }> {
   if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
     // Mock response for development

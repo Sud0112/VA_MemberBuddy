@@ -94,6 +94,25 @@ export const workoutPlans = pgTable("workout_plans", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Churn prevention emails table
+export const churnEmails = pgTable("churn_emails", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  memberId: varchar("member_id").references(() => users.id).notNull(),
+  staffId: varchar("staff_id").references(() => users.id),
+  subject: varchar("subject").notNull(),
+  content: text("content").notNull(),
+  riskLevel: varchar("risk_level").notNull(), // 'low', 'medium', 'high'
+  currentRiskBand: varchar("current_risk_band").notNull(),
+  previousRiskBand: varchar("previous_risk_band"),
+  memberProfile: jsonb("member_profile").notNull(), // User data used for personalization
+  status: varchar("status").notNull().default("pending"), // 'pending', 'approved', 'sent', 'rejected'
+  approvedBy: varchar("approved_by").references(() => users.id),
+  approvedAt: timestamp("approved_at"),
+  sentAt: timestamp("sent_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   createdOffers: many(loyaltyOffers),
@@ -101,6 +120,8 @@ export const usersRelations = relations(users, ({ many }) => ({
   outreachActionsAsMember: many(outreachActions, { relationName: "memberActions" }),
   outreachActionsAsStaff: many(outreachActions, { relationName: "staffActions" }),
   workoutPlans: many(workoutPlans),
+  churnEmailsAsMember: many(churnEmails, { relationName: "memberEmails" }),
+  churnEmailsAsStaff: many(churnEmails, { relationName: "staffEmails" }),
 }));
 
 export const loyaltyOffersRelations = relations(loyaltyOffers, ({ one, many }) => ({
@@ -138,6 +159,23 @@ export const outreachActionsRelations = relations(outreachActions, ({ one }) => 
 export const workoutPlansRelations = relations(workoutPlans, ({ one }) => ({
   user: one(users, {
     fields: [workoutPlans.userId],
+    references: [users.id],
+  }),
+}));
+
+export const churnEmailsRelations = relations(churnEmails, ({ one }) => ({
+  member: one(users, {
+    fields: [churnEmails.memberId],
+    references: [users.id],
+    relationName: "memberEmails",
+  }),
+  staff: one(users, {
+    fields: [churnEmails.staffId],
+    references: [users.id],
+    relationName: "staffEmails",
+  }),
+  approver: one(users, {
+    fields: [churnEmails.approvedBy],
     references: [users.id],
   }),
 }));
@@ -181,3 +219,11 @@ export const insertWorkoutPlanSchema = createInsertSchema(workoutPlans).omit({
 });
 export type InsertWorkoutPlan = z.infer<typeof insertWorkoutPlanSchema>;
 export type WorkoutPlan = typeof workoutPlans.$inferSelect;
+
+export const insertChurnEmailSchema = createInsertSchema(churnEmails).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertChurnEmail = z.infer<typeof insertChurnEmailSchema>;
+export type ChurnEmail = typeof churnEmails.$inferSelect;

@@ -5,6 +5,7 @@ import {
   outreachActions,
   chatConversations,
   workoutPlans,
+  churnEmails,
   type User,
   type UpsertUser,
   type LoyaltyOffer,
@@ -17,6 +18,8 @@ import {
   type InsertChatConversation,
   type WorkoutPlan,
   type InsertWorkoutPlan,
+  type ChurnEmail,
+  type InsertChurnEmail,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, sql } from "drizzle-orm";
@@ -53,6 +56,16 @@ export interface IStorage {
   // Workout plans
   createWorkoutPlan(plan: InsertWorkoutPlan): Promise<WorkoutPlan>;
   getUserWorkoutPlans(userId: string): Promise<WorkoutPlan[]>;
+  
+  // Churn email operations
+  createChurnEmail(email: InsertChurnEmail): Promise<ChurnEmail>;
+  getPendingChurnEmails(): Promise<ChurnEmail[]>;
+  getChurnEmailsByMember(memberId: string): Promise<ChurnEmail[]>;
+  approveChurnEmail(emailId: string, staffId: string): Promise<ChurnEmail>;
+  rejectChurnEmail(emailId: string, staffId: string): Promise<ChurnEmail>;
+  markChurnEmailSent(emailId: string): Promise<ChurnEmail>;
+  getRiskLevel(member: User): { level: 'low' | 'medium' | 'high', band: string, percentage: number };
+  checkAndCreateChurnEmail(memberId: string): Promise<ChurnEmail | null>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -244,6 +257,166 @@ export class DatabaseStorage implements IStorage {
       .from(workoutPlans)
       .where(eq(workoutPlans.userId, userId))
       .orderBy(desc(workoutPlans.createdAt));
+  }
+
+  // Churn email operations
+  async createChurnEmail(email: InsertChurnEmail): Promise<ChurnEmail> {
+    const [newEmail] = await db
+      .insert(churnEmails)
+      .values(email)
+      .returning();
+    return newEmail;
+  }
+
+  async getPendingChurnEmails(): Promise<ChurnEmail[]> {
+    const result = await db
+      .select({
+        id: churnEmails.id,
+        memberId: churnEmails.memberId,
+        staffId: churnEmails.staffId,
+        subject: churnEmails.subject,
+        content: churnEmails.content,
+        riskLevel: churnEmails.riskLevel,
+        currentRiskBand: churnEmails.currentRiskBand,
+        previousRiskBand: churnEmails.previousRiskBand,
+        memberProfile: churnEmails.memberProfile,
+        status: churnEmails.status,
+        approvedBy: churnEmails.approvedBy,
+        approvedAt: churnEmails.approvedAt,
+        sentAt: churnEmails.sentAt,
+        createdAt: churnEmails.createdAt,
+        updatedAt: churnEmails.updatedAt,
+        memberName: sql<string>`${users.firstName} || ' ' || ${users.lastName}`,
+        memberEmail: users.email,
+        memberMembershipType: users.membershipType,
+      })
+      .from(churnEmails)
+      .leftJoin(users, eq(churnEmails.memberId, users.id))
+      .where(eq(churnEmails.status, "pending"))
+      .orderBy(desc(churnEmails.createdAt));
+    return result as ChurnEmail[];
+  }
+
+  async getChurnEmailsByMember(memberId: string): Promise<ChurnEmail[]> {
+    return await db
+      .select()
+      .from(churnEmails)
+      .where(eq(churnEmails.memberId, memberId))
+      .orderBy(desc(churnEmails.createdAt));
+  }
+
+  async approveChurnEmail(emailId: string, staffId: string): Promise<ChurnEmail> {
+    const [updatedEmail] = await db
+      .update(churnEmails)
+      .set({
+        status: "approved",
+        approvedBy: staffId,
+        approvedAt: new Date(),
+        updatedAt: new Date(),
+      })
+      .where(eq(churnEmails.id, emailId))
+      .returning();
+    return updatedEmail;
+  }
+
+  async rejectChurnEmail(emailId: string, staffId: string): Promise<ChurnEmail> {
+    const [updatedEmail] = await db
+      .update(churnEmails)
+      .set({
+        status: "rejected",
+        approvedBy: staffId,
+        approvedAt: new Date(),
+        updatedAt: new Date(),
+      })
+      .where(eq(churnEmails.id, emailId))
+      .returning();
+    return updatedEmail;
+  }
+
+  async markChurnEmailSent(emailId: string): Promise<ChurnEmail> {
+    const [updatedEmail] = await db
+      .update(churnEmails)
+      .set({
+        status: "sent",
+        sentAt: new Date(),
+        updatedAt: new Date(),
+      })
+      .where(eq(churnEmails.id, emailId))
+      .returning();
+    return updatedEmail;
+  }
+
+  // Helper function to determine risk level and band
+  getRiskLevel(member: User): { level: 'low' | 'medium' | 'high', band: string, percentage: number } {
+    if (!member.lastVisit) return { level: "high", band: "never-visited", percentage: 95 };
+    
+    const daysSinceLastVisit = Math.floor(
+      (Date.now() - new Date(member.lastVisit).getTime()) / (1000 * 60 * 60 * 24)
+    );
+    
+    if (daysSinceLastVisit > 10) return { level: "high", band: "high-risk", percentage: 89 };
+    if (daysSinceLastVisit > 7) return { level: "medium", band: "medium-risk", percentage: 76 };
+    if (daysSinceLastVisit > 5) return { level: "low", band: "low-risk", percentage: 65 };
+    return { level: "low", band: "active", percentage: 25 };
+  }
+
+  // Check if member needs a churn prevention email
+  async checkAndCreateChurnEmail(memberId: string): Promise<ChurnEmail | null> {
+    const member = await this.getUser(memberId);
+    if (!member || member.role !== "member") return null;
+
+    const currentRisk = this.getRiskLevel(member);
+    
+    // Check if there's already a recent email for this risk level
+    const recentEmails = await db
+      .select()
+      .from(churnEmails)
+      .where(
+        and(
+          eq(churnEmails.memberId, memberId),
+          eq(churnEmails.currentRiskBand, currentRisk.band),
+          sql`${churnEmails.createdAt} > NOW() - INTERVAL '7 days'`
+        )
+      );
+
+    if (recentEmails.length > 0) return null; // Already sent recently
+
+    // Only create email if member is in a risk band (not active)
+    if (currentRisk.band === "active") return null;
+
+    // Generate email using AI service
+    const { generateChurnPreventionEmail } = await import("./services/geminiService");
+    
+    try {
+      const emailContent = await generateChurnPreventionEmail(
+        member,
+        currentRisk.level,
+        currentRisk.band
+      );
+
+      const emailData: InsertChurnEmail = {
+        memberId: member.id,
+        subject: emailContent.subject,
+        content: emailContent.content,
+        riskLevel: currentRisk.level,
+        currentRiskBand: currentRisk.band,
+        memberProfile: {
+          firstName: member.firstName,
+          lastName: member.lastName,
+          email: member.email,
+          membershipType: member.membershipType,
+          joinDate: member.joinDate,
+          lastVisit: member.lastVisit,
+          loyaltyPoints: member.loyaltyPoints,
+        },
+        status: "pending",
+      };
+
+      return await this.createChurnEmail(emailData);
+    } catch (error) {
+      console.error("Error creating churn email:", error);
+      return null;
+    }
   }
 }
 

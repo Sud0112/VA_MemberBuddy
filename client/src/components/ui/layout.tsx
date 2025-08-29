@@ -70,6 +70,7 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
 
   const staffTabs = [
     { id: "churn-prediction", label: "Churn Prediction", icon: TrendingUp },
+    { id: "churn-emails", label: "Churn Emails", icon: Mail },
     { id: "loyalty-campaigns", label: "Loyalty Campaigns", icon: Megaphone },
     { id: "member-analytics", label: "Member Analytics", icon: Users },
   ];

@@ -14,6 +14,7 @@ import {
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area } from "recharts";
 import { ChurnPrediction } from "@/pages/ChurnPrediction";
 import { LoyaltyCampaigns } from "@/pages/LoyaltyCampaigns";
+import { ChurnEmailManagement } from "@/pages/ChurnEmailManagement";
 
 export function StaffDashboard() {
   const [activeTab, setActiveTab] = useState("churn-prediction");
@@ -24,6 +25,8 @@ export function StaffDashboard() {
         return <LoyaltyCampaigns />;
       case "member-analytics":
         return <MemberAnalytics />;
+      case "churn-emails":
+        return <ChurnEmailManagement />;
       default:
         return <ChurnPrediction />;
     }

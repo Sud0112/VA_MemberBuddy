@@ -286,6 +286,87 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Churn email endpoints
+  app.get('/api/staff/churn-emails', isAuthenticated, async (req: any, res) => {
+    try {
+      const user = await storage.getUser(req.user.claims.sub);
+      if (!user || user.role !== 'staff') {
+        return res.status(403).json({ message: "Staff access required" });
+      }
+
+      const emails = await storage.getPendingChurnEmails();
+      res.json(emails);
+    } catch (error) {
+      console.error("Error fetching churn emails:", error);
+      res.status(500).json({ message: "Failed to fetch churn emails" });
+    }
+  });
+
+  app.post('/api/staff/churn-emails/:id/approve', isAuthenticated, async (req: any, res) => {
+    try {
+      const user = await storage.getUser(req.user.claims.sub);
+      if (!user || user.role !== 'staff') {
+        return res.status(403).json({ message: "Staff access required" });
+      }
+
+      const email = await storage.approveChurnEmail(req.params.id, user.id);
+      res.json(email);
+    } catch (error) {
+      console.error("Error approving churn email:", error);
+      res.status(500).json({ message: "Failed to approve churn email" });
+    }
+  });
+
+  app.post('/api/staff/churn-emails/:id/reject', isAuthenticated, async (req: any, res) => {
+    try {
+      const user = await storage.getUser(req.user.claims.sub);
+      if (!user || user.role !== 'staff') {
+        return res.status(403).json({ message: "Staff access required" });
+      }
+
+      const email = await storage.rejectChurnEmail(req.params.id, user.id);
+      res.json(email);
+    } catch (error) {
+      console.error("Error rejecting churn email:", error);
+      res.status(500).json({ message: "Failed to reject churn email" });
+    }
+  });
+
+  app.post('/api/staff/churn-emails/:id/send', isAuthenticated, async (req: any, res) => {
+    try {
+      const user = await storage.getUser(req.user.claims.sub);
+      if (!user || user.role !== 'staff') {
+        return res.status(403).json({ message: "Staff access required" });
+      }
+
+      const email = await storage.markChurnEmailSent(req.params.id);
+      res.json(email);
+    } catch (error) {
+      console.error("Error marking churn email as sent:", error);
+      res.status(500).json({ message: "Failed to mark churn email as sent" });
+    }
+  });
+
+  app.post('/api/staff/churn-emails/generate', isAuthenticated, async (req: any, res) => {
+    try {
+      const user = await storage.getUser(req.user.claims.sub);
+      if (!user || user.role !== 'staff') {
+        return res.status(403).json({ message: "Staff access required" });
+      }
+
+      const { memberId } = req.body;
+      if (!memberId) {
+        return res.status(400).json({ message: "Member ID is required" });
+      }
+
+      const email = await storage.checkAndCreateChurnEmail(memberId);
+      res.json(email);
+    } catch (error) {
+      console.error("Error generating churn email:", error);
+      res.status(500).json({ message: "Failed to generate churn email" });
+    }
+  });
+
   // Chatbot endpoints
   app.post('/api/chat/message', async (req, res) => {
     try {
