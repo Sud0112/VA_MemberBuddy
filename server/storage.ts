@@ -496,62 +496,135 @@ export async function seedDummyUsers() {
   const existingUsers = await storage.getAllUsers();
   if (existingUsers.length > 2) return; // Skip if we already have users beyond system ones
   
-  // Create diverse member personas
+  // Create diverse member personas with varied risk levels
   const memberPersonas = [
+    // High-risk members (haven't visited in 10+ days)
     {
       id: 'member-sarah-wilson',
       email: 'sarah.wilson@email.com',
       firstName: 'Sarah',
       lastName: 'Wilson',
       role: 'member' as const,
-      membershipType: 'premium' as const,
-      loyaltyPoints: 2450,
-      joinDate: new Date('2023-03-15'),
-      lastVisit: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000), // 6 days ago (at risk)
+      membershipType: 'Premium',
+      loyaltyPoints: 320,
+      joinDate: new Date('2023-02-15'),
+      lastVisit: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), // 15 days ago
     },
     {
-      id: 'member-michael-chen',
-      email: 'michael.chen@email.com', 
-      firstName: 'Michael',
+      id: 'member-david-chen',
+      email: 'david.chen@email.com',
+      firstName: 'David',
       lastName: 'Chen',
       role: 'member' as const,
-      membershipType: 'premium' as const,
-      loyaltyPoints: 3200,
+      membershipType: 'Basic',
+      loyaltyPoints: 85,
+      joinDate: new Date('2024-01-10'),
+      lastVisit: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000), // 12 days ago
+    },
+    {
+      id: 'member-emily-taylor',
+      email: 'emily.taylor@email.com',
+      firstName: 'Emily',
+      lastName: 'Taylor',
+      role: 'member' as const,
+      membershipType: 'Student',
+      loyaltyPoints: 45,
+      joinDate: new Date('2024-09-01'),
+      lastVisit: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000), // 18 days ago
+    },
+    {
+      id: 'member-never-visited',
+      email: 'alex.parker@email.com',
+      firstName: 'Alex',
+      lastName: 'Parker',
+      role: 'member' as const,
+      membershipType: 'Premium',
+      loyaltyPoints: 0,
+      joinDate: new Date('2024-11-20'),
+      lastVisit: null, // Never visited
+    },
+    
+    // Medium-risk members (7-10 days)
+    {
+      id: 'member-james-brown',
+      email: 'james.brown@email.com',
+      firstName: 'James',
+      lastName: 'Brown',
+      role: 'member' as const,
+      membershipType: 'Premium',
+      loyaltyPoints: 540,
       joinDate: new Date('2022-08-20'),
+      lastVisit: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000), // 8 days ago
+    },
+    {
+      id: 'member-lisa-garcia',
+      email: 'lisa.garcia@email.com',
+      firstName: 'Lisa',
+      lastName: 'Garcia',
+      role: 'member' as const,
+      membershipType: 'Basic',
+      loyaltyPoints: 275,
+      joinDate: new Date('2023-05-12'),
+      lastVisit: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000), // 9 days ago
+    },
+    
+    // Low-risk members (5-7 days)
+    {
+      id: 'member-michael-johnson',
+      email: 'michael.johnson@email.com',
+      firstName: 'Michael',
+      lastName: 'Johnson',
+      role: 'member' as const,
+      membershipType: 'Student',
+      loyaltyPoints: 180,
+      joinDate: new Date('2024-03-15'),
+      lastVisit: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000), // 6 days ago
+    },
+    {
+      id: 'member-anna-williams',
+      email: 'anna.williams@email.com',
+      firstName: 'Anna',
+      lastName: 'Williams',
+      role: 'member' as const,
+      membershipType: 'Premium',
+      loyaltyPoints: 720,
+      joinDate: new Date('2021-11-30'),
+      lastVisit: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
+    },
+    
+    // Active members (recent visits - for comparison)
+    {
+      id: 'member-tom-davis',
+      email: 'tom.davis@email.com',
+      firstName: 'Tom',
+      lastName: 'Davis',
+      role: 'member' as const,
+      membershipType: 'Basic',
+      loyaltyPoints: 150,
+      joinDate: new Date('2024-06-10'),
+      lastVisit: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+    },
+    {
+      id: 'member-sophie-miller',
+      email: 'sophie.miller@email.com',
+      firstName: 'Sophie',
+      lastName: 'Miller',
+      role: 'member' as const,
+      membershipType: 'Premium',
+      loyaltyPoints: 420,
+      joinDate: new Date('2023-03-15'),
       lastVisit: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago (active)
     },
     {
-      id: 'member-emily-rodriguez',
-      email: 'emily.rodriguez@email.com',
-      firstName: 'Emily', 
-      lastName: 'Rodriguez',
+      id: 'member-rachel-green',
+      email: 'rachel.green@email.com', 
+      firstName: 'Rachel',
+      lastName: 'Green',
       role: 'member' as const,
-      membershipType: 'basic' as const,
-      loyaltyPoints: 1850,
-      joinDate: new Date('2024-01-10'),
-      lastVisit: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago (very active)
-    },
-    {
-      id: 'member-david-kim',
-      email: 'david.kim@email.com',
-      firstName: 'David',
-      lastName: 'Kim',
-      role: 'member' as const,
-      membershipType: 'student' as const,
-      loyaltyPoints: 750,
-      joinDate: new Date('2024-06-01'),
-      lastVisit: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
-    },
-    {
-      id: 'member-jessica-taylor',
-      email: 'jessica.taylor@email.com',
-      firstName: 'Jessica',
-      lastName: 'Taylor',
-      role: 'member' as const,
-      membershipType: 'premium' as const,
-      loyaltyPoints: 4100,
-      joinDate: new Date('2021-11-30'),
-      lastVisit: new Date(Date.now() - 12 * 60 * 60 * 1000), // 12 hours ago (active)
+      membershipType: 'Basic',
+      loyaltyPoints: 95,
+      joinDate: new Date('2024-08-20'),
+      lastVisit: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000), // 4 days ago (active)
     },
     {
       id: 'member-alex-johnson',
@@ -671,6 +744,248 @@ export async function seedDummyUsers() {
   }
   
   console.log(`✓ Seeded ${memberPersonas.length} member personas and ${staffPersonas.length} staff personas`);
+}
+
+// Seed sample churn emails for demonstration
+export async function seedSampleChurnEmails() {
+  const storage = new DatabaseStorage();
+  
+  // Check if we already have churn emails
+  try {
+    const existingEmails = await storage.getPendingChurnEmails();
+    if (existingEmails.length > 0) return;
+  } catch (error) {
+    // Table might not exist yet, continue
+  }
+
+  // Ensure all users exist first
+  const existingUsers = await storage.getAllUsers();
+  const memberIds = existingUsers.map(user => user.id);
+  console.log('Available member IDs for churn emails:', memberIds);
+  
+  // Sample churn emails for different risk levels
+  const sampleEmails = [
+    {
+      memberId: 'member-sarah-wilson',
+      subject: 'We miss you at ClubPulse, Sarah! Let\'s get back on track 💪',
+      content: `Dear Sarah Wilson,
+
+We've noticed you haven't visited ClubPulse in a while, and we want to make sure everything is alright. As a valued Premium member, you're important to us!
+
+**Your Current Membership Benefits:**
+• 24/7 access to all premium facilities
+• Unlimited group fitness classes
+• Access to our AI-powered workout recommendations
+• Complimentary towel service
+
+**Special Comeback Offer - Just for You:**
+To help you get back into your routine, we're offering:
+• FREE personal training session (worth £65)
+• 50% off next month's supplements
+• Priority booking for popular classes
+
+Your wellness journey matters to us. Our team would love to understand any challenges you're facing and help create a plan that works better for your lifestyle.
+
+**Ready to return?** Simply reply to this email or call us at 020 3837 4721.
+
+Stay strong,
+The ClubPulse Team
+
+P.S. Don't forget - your membership includes unlimited access to our new meditation room and recovery zone!`,
+      riskLevel: 'high',
+      currentRiskBand: 'high-risk',
+      memberProfile: {
+        firstName: 'Sarah',
+        lastName: 'Wilson',
+        email: 'sarah.wilson@email.com',
+        membershipType: 'Premium',
+        joinDate: '2023-02-15',
+        lastVisit: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+        loyaltyPoints: 320,
+      },
+      status: 'pending',
+    },
+    {
+      memberId: 'member-david-chen',
+      subject: 'Your ClubPulse journey continues, David! 🏃‍♂️',
+      content: `Hi David Chen,
+
+Hope you're doing well! We've noticed it's been a little while since your last visit to ClubPulse, and we wanted to reach out.
+
+**What's New at ClubPulse:**
+• Fresh morning HIIT classes (perfect for busy schedules!)
+• New strength training equipment in the main zone
+• Updated nutrition workshops every Saturday morning
+• Enhanced AI workout recommendations based on your preferences
+
+**Your Basic Membership Perks:**
+As a Basic member, you have access to all these new offerings during your membership hours (06:00-22:00).
+
+**This Month's Special:**
+• 20% off personal training packages
+• Free fitness assessment to update your goals
+• Complimentary smoothie with your next visit
+
+We understand life gets busy sometimes! Our flexible approach is designed to work around your schedule.
+
+**Let's catch up:** Pop in this week and let our team know how we can better support your fitness goals.
+
+Best regards,
+Your ClubPulse Family
+
+*Remember: Every step forward counts, no matter how small!*`,
+      riskLevel: 'high',
+      currentRiskBand: 'high-risk',
+      memberProfile: {
+        firstName: 'David',
+        lastName: 'Chen',
+        email: 'david.chen@email.com',
+        membershipType: 'Basic',
+        joinDate: '2024-01-10',
+        lastVisit: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString(),
+        loyaltyPoints: 85,
+      },
+      status: 'pending',
+    },
+    {
+      memberId: 'member-james-brown',
+      subject: 'James, let\'s keep your momentum going! 💫',
+      content: `Hi James Brown,
+
+We've noticed a slight change in your visit pattern recently. As someone who's been crushing their fitness goals, we want to help you maintain that amazing momentum!
+
+**Your Recent Progress:**
+• Premium member since August 2022
+• 540 loyalty points earned
+• Previously averaging regular visits
+
+**To keep you motivated:**
+• NEW: Try our just-launched strength & conditioning masterclasses
+• Book a complimentary fitness assessment to update your goals
+• 15% off personal training packages this month
+
+Sometimes life gets busy - that's completely normal! Our flexible class schedule and 24/7 access are designed to work around your lifestyle.
+
+**Let's catch up:** Pop in this week for a quick chat with our wellness team. We're here to support your journey!
+
+Best regards,
+Your ClubPulse Family
+
+*Remember: Consistency beats perfection. Even 30 minutes counts!*`,
+      riskLevel: 'medium',
+      currentRiskBand: 'medium-risk',
+      memberProfile: {
+        firstName: 'James',
+        lastName: 'Brown',
+        email: 'james.brown@email.com',
+        membershipType: 'Premium',
+        joinDate: '2022-08-20',
+        lastVisit: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+        loyaltyPoints: 540,
+      },
+      status: 'pending',
+    },
+    {
+      memberId: 'member-anna-williams',
+      subject: 'New classes and features await you, Anna! ✨',
+      content: `Hello Anna Williams,
+
+Hope you're doing well! We've added some exciting new features and classes that we think you'll love.
+
+**What's New at ClubPulse:**
+• Fresh morning yoga sessions (perfect for starting the day right)
+• Advanced strength training equipment in the new zone
+• Nutrition workshops every Saturday morning
+• Updated AI workout recommendations based on your preferences
+
+**Your Premium Membership Perks:**
+As a Premium member, you have full access to all these new offerings at no extra cost!
+
+**This Week's Highlights:**
+• Monday: Power Yoga with Sarah (07:00)
+• Wednesday: Strength & Conditioning masterclass
+• Friday: Nutrition Q&A session
+
+We'd love to see you soon and hear about your current fitness goals. Our team is always here to help you make the most of your membership.
+
+See you soon!
+The ClubPulse Team
+
+*Your next visit is going to be amazing - we've got everything ready for you!*`,
+      riskLevel: 'low',
+      currentRiskBand: 'low-risk',
+      memberProfile: {
+        firstName: 'Anna',
+        lastName: 'Williams',
+        email: 'anna.williams@email.com',
+        membershipType: 'Premium',
+        joinDate: '2021-11-30',
+        lastVisit: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+        loyaltyPoints: 720,
+      },
+      status: 'pending',
+    },
+    {
+      memberId: 'member-never-visited',
+      subject: 'Welcome to ClubPulse, Alex! Your fitness journey starts here 🚀',
+      content: `Dear Alex Parker,
+
+Welcome to the ClubPulse family! We're absolutely thrilled to have you as our newest Premium member.
+
+We noticed you haven't had a chance to visit us yet since joining, and we want to make sure you feel completely comfortable and excited about starting your fitness journey with us.
+
+**Your Premium Membership Includes:**
+• 24/7 access to all facilities
+• Unlimited group fitness classes
+• AI-powered personalised workout plans
+• 2 complimentary personal training sessions per month
+• Access to our recovery zone and meditation room
+
+**Let's Get You Started:**
+• FREE welcome session with one of our fitness consultants
+• Complimentary facility tour at your convenience
+• No-obligation chat about your fitness goals
+• Free ClubPulse starter pack (water bottle, towel, protein shake)
+
+**Ready to begin?** 
+Simply call us at 020 3837 4721 or reply to this email. We can arrange a convenient time that works for you - evenings and weekends are absolutely fine!
+
+Our team is here to support you every step of the way. There's no pressure, just genuine care for your wellness journey.
+
+Looking forward to meeting you!
+
+The ClubPulse Welcome Team
+
+*Your membership is active and ready - we can't wait to show you around!*`,
+      riskLevel: 'high',
+      currentRiskBand: 'never-visited',
+      memberProfile: {
+        firstName: 'Alex',
+        lastName: 'Parker',
+        email: 'alex.parker@email.com',
+        membershipType: 'Premium',
+        joinDate: '2024-11-20',
+        lastVisit: null,
+        loyaltyPoints: 0,
+      },
+      status: 'pending',
+    },
+  ];
+  
+  // Filter emails to only those for existing members
+  const validEmails = sampleEmails.filter(email => memberIds.includes(email.memberId));
+  console.log(`Creating ${validEmails.length} out of ${sampleEmails.length} sample emails for existing members`);
+
+  // Create sample emails
+  for (const emailData of validEmails) {
+    try {
+      await storage.createChurnEmail(emailData);
+    } catch (error) {
+      console.error(`Failed to create sample email for ${emailData.memberProfile.firstName}:`, error);
+    }
+  }
+  
+  console.log(`✓ Seeded ${sampleEmails.length} sample churn emails for staff approval`);
 }
 
 export const storage = new DatabaseStorage();

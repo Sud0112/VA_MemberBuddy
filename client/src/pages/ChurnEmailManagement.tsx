@@ -112,20 +112,20 @@ export function ChurnEmailManagement() {
 
   const getRiskBadgeColor = (riskLevel: string) => {
     switch (riskLevel) {
-      case 'high': return 'bg-red-500';
-      case 'medium': return 'bg-orange-500';
-      case 'low': return 'bg-yellow-500';
-      default: return 'bg-gray-500';
+      case 'high': return 'bg-red-600 hover:bg-red-700 text-white shadow-sm';
+      case 'medium': return 'bg-amber-500 hover:bg-amber-600 text-white shadow-sm';
+      case 'low': return 'bg-yellow-500 hover:bg-yellow-600 text-white shadow-sm';
+      default: return 'bg-gray-500 hover:bg-gray-600 text-white shadow-sm';
     }
   };
 
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-blue-500';
-      case 'approved': return 'bg-green-500';
-      case 'rejected': return 'bg-red-500';
-      case 'sent': return 'bg-purple-500';
-      default: return 'bg-gray-500';
+      case 'pending': return 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm';
+      case 'approved': return 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm';
+      case 'rejected': return 'bg-red-600 hover:bg-red-700 text-white shadow-sm';
+      case 'sent': return 'bg-purple-600 hover:bg-purple-700 text-white shadow-sm';
+      default: return 'bg-gray-500 hover:bg-gray-600 text-white shadow-sm';
     }
   };
 
@@ -146,27 +146,48 @@ export function ChurnEmailManagement() {
 
   if (loading) {
     return (
-      <div className="p-6">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
         <div className="flex items-center justify-center h-64">
-          <div className="text-gray-500">Loading churn emails...</div>
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <div className="text-slate-600 text-lg">Loading churn emails...</div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Churn Prevention Emails</h1>
-          <p className="text-gray-600">Review and approve AI-generated emails to prevent member churn</p>
-        </div>
-        <div className="flex items-center space-x-4">
-          <div className="text-sm text-gray-500">
-            {emails.filter(e => e.status === 'pending').length} pending approval
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="p-8 space-y-8">
+        <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-800 mb-2">Churn Prevention Emails</h1>
+              <p className="text-slate-600 text-lg">Review and approve AI-generated emails to prevent member churn</p>
+            </div>
+            <div className="flex items-center space-x-6">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">
+                  {emails.filter(e => e.status === 'pending').length}
+                </div>
+                <div className="text-sm text-slate-500">Pending Approval</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-emerald-600">
+                  {emails.filter(e => e.status === 'approved').length}
+                </div>
+                <div className="text-sm text-slate-500">Approved</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-purple-600">
+                  {emails.filter(e => e.status === 'sent').length}
+                </div>
+                <div className="text-sm text-slate-500">Sent</div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
       {emails.length === 0 ? (
         <Card>
@@ -322,6 +343,7 @@ export function ChurnEmailManagement() {
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 }

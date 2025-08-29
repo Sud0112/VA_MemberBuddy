@@ -1,7 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
-import { seedLoyaltyOffers, seedDummyUsers } from "./storage";
+import { seedLoyaltyOffers, seedDummyUsers, seedSampleChurnEmails } from "./storage";
 
 const app = express();
 app.use(express.json());
@@ -41,6 +41,7 @@ app.use((req, res, next) => {
   // Seed initial data
   await seedLoyaltyOffers();
   await seedDummyUsers();
+  await seedSampleChurnEmails();
   
   const server = await registerRoutes(app);
 
