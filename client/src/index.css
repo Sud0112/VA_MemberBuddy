@@ -3,25 +3,25 @@
 @tailwind utilities;
 
 :root {
-  --background: linear-gradient(135deg, hsl(210, 100%, 97%) 0%, hsl(260, 60%, 96%) 30%, hsl(320, 40%, 94%) 70%, hsl(40, 80%, 96%) 100%);
+  --background: hsl(0, 0%, 100%);
   --foreground: hsl(222.2, 90%, 8%);
-  --card: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(210, 80%, 98%) 30%, hsl(270, 60%, 97%) 70%, hsl(40, 70%, 98%) 100%);
+  --card: hsl(0, 0%, 100%);
   --card-foreground: hsl(222.2, 90%, 8%);
   --popover: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(210, 60%, 98%) 100%);
   --popover-foreground: hsl(222.2, 90%, 8%);
-  --primary: hsl(240, 100%, 60%);
+  --primary: hsl(0, 100%, 45%);
   --primary-foreground: hsl(0, 0%, 98%);
-  --secondary: linear-gradient(135deg, hsl(300, 80%, 94%) 0%, hsl(270, 70%, 92%) 100%);
+  --secondary: hsl(210, 40%, 96%);
   --secondary-foreground: hsl(222.2, 90%, 8%);
-  --muted: linear-gradient(135deg, hsl(210, 60%, 96%) 0%, hsl(270, 40%, 94%) 100%);
+  --muted: hsl(210, 40%, 98%);
   --muted-foreground: hsl(215.4, 25%, 35%);
-  --accent: linear-gradient(135deg, hsl(50, 100%, 92%) 0%, hsl(30, 90%, 90%) 100%);
+  --accent: hsl(210, 40%, 94%);
   --accent-foreground: hsl(222.2, 90%, 8%);
-  --destructive: hsl(0, 90%, 65%);
+  --destructive: hsl(0, 100%, 50%);
   --destructive-foreground: hsl(0, 0%, 98%);
   --border: hsl(214.3, 40%, 88%);
   --input: hsl(214.3, 40%, 88%);
-  --ring: hsl(240, 100%, 60%);
+  --ring: hsl(0, 100%, 45%);
   --chart-1: hsl(340, 100%, 65%);
   --chart-2: hsl(200, 100%, 60%);
   --chart-3: hsl(120, 100%, 50%);

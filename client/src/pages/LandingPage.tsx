@@ -44,13 +44,13 @@ export function LandingPage() {
   return (
     <div className="min-h-screen">
       {/* Enhanced Header */}
-      <header className="bg-gradient-to-r from-slate-900/95 via-purple-900/95 to-indigo-900/95 backdrop-blur-lg border-b border-purple-300/30 sticky top-0 z-50 shadow-2xl">
+      <header className="bg-white backdrop-blur-lg border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-4">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="w-10 h-10 bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600 rounded-xl flex items-center justify-center cursor-pointer transform hover:scale-110 transition-all duration-300 shadow-lg">
+                  <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center cursor-pointer transform hover:scale-110 transition-all duration-300 shadow-lg">
                     <Dumbbell className="text-white h-5 w-5" />
                   </div>
                 </TooltipTrigger>
@@ -59,11 +59,11 @@ export function LandingPage() {
                 </TooltipContent>
               </Tooltip>
               <div className="flex flex-col">
-                <span className="text-2xl font-black bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
-                  MEMBER BUDDY
+                <span className="text-2xl font-black text-primary tracking-tight">
+                  CLUBPULSE
                 </span>
-                <span className="text-xs text-purple-300 font-medium tracking-wider uppercase">
-                  AI Fitness Revolution
+                <span className="text-xs text-gray-500 font-medium tracking-wider uppercase">
+                  Real Wellness
                 </span>
               </div>
             </div>
@@ -72,10 +72,10 @@ export function LandingPage() {
                 <TooltipTrigger asChild>
                   <a
                     href="#features"
-                    className="text-purple-200 hover:text-white transition-all duration-300 font-semibold relative group"
+                    className="text-gray-600 hover:text-primary transition-all duration-300 font-semibold relative group"
                   >
                     Features
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -86,10 +86,10 @@ export function LandingPage() {
                 <TooltipTrigger asChild>
                   <a
                     href="#pricing"
-                    className="text-purple-200 hover:text-white transition-all duration-300 font-semibold relative group"
+                    className="text-gray-600 hover:text-primary transition-all duration-300 font-semibold relative group"
                   >
                     Pricing
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -100,10 +100,10 @@ export function LandingPage() {
                 <TooltipTrigger asChild>
                   <a
                     href="#success"
-                    className="text-purple-200 hover:text-white transition-all duration-300 font-semibold relative group"
+                    className="text-gray-600 hover:text-primary transition-all duration-300 font-semibold relative group"
                   >
                     Success Stories
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -114,10 +114,10 @@ export function LandingPage() {
                 <TooltipTrigger asChild>
                   <a
                     href="#contact"
-                    className="text-purple-200 hover:text-white transition-all duration-300 font-semibold relative group"
+                    className="text-gray-600 hover:text-primary transition-all duration-300 font-semibold relative group"
                   >
                     Contact
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -130,11 +130,11 @@ export function LandingPage() {
                 <TooltipTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 border border-white/20 hover:border-white/40 font-semibold transition-all duration-300"
+                    className="text-gray-600 hover:text-primary hover:bg-gray-50 font-semibold transition-all duration-300"
                     onClick={handleGetStarted}
                     data-testid="button-sign-in"
                   >
-                    Sign In
+                    Log in
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -144,12 +144,11 @@ export function LandingPage() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
-                    className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 hover:from-orange-600 hover:via-pink-600 hover:to-purple-700 text-white font-bold shadow-xl transform hover:scale-105 transition-all duration-300"
+                    className="bg-primary hover:bg-primary-600 text-white font-bold shadow-sm transform hover:scale-105 transition-all duration-300"
                     onClick={handleGetStarted}
                     data-testid="button-get-started"
                   >
-                    <Rocket className="w-4 h-4 mr-2" />
-                    Start Your Journey
+                    Join now
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -162,13 +161,7 @@ export function LandingPage() {
       </header>
 
       {/* Revolutionary Hero Section */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 section-spacing overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-orange-400/20 to-pink-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-br from-purple-400/20 to-blue-500/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-pink-400/10 to-orange-400/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '0.5s'}}></div>
-        </div>
+      <section className="relative bg-white section-spacing overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="text-center lg:text-left content-spacing relative z-10">
@@ -180,20 +173,19 @@ export function LandingPage() {
                   </span>
                 </div>
               </div>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-tight">
-                Transform Your{" "}
-                <span className="bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
-                  Body & Mind
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-8 leading-tight">
+                WELCOME TO{" "}
+                <span className="text-primary block">
+                  REAL WELLNESS
                 </span>
-                <span className="block text-4xl md:text-5xl lg:text-6xl mt-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  with AI Precision
+                <span className="block text-4xl md:text-5xl lg:text-6xl mt-2 text-gray-600">
+                  One membership. Endless variety.
                 </span>
               </h1>
-              <p className="text-xl md:text-2xl text-purple-200 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium">
-                Join the fitness revolution where artificial intelligence meets human potential. 
-                <span className="text-orange-300 font-semibold block mt-2">
-                  Personalized coaching • Smart analytics • Premium community
-                </span>
+              <p className="text-xl md:text-2xl text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium">
+                <span className="text-gray-900 font-semibold">Real rewards:</span> instant goodies from Kauai & Mother plus partner discounts<br/>
+                <span className="text-gray-900 font-semibold">Real endorphins:</span> spacious gym floors & unlimited exercise classes<br/>
+                <span className="text-gray-900 font-semibold">Real relaxation:</span> pools, saunas & steam rooms
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start mb-8">
                 <Tooltip>
@@ -201,12 +193,10 @@ export function LandingPage() {
                     <Button
                       size="lg"
                       onClick={handleGetStarted}
-                      className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 hover:from-orange-600 hover:via-pink-600 hover:to-purple-700 text-white font-bold text-lg px-8 py-4 transform hover:scale-105 transition-all duration-300 shadow-2xl border-2 border-white/20 hover:border-white/40"
+                      className="bg-primary hover:bg-primary-600 text-white font-bold text-lg px-8 py-4 transform hover:scale-105 transition-all duration-300 shadow-lg rounded-lg"
                       data-testid="button-start-free-trial"
                     >
-                      <Rocket className="w-5 h-5 mr-3" />
-                      Start 7-Day FREE Trial
-                      <ArrowRight className="w-5 h-5 ml-3" />
+                      JOIN THE CLUB
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -233,18 +223,18 @@ export function LandingPage() {
               </div>
               
               {/* Trust Indicators */}
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 text-purple-200">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 text-gray-600">
                 <div className="flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-green-400" />
-                  <span className="font-semibold">No Credit Card Required</span>
+                  <Shield className="w-5 h-5 text-primary" />
+                  <span className="font-semibold">Pay Nothing Until October*</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Star className="w-5 h-5 text-yellow-400" />
+                  <Star className="w-5 h-5 text-primary" />
                   <span className="font-semibold">4.9/5 Member Rating</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Users className="w-5 h-5 text-blue-400" />
-                  <span className="font-semibold">2,500+ Active Members</span>
+                  <Users className="w-5 h-5 text-primary" />
+                  <span className="font-semibold">50+ Premium Clubs</span>
                 </div>
               </div>
             </div>
