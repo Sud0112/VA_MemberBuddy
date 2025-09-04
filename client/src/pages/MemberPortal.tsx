@@ -116,15 +116,15 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                     <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Loyalty Points</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-black text-gray-900">32</div>
-                    <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Age</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-black text-gray-900">2Y</div>
+                    <div className="text-2xl font-black text-gray-900">{new Date().getFullYear() - (user?.joinDate ? new Date(user.joinDate).getFullYear() : new Date().getFullYear() - 2)}Y</div>
                     <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Member Since</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-black text-gray-900">Gold</div>
+                    <div className="text-2xl font-black text-gray-900">{user?.membershipType || 'Premium'}</div>
+                    <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Plan</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-black text-gray-900">Active</div>
                     <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Status</div>
                   </div>
                 </div>
@@ -136,9 +136,9 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
                   <div className="w-full h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center">
                     <div className="text-center">
                       <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span className="text-white text-2xl font-bold">P</span>
+                        <span className="text-white text-2xl font-bold">{user?.firstName?.charAt(0) || 'M'}</span>
                       </div>
-                      <p className="text-gray-600 font-semibold">Strength Training Focus</p>
+                      <p className="text-gray-600 font-semibold">{user?.firstName || 'Member'} - {user?.membershipType || 'Premium'} Member</p>
                     </div>
                   </div>
                 </div>

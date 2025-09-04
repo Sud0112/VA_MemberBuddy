@@ -65,7 +65,7 @@ export function NotificationCenter({ userRole }: NotificationCenterProps) {
           id: '1',
           type: 'alert',
           title: 'Member At Risk',
-          message: 'Sarah Wilson has not visited in 6 days. Consider outreach.',
+          message: 'Member has not visited in 6 days. Consider outreach.',
           timestamp: new Date(Date.now() - 30 * 60 * 1000),
           read: false,
           urgent: true
