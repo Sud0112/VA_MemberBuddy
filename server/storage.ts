@@ -589,7 +589,7 @@ export async function seedDummyUsers() {
       membershipType: 'Premium',
       loyaltyPoints: 720,
       joinDate: new Date('2021-11-30'),
-      lastVisit: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
+      lastVisit: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000), // 14 days ago (high risk)
     },
     
     // Active members (recent visits - for comparison)
@@ -912,15 +912,15 @@ See you soon!
 The ClubPulse Team
 
 *Your next visit is going to be amazing - we've got everything ready for you!*`,
-      riskLevel: 'low',
-      currentRiskBand: 'low-risk',
+      riskLevel: 'high',
+      currentRiskBand: 'high-risk',
       memberProfile: {
         firstName: 'Anna',
         lastName: 'Williams',
         email: 'anna.williams@email.com',
         membershipType: 'Premium',
         joinDate: '2021-11-30',
-        lastVisit: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+        lastVisit: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
         loyaltyPoints: 720,
       },
       status: 'pending',
@@ -970,6 +970,100 @@ The ClubPulse Welcome Team
       },
       status: 'pending',
     },
+    {
+      memberId: 'member-emily-taylor',
+      subject: 'Emily, we want to help you succeed! 💪',
+      content: `Dear Emily Taylor,
+
+We hope your studies are going well! As a valued Student member, we wanted to reach out because we've noticed you haven't visited ClubPulse recently.
+
+**Student Membership Benefits:**
+• Access to all facilities during off-peak hours (09:00-16:00, 20:00-22:00)
+• Unlimited group fitness classes designed around student schedules
+• Study-friendly recovery zone perfect for post-workout relaxation
+• Budget-friendly membership with maximum value
+
+**Special Student Support:**
+We know student life can be overwhelming with exams, assignments, and social commitments. That's exactly why we're here to help!
+
+• FREE stress-relief yoga sessions every Thursday evening
+• Quick 20-minute HIIT classes perfect for busy schedules
+• Study break workout challenges with your fellow students
+• Complimentary nutritional guidance for student budgets
+
+**This Week's Student Special:**
+• Free healthy smoothie with your next visit
+• Bonus loyalty points for any class attendance
+• Access to our quiet study area with Wi-Fi
+
+**Let's get you back on track!** Reply to this email or pop in between classes. Our team understands student life and we're here to make fitness work around YOUR schedule.
+
+Best of luck with your studies!
+The ClubPulse Student Support Team
+
+*Remember: A healthy body supports a healthy mind - perfect for exam season!*`,
+      riskLevel: 'high',
+      currentRiskBand: 'high-risk',
+      memberProfile: {
+        firstName: 'Emily',
+        lastName: 'Taylor',
+        email: 'emily.taylor@email.com',
+        membershipType: 'Student',
+        joinDate: '2024-09-01',
+        lastVisit: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000).toISOString(),
+        loyaltyPoints: 45,
+      },
+      status: 'pending',
+    },
+    {
+      memberId: 'member-lisa-garcia',
+      subject: 'Lisa, let\'s reignite your fitness passion! 🔥',
+      content: `Hi Lisa Garcia,
+
+We've noticed it's been a while since your last visit to ClubPulse, and we wanted to personally reach out to you.
+
+**Your Fitness Journey:**
+• Basic member since May 2023
+• 275 loyalty points earned through consistent effort
+• Previously a regular participant in our community
+
+**What's New Since Your Last Visit:**
+• Brand new functional training area with latest equipment
+• Morning energy boost classes (07:00-08:00) perfect before work
+• Updated group fitness schedule with more evening options
+• Enhanced changing facilities with better amenities
+
+**Your Basic Membership Includes:**
+• Access during all operating hours (06:00-22:00)
+• All group fitness classes at no extra charge
+• Complimentary fitness consultations
+• Full use of all gym equipment and facilities
+
+**This Month's Reconnection Offer:**
+• 25% off personal training sessions
+• Free fitness assessment to restart your goals
+• Complimentary ClubPulse water bottle
+• Priority booking for popular classes
+
+**Ready to return?** We'd love to welcome you back with a complimentary catch-up session. Simply call 020 3837 4721 or reply to this email.
+
+Every step back is a step forward!
+Your ClubPulse Family
+
+*We believe in you, Lisa - your next workout is going to feel amazing!*`,
+      riskLevel: 'medium',
+      currentRiskBand: 'medium-risk',
+      memberProfile: {
+        firstName: 'Lisa',
+        lastName: 'Garcia',
+        email: 'lisa.garcia@email.com',
+        membershipType: 'Basic',
+        joinDate: '2023-05-12',
+        lastVisit: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000).toISOString(),
+        loyaltyPoints: 275,
+      },
+      status: 'pending',
+    },
   ];
   
   // Filter emails to only those for existing members
@@ -985,7 +1079,7 @@ The ClubPulse Welcome Team
     }
   }
   
-  console.log(`✓ Seeded ${sampleEmails.length} sample churn emails for staff approval`);
+  console.log(`✓ Seeded ${validEmails.length} sample churn emails for staff approval`);
 }
 
 export const storage = new DatabaseStorage();
