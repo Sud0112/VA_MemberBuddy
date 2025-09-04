@@ -86,150 +86,202 @@ function MemberDashboard({ onTabChange }: { onTabChange: (tab: string) => void }
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      {/* Special Welcome Back Banner */}
-      <div className="mb-8 p-6 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-xl shadow-lg">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold mb-2">🎉 Welcome Back Prakhar!</h2>
-            <p className="text-green-100">Our fitness coach called you yesterday about your premium membership. We have exclusive offers waiting for you!</p>
-            <p className="text-sm text-green-200 mt-1">Premium Member since June 2023 • Strength Training Focus</p>
-          </div>
-          <div className="hidden md:block">
-            <div className="bg-white/20 rounded-lg p-3 text-center">
-              <p className="text-lg font-bold">{user?.loyaltyPoints || 0}</p>
-              <p className="text-sm text-green-100">Loyalty Points</p>
+      {/* Virgin Active Style Hero Banner */}
+      <div className="mb-12 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-gradient-to-br from-red-600 via-red-500 to-red-700 opacity-5"></div>
+        
+        {/* Main Content */}
+        <div className="relative p-8 lg:p-12">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="mb-6">
+                  <span className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold uppercase tracking-wider rounded-full mb-4">
+                    Premium Member
+                  </span>
+                  <h1 className="text-4xl lg:text-6xl font-black tracking-tight text-gray-900 leading-tight mb-6">
+                    WELCOME TO{" "}
+                    <span className="text-red-600 block">REAL WELLNESS</span>
+                  </h1>
+                  <p className="text-xl text-gray-700 leading-relaxed mb-8 max-w-lg">
+                    Ready to get back on track? We've got some great offers to help you reach your goals.
+                  </p>
+                </div>
+                
+                {/* Member Stats */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  <div className="text-center">
+                    <div className="text-2xl font-black text-red-600">{user?.loyaltyPoints || 0}</div>
+                    <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Loyalty Points</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-black text-gray-900">32</div>
+                    <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Age</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-black text-gray-900">2Y</div>
+                    <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Member Since</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-black text-gray-900">Gold</div>
+                    <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Status</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Right Side - Member Photo Placeholder */}
+              <div className="hidden lg:block">
+                <div className="relative">
+                  <div className="w-full h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-white text-2xl font-bold">P</span>
+                      </div>
+                      <p className="text-gray-600 font-semibold">Strength Training Focus</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="mb-10 content-spacing">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mb-3">
-          Welcome back, <span data-testid="text-user-first-name" className="text-red-600">Prakhar</span>!
-        </h1>
-        <p className="text-slate-600 text-lg md:text-xl font-medium leading-relaxed max-w-3xl">Ready to get back on track? We've got some great offers to help you reach your goals! 💪</p>
-        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-            <div>
-              <span className="font-semibold text-gray-700">Age:</span>
-              <span className="ml-1 text-gray-600">32</span>
+      {/* Real Wellness Features Section */}
+      <div className="mb-16">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl lg:text-4xl font-black text-gray-900 mb-12 text-center">
+            Your membership. Endless possibilities.
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Gift className="text-white h-8 w-8" />
+              </div>
+              <h3 className="font-bold text-gray-900 mb-2">Real rewards</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">instant goodies & partner discounts for staying active</p>
             </div>
-            <div>
-              <span className="font-semibold text-gray-700">Goal:</span>
-              <span className="ml-1 text-gray-600">Strength Training</span>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Activity className="text-white h-8 w-8" />
+              </div>
+              <h3 className="font-bold text-gray-900 mb-2">Real endorphins</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">spacious gym floors & unlimited exercise classes</p>
             </div>
-            <div>
-              <span className="font-semibold text-gray-700">Plan:</span>
-              <span className="ml-1 text-gray-600">Premium</span>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Target className="text-white h-8 w-8" />
+              </div>
+              <h3 className="font-bold text-gray-900 mb-2">Real progress</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">personal training & nutrition coaching</p>
             </div>
-            <div>
-              <span className="font-semibold text-gray-700">Trainer:</span>
-              <span className="ml-1 text-gray-600">Alex Rodriguez</span>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Brain className="text-white h-8 w-8" />
+              </div>
+              <h3 className="font-bold text-gray-900 mb-2">Real relaxation</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">pools, saunas & steam rooms</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Enhanced Stats Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        <Card className="relative overflow-hidden hover:shadow-xl transition-all duration-300 border border-slate-200/60 shadow-sm hover:border-slate-300/80 bg-gradient-to-br from-blue-50/80 via-cyan-50/60 to-purple-50/40">
-          <div className="absolute -top-2 -right-2 w-20 h-20 bg-gradient-to-br from-blue-300/40 to-purple-300/40 rounded-full"></div>
-          <CardContent className="p-6 relative">
+      {/* Your Progress Dashboard */}
+      <div className="mb-16">
+        <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-8">Your progress dashboard</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border-0 bg-white shadow-md">
+          <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-200 to-cyan-200 rounded-xl flex items-center justify-center shadow-md">
-                <Calendar className="text-blue-700 h-6 w-6" />
+              <div className="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center">
+                <Calendar className="text-white h-6 w-6" />
               </div>
               <div className="text-right">
-                <p className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent" data-testid="text-monthly-visits">{currentVisits}</p>
-                <p className="text-sm md:text-base font-medium text-readable-muted">of {monthlyGoal} visits</p>
+                <p className="text-3xl font-black text-gray-900" data-testid="text-monthly-visits">{currentVisits}</p>
+                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide">of {monthlyGoal} visits</p>
               </div>
             </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-800 font-semibold">Monthly Goal 🎯</span>
-                <span className="font-bold text-blue-700">{Math.round(goalProgress)}%</span>
+            <div className="space-y-3">
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-900 font-bold">Monthly Goal</span>
+                <span className="text-sm font-black text-red-600">{Math.round(goalProgress)}%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2.5 shadow-inner">
+              <div className="w-full bg-gray-200 rounded-full h-3">
                 <div 
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 h-2.5 rounded-full transition-all duration-500 shadow-sm" 
+                  className="bg-red-600 h-3 rounded-full transition-all duration-500" 
                   style={{ width: `${goalProgress}%` }}
                 />
               </div>
               {goalProgress < 50 && (
-                <div className="text-xs text-orange-800 font-semibold animate-pulse bg-white/70 px-2 py-1 rounded shadow-sm">
-                  💪 You've got this! Let's reach that goal!
+                <div className="text-xs text-gray-900 font-bold">
+                  You've got this! Let's reach that goal!
                 </div>
               )}
             </div>
           </CardContent>
         </Card>
 
-        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border border-slate-200/60 shadow-sm hover:border-orange-300/60 bg-gradient-to-br from-orange-50/80 to-orange-100/60">
-          <div className="absolute -bottom-2 -left-2 w-16 h-16 bg-orange-200/30 rounded-full"></div>
-          <CardContent className="p-6 relative">
+        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border-0 bg-white shadow-md">
+          <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center shadow-sm animate-pulse">
-                <Flame className="text-orange-600 h-6 w-6" />
+              <div className="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center">
+                <Flame className="text-white h-6 w-6" />
               </div>
               <div className="text-right">
-                <p className="text-3xl md:text-4xl font-bold text-readable-primary" data-testid="text-current-streak">{currentStreak}</p>
-                <p className="text-sm md:text-base text-readable-muted">day streak 🔥</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-orange-500" />
-              <span className="text-sm text-orange-600 font-medium">Restart your streak today!</span>
-            </div>
-            <div className="mt-3 text-xs text-orange-800 font-semibold bg-white/70 px-2 py-1 rounded shadow-sm inline-block">
-              Come back soon! 💪
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border border-slate-200/60 shadow-sm hover:border-purple-300/60 bg-gradient-to-br from-purple-50/80 to-purple-100/60">
-          <div className="absolute -top-3 -right-1 w-12 h-12 bg-purple-200/30 rounded-full"></div>
-          <CardContent className="p-6 relative">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center shadow-sm">
-                <Trophy className="text-purple-600 h-6 w-6" />
-              </div>
-              <div className="text-right">
-                <p className="text-3xl md:text-4xl font-bold text-readable-primary">Gold</p>
-                <p className="text-sm md:text-base text-readable-muted">Member Status</p>
+                <p className="text-3xl font-black text-gray-900" data-testid="text-current-streak">{currentStreak}</p>
+                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Day Streak</p>
               </div>
             </div>
             <div className="space-y-2">
-              <div className="text-sm text-purple-700 font-medium">Premium Benefits Active</div>
-              <div className="text-xs text-purple-600 bg-white/70 px-2 py-1 rounded shadow-sm inline-block">
-                Personal Trainer Included 💪
+              <div className="text-sm text-gray-900 font-bold">Keep the momentum!</div>
+              <div className="text-xs text-gray-600">
+                Visit today to maintain your streak
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border border-slate-200/60 shadow-sm hover:border-green-300/60 bg-gradient-to-br from-green-50/80 to-green-100/60">
-          <div className="absolute -bottom-1 -right-3 w-14 h-14 bg-green-200/30 rounded-full"></div>
-          <CardContent className="p-6 relative">
+        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border-0 bg-white shadow-md">
+          <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center shadow-sm">
-                <Activity className="text-green-600 h-6 w-6" />
+              <div className="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center">
+                <Trophy className="text-white h-6 w-6" />
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-gray-900">2.5</p>
-                <p className="text-sm text-gray-600">avg hours/visit ⏱️</p>
+                <p className="text-3xl font-black text-gray-900">Gold</p>
+                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Member Status</p>
               </div>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-blue-500" />
-                <span className="text-sm text-gray-600">Great consistency! 🎯</span>
-              </div>
-              <div className="text-xs text-green-800 font-semibold bg-white/70 px-2 py-1 rounded shadow-sm">
-                Optimal! ✅
+            <div className="space-y-2">
+              <div className="text-sm text-gray-900 font-bold">Premium Benefits Active</div>
+              <div className="text-xs text-gray-600">
+                Personal Trainer Included
               </div>
             </div>
           </CardContent>
         </Card>
+
+        <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 border-0 bg-white shadow-md">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center">
+                <Clock className="text-white h-6 w-6" />
+              </div>
+              <div className="text-right">
+                <p className="text-3xl font-black text-gray-900">2.5</p>
+                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Avg Hours/Visit</p>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-sm text-gray-900 font-bold">Great consistency!</div>
+              <div className="text-xs text-gray-600">
+                Optimal workout duration
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        </div>
       </div>
 
       {/* Progress Charts */}

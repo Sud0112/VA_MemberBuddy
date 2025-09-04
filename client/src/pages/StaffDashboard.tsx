@@ -86,9 +86,19 @@ function MemberAnalytics() {
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-slate-900 mb-3">Member Analytics</h1>
-        <p className="text-slate-600 text-base md:text-lg leading-relaxed max-w-2xl">Comprehensive insights into member behavior and club performance</p>
+      <div className="mb-12">
+        <div className="max-w-6xl mx-auto text-center">
+          <span className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold uppercase tracking-wider rounded-full mb-4">
+            Staff Dashboard
+          </span>
+          <h1 className="text-4xl lg:text-6xl font-black tracking-tight text-gray-900 leading-tight mb-6">
+            MEMBER{" "}
+            <span className="text-red-600 block">ANALYTICS</span>
+          </h1>
+          <p className="text-xl text-gray-700 leading-relaxed mb-8 max-w-2xl mx-auto">
+            Comprehensive insights into member behavior and club performance
+          </p>
+        </div>
       </div>
 
       {/* Key Metrics */}

@@ -167,9 +167,19 @@ export function LoyaltyCampaigns() {
   return (
     <div className="p-8">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-slate-900 mb-3">Loyalty Campaign Management</h1>
-          <p className="text-slate-600 text-base md:text-lg leading-relaxed max-w-2xl">Create and manage AI-powered loyalty offers for members</p>
+        <div className="mb-12">
+          <div className="max-w-6xl mx-auto text-center">
+            <span className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold uppercase tracking-wider rounded-full mb-4">
+              Marketing Tools
+            </span>
+            <h1 className="text-4xl lg:text-6xl font-black tracking-tight text-gray-900 leading-tight mb-6">
+              LOYALTY{" "}
+              <span className="text-red-600 block">CAMPAIGNS</span>
+            </h1>
+            <p className="text-xl text-gray-700 leading-relaxed mb-8 max-w-2xl mx-auto">
+              Create and manage AI-powered loyalty offers for members
+            </p>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
