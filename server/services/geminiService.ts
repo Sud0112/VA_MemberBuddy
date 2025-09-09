@@ -1,10 +1,12 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ 
-  apiKey: process.env.GEMINI_API_KEY || process.env.API_KEY || "" 
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY || process.env.API_KEY || "",
 });
 
-export async function generateRetentionStrategies(memberProfile: any): Promise<string> {
+export async function generateRetentionStrategies(
+  memberProfile: any,
+): Promise<string> {
   if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
     // Mock response for development
     return `
@@ -47,7 +49,70 @@ Please provide 3 actionable retention strategies in markdown format with headers
   }
 }
 
-export async function generateChurnPreventionEmail(memberProfile: any, riskLevel: string, currentRiskBand: string, previousRiskBand?: string): Promise<{ subject: string; content: string }> {
+export async function generateSalesEmail(
+  prompt: string,
+  systemInstruction: string,
+  model: string = "gemini-2.5-flash"
+): Promise<{ content: string }> {
+  if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
+    // Mock response for development
+    return {
+      content: `Subject: Discover Your Perfect Fitness Journey at Virgin Active
+
+Dear [Name],
+
+I hope this email finds you well! I noticed your passion for fitness and wellness, and I wanted to personally reach out to introduce you to Virgin Active - London's premier fitness destination.
+
+Based on your interests in [interests], I believe you'd absolutely love our state-of-the-art facilities and expert-led programs designed specifically for people like you who are serious about their health and fitness goals.
+
+**What makes Virgin Active special:**
+• World-class equipment and facilities across London
+• Expert personal trainers and group fitness classes
+• Exclusive member benefits and flexible membership options
+• Community of like-minded fitness enthusiasts
+
+I'd love to invite you to experience everything we have to offer with a **complimentary 7-day trial** - completely free, no strings attached.
+
+**Ready to see for yourself?**
+Click here to take our virtual tour: [Virgin Active Virtual Tour Link]
+
+Or if you'd prefer, I can arrange a personal tour at your convenience. Simply reply to this email or call me directly.
+
+Your fitness journey deserves the best support, and I'm confident Virgin Active can provide exactly that.
+
+Looking forward to welcoming you to our community!
+
+Best regards,
+[Your Name]
+Virgin Active Sales Team
+
+P.S. Don't forget to book your free trial session - spaces are limited!`
+    };
+  }
+
+  try {
+    const fullPrompt = `${systemInstruction}\n\n${prompt}`;
+    
+    const response = await ai.models.generateContent({
+      model: model || "gemini-2.5-flash",
+      contents: fullPrompt,
+    });
+
+    return {
+      content: response.text || "Email generated successfully"
+    };
+  } catch (error) {
+    console.error("Error generating sales email:", error);
+    throw new Error("Failed to generate sales email");
+  }
+}
+
+export async function generateChurnPreventionEmail(
+  memberProfile: any,
+  riskLevel: string,
+  currentRiskBand: string,
+  previousRiskBand?: string,
+): Promise<{ subject: string; content: string }> {
   if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
     // Mock response for development
     const memberName = `${memberProfile.firstName} ${memberProfile.lastName}`;
@@ -77,7 +142,7 @@ Your wellness journey matters to us. Our team would love to understand any chall
 Stay strong,
 The ClubPulse Team
 
-P.S. Don't forget - your membership includes unlimited access to our new meditation room and recovery zone!`
+P.S. Don't forget - your membership includes unlimited access to our new meditation room and recovery zone!`,
       },
       medium: {
         subject: `${memberProfile.firstName}, let's keep your momentum going! 🏃‍♀️`,
@@ -86,7 +151,7 @@ P.S. Don't forget - your membership includes unlimited access to our new meditat
 We've noticed a slight change in your visit pattern recently. As someone who's been crushing their fitness goals, we want to help you maintain that amazing momentum!
 
 **Your Recent Progress:**
-• Member since ${new Date(memberProfile.joinDate).toLocaleDateString('en-GB')}
+• Member since ${new Date(memberProfile.joinDate).toLocaleDateString("en-GB")}
 • ${memberProfile.membershipType} membership benefits
 • Previously averaging regular visits
 
@@ -102,7 +167,7 @@ Sometimes life gets busy - that's completely normal! Our flexible class schedule
 Best regards,
 Your ClubPulse Family
 
-*Remember: Consistency beats perfection. Even 20 minutes counts!*`
+*Remember: Consistency beats perfection. Even 20 minutes counts!*`,
       },
       low: {
         subject: `New classes and features await you, ${memberProfile.firstName}! ✨`,
@@ -129,17 +194,22 @@ We'd love to see you soon and hear about your current fitness goals. Our team is
 See you soon!
 The ClubPulse Team
 
-*Your next visit is going to be amazing - we've got everything ready for you!*`
-      }
+*Your next visit is going to be amazing - we've got everything ready for you!*`,
+      },
     };
 
-    return mockEmails[riskLevel as keyof typeof mockEmails] || mockEmails.medium;
+    return (
+      mockEmails[riskLevel as keyof typeof mockEmails] || mockEmails.medium
+    );
   }
 
   try {
     const memberName = `${memberProfile.firstName} ${memberProfile.lastName}`;
-    const daysSinceLastVisit = memberProfile.lastVisit 
-      ? Math.floor((Date.now() - new Date(memberProfile.lastVisit).getTime()) / (1000 * 60 * 60 * 24))
+    const daysSinceLastVisit = memberProfile.lastVisit
+      ? Math.floor(
+          (Date.now() - new Date(memberProfile.lastVisit).getTime()) /
+            (1000 * 60 * 60 * 24),
+        )
       : 999;
 
     const prompt = `You are writing a personalized churn prevention email for a UK fitness club called ClubPulse. Write a warm, encouraging email that doesn't feel pushy or desperate.
@@ -148,7 +218,7 @@ Member Details:
 - Name: ${memberName}
 - Membership Type: ${memberProfile.membershipType}
 - Member Since: ${memberProfile.joinDate}
-- Last Visit: ${memberProfile.lastVisit ? `${daysSinceLastVisit} days ago` : 'Never visited'}
+- Last Visit: ${memberProfile.lastVisit ? `${daysSinceLastVisit} days ago` : "Never visited"}
 - Current Risk Level: ${riskLevel}
 - Risk Band Change: ${previousRiskBand ? `Moving from ${previousRiskBand} to ${currentRiskBand}` : `Currently in ${currentRiskBand} band`}
 
@@ -183,19 +253,31 @@ Return format:
     });
 
     const emailText = response.text || "";
-    
+
     // Try to parse as JSON, fallback to structured format
     try {
       return JSON.parse(emailText);
     } catch {
       // If not JSON, extract subject and content manually
-      const lines = emailText.split('\n');
-      const subjectLine = lines.find(line => line.toLowerCase().includes('subject:'));
-      const subject = subjectLine ? subjectLine.replace(/subject:\s*/i, '').trim() : `We miss you at ClubPulse, ${memberProfile.firstName}!`;
-      
-      const contentStart = lines.findIndex(line => line.toLowerCase().includes('content:'));
-      const content = contentStart > -1 ? lines.slice(contentStart + 1).join('\n').trim() : emailText;
-      
+      const lines = emailText.split("\n");
+      const subjectLine = lines.find((line) =>
+        line.toLowerCase().includes("subject:"),
+      );
+      const subject = subjectLine
+        ? subjectLine.replace(/subject:\s*/i, "").trim()
+        : `We miss you at ClubPulse, ${memberProfile.firstName}!`;
+
+      const contentStart = lines.findIndex((line) =>
+        line.toLowerCase().includes("content:"),
+      );
+      const content =
+        contentStart > -1
+          ? lines
+              .slice(contentStart + 1)
+              .join("\n")
+              .trim()
+          : emailText;
+
       return { subject, content };
     }
   } catch (error) {
@@ -204,7 +286,9 @@ Return format:
   }
 }
 
-export async function generateLoyaltyOffers(targetCriteria: string): Promise<{ offers: any[] }> {
+export async function generateLoyaltyOffers(
+  targetCriteria: string,
+): Promise<{ offers: any[] }> {
   if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
     // Mock response for development
     return {
@@ -214,23 +298,24 @@ export async function generateLoyaltyOffers(targetCriteria: string): Promise<{ o
           title: "Free Yoga Mat",
           description: "Premium branded yoga mat for dedicated practitioners",
           points: 400,
-          category: "Wellness"
+          category: "Wellness",
         },
         {
           id: 2,
           title: "Morning Yoga Package",
           description: "5 additional morning yoga classes",
           points: 600,
-          category: "Classes"
+          category: "Classes",
         },
         {
           id: 3,
           title: "Meditation Workshop",
-          description: "Exclusive mindfulness workshop with certified instructor",
+          description:
+            "Exclusive mindfulness workshop with certified instructor",
           points: 350,
-          category: "Wellness"
-        }
-      ]
+          category: "Wellness",
+        },
+      ],
     };
   }
 
@@ -263,14 +348,14 @@ Return the response as a JSON object with an "offers" array.`;
                   title: { type: "string" },
                   description: { type: "string" },
                   points: { type: "integer" },
-                  category: { type: "string" }
+                  category: { type: "string" },
                 },
-                required: ["id", "title", "description", "points", "category"]
-              }
-            }
+                required: ["id", "title", "description", "points", "category"],
+              },
+            },
           },
-          required: ["offers"]
-        }
+          required: ["offers"],
+        },
       },
       contents: prompt,
     });
@@ -288,24 +373,30 @@ Return the response as a JSON object with an "offers" array.`;
 }
 
 export async function sendMessageToChat(
-  message: string, 
-  conversationHistory: Array<{ role: string; content: string }>
-): Promise<{ content: string; contactEmail?: string; contactName?: string; tourBooked?: boolean }> {
+  message: string,
+  conversationHistory: Array<{ role: string; content: string }>,
+): Promise<{
+  content: string;
+  contactEmail?: string;
+  contactName?: string;
+  tourBooked?: boolean;
+}> {
   if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
     // Mock response for development
     const responses = [
       "Hi! I'm your AI assistant. I can help you learn about our facilities, pricing, and schedule a tour. How can I help you today?",
       "We're open 24/7 for Premium members! Basic and Student members have access from 6am-10pm daily. Would you like to know more about our membership options?",
       "Our Premium membership is £59/month and includes 24/7 access, advanced AI coaching, group fitness classes, personal training sessions, and premium loyalty rewards. Would you like to schedule a tour to see our facilities?",
-      "Great! I'd love to help you schedule a tour. What's your name and email address so we can get that set up for you?"
+      "Great! I'd love to help you schedule a tour. What's your name and email address so we can get that set up for you?",
     ];
-    
-    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+
+    const randomResponse =
+      responses[Math.floor(Math.random() * responses.length)];
     return { content: randomResponse };
   }
 
   try {
-    const systemInstruction = `You are a friendly sales assistant for ClubPulse, a premium AI-powered fitness club. Your goal is to help prospective members learn about the club and ultimately book a tour.
+    const systemInstruction = `You are a friendly sales assistant for MemberBuddy, a premium AI-powered fitness club. Your goal is to help prospective members learn about the club and ultimately book a tour.
 
 Follow this conversation flow:
 1. Greet warmly and ask how you can help
@@ -338,20 +429,24 @@ Keep responses helpful, friendly, and conversational. Always try to guide toward
     }
 
     const response = await chat.sendMessage({ message: message });
-    const content = response.text || "I'm sorry, I didn't understand that. Could you please rephrase?";
+    const content =
+      response.text ||
+      "I'm sorry, I didn't understand that. Could you please rephrase?";
 
     // Parse special commands
     let contactEmail, contactName, tourBooked;
-    
+
     // Simple extraction for demo (in production, this would be more sophisticated)
-    const emailMatch = message.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/);
+    const emailMatch = message.match(
+      /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/,
+    );
     if (emailMatch) {
       contactEmail = emailMatch[0];
       tourBooked = true;
     }
 
     // Extract name if email is provided
-    if (contactEmail && message.toLowerCase().includes('my name is')) {
+    if (contactEmail && message.toLowerCase().includes("my name is")) {
       const nameMatch = message.match(/my name is ([A-Za-z\s]+)/i);
       if (nameMatch) {
         contactName = nameMatch[1].trim();
@@ -361,11 +456,17 @@ Keep responses helpful, friendly, and conversational. Always try to guide toward
     return { content, contactEmail, contactName, tourBooked };
   } catch (error) {
     console.error("Error in chat:", error);
-    return { content: "I'm experiencing some technical difficulties. Please try again or contact us directly at (555) 123-4567." };
+    return {
+      content:
+        "I'm experiencing some technical difficulties. Please try again or contact us directly at (555) 123-4567.",
+    };
   }
 }
 
-export async function generateWorkoutPlan(goals: string, healthData?: any): Promise<{ planTitle: string; weeklySchedule: any[] }> {
+export async function generateWorkoutPlan(
+  goals: string,
+  healthData?: any,
+): Promise<{ planTitle: string; weeklySchedule: any[] }> {
   if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
     // Mock response for development
     return {
@@ -374,13 +475,14 @@ export async function generateWorkoutPlan(goals: string, healthData?: any): Prom
         {
           day: "Monday",
           focus: "Upper Body Strength",
-          description: "Focus on building upper body strength with compound movements",
+          description:
+            "Focus on building upper body strength with compound movements",
           exercises: [
             "Bench Press - 4 sets x 8-10 reps",
             "Pull-ups - 3 sets x 6-8 reps",
             "Shoulder Press - 3 sets x 10-12 reps",
-            "Dumbbell Rows - 3 sets x 10-12 reps"
-          ]
+            "Dumbbell Rows - 3 sets x 10-12 reps",
+          ],
         },
         {
           day: "Tuesday",
@@ -390,8 +492,8 @@ export async function generateWorkoutPlan(goals: string, healthData?: any): Prom
             "Treadmill Run - 30 minutes moderate pace",
             "Plank - 3 sets x 45 seconds",
             "Russian Twists - 3 sets x 20 reps",
-            "Mountain Climbers - 3 sets x 30 seconds"
-          ]
+            "Mountain Climbers - 3 sets x 30 seconds",
+          ],
         },
         {
           day: "Wednesday",
@@ -401,8 +503,8 @@ export async function generateWorkoutPlan(goals: string, healthData?: any): Prom
             "Squats - 4 sets x 10-12 reps",
             "Deadlifts - 3 sets x 8-10 reps",
             "Lunges - 3 sets x 12 reps each leg",
-            "Calf Raises - 3 sets x 15 reps"
-          ]
+            "Calf Raises - 3 sets x 15 reps",
+          ],
         },
         {
           day: "Thursday",
@@ -412,23 +514,25 @@ export async function generateWorkoutPlan(goals: string, healthData?: any): Prom
             "20-minute walk",
             "Full body stretching routine",
             "Foam rolling",
-            "Yoga or meditation"
-          ]
-        }
-      ]
+            "Yoga or meditation",
+          ],
+        },
+      ],
     };
   }
 
   try {
-    const healthProfile = healthData ? `
+    const healthProfile = healthData
+      ? `
 
 Health Profile:
 - Age: ${healthData.age}
 - Current Fitness Level: ${healthData.fitnessLevel}
 - Exercise Experience: ${healthData.exerciseExperience}
-- Medical Conditions/Notes: ${healthData.medicalConditions || 'None reported'}
-` : '';
-    
+- Medical Conditions/Notes: ${healthData.medicalConditions || "None reported"}
+`
+      : "";
+
     const prompt = `You are an expert personal trainer. Create a personalized weekly workout plan based on these goals and health profile:
 
 Goals: ${goals}${healthProfile}
@@ -473,15 +577,15 @@ Return as JSON with this structure:
                   description: { type: "string" },
                   exercises: {
                     type: "array",
-                    items: { type: "string" }
-                  }
+                    items: { type: "string" },
+                  },
                 },
-                required: ["day", "focus", "description", "exercises"]
-              }
-            }
+                required: ["day", "focus", "description", "exercises"],
+              },
+            },
           },
-          required: ["planTitle", "weeklySchedule"]
-        }
+          required: ["planTitle", "weeklySchedule"],
+        },
       },
       contents: prompt,
     });

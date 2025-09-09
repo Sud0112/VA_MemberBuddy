@@ -14,6 +14,7 @@ import {
   generateLoyaltyOffers,
   sendMessageToChat,
   generateWorkoutPlan,
+  generateSalesEmail,
 } from "./services/geminiService";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -429,6 +430,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching metrics:", error);
       res.status(500).json({ message: "Failed to fetch metrics" });
+    }
+  });
+
+  // Sales email generation endpoint
+  app.post('/api/ai/sales-email', isAuthenticated, async (req: any, res) => {
+    try {
+      const user = await storage.getUser(req.user.claims.sub);
+      if (!user || user.role !== 'staff') {
+        return res.status(403).json({ message: "Staff access required" });
+      }
+
+      const { prompt, systemInstruction, model } = req.body;
+      
+      if (!prompt || !systemInstruction) {
+        return res.status(400).json({ message: "Prompt and system instruction are required" });
+      }
+
+      const emailContent = await generateSalesEmail(prompt, systemInstruction, model);
+      res.json(emailContent);
+    } catch (error) {
+      console.error("Error generating sales email:", error);
+      res.status(500).json({ message: "Failed to generate sales email" });
     }
   });
 

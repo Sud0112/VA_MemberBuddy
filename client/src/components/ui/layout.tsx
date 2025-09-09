@@ -14,7 +14,8 @@ import {
   Mail,
   Shield,
   ToggleLeft,
-  ToggleRight
+  ToggleRight,
+  Rocket
 } from "lucide-react";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { NotificationCenter } from "@/components/NotificationCenter";
@@ -74,6 +75,7 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
     { id: "churn-emails", label: "Churn Emails", icon: Mail },
     { id: "loyalty-campaigns", label: "Loyalty Campaigns", icon: Megaphone },
     { id: "member-analytics", label: "Member Analytics", icon: Users },
+    { id: "sales-persona", label: "Sales Persona", icon: Rocket },
   ];
 
   const tabs = userRole === "staff" ? staffTabs : memberTabs;

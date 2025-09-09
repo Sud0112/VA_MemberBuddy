@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "Emily Johnson",
+    "email": "emily.johnson@email.com",
+    "status": "New",
+    "socialMediaHandle": "@emily_fitness"
+  },
+  {
+    "id": 2,
+    "name": "Marcus Chen",
+    "email": "marcus.chen@email.com",
+    "status": "New",
+    "socialMediaHandle": "@marcus_active"
+  },
+  {
+    "id": 3,
+    "name": "Sophie Williams",
+    "email": "sophie.williams@email.com",
+    "status": "Contacted",
+    "socialMediaHandle": "@sophie_wellness"
+  },
+  {
+    "id": 4,
+    "name": "James Thompson",
+    "email": "james.thompson@email.com",
+    "status": "New",
+    "socialMediaHandle": "@james_runner"
+  },
+  {
+    "id": 5,
+    "name": "Isabella Rodriguez",
+    "email": "isabella.rodriguez@email.com",
+    "status": "Interested",
+    "socialMediaHandle": "@bella_yoga"
+  },
+  {
+    "id": 6,
+    "name": "David Park",
+    "email": "david.park@email.com",
+    "status": "New",
+    "socialMediaHandle": "@david_strength"
+  }
+]

@@ -9,6 +9,7 @@ import { CookieConsent } from "@/components/CookieConsent";
 import { LandingPage } from "@/pages/LandingPage";
 import { MemberPortal } from "@/pages/MemberPortal";
 import { StaffDashboard } from "@/pages/StaffDashboard";
+import { SalesPersona } from "@/pages/SalesPersona";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 
@@ -39,6 +40,12 @@ function Router() {
       <Route path="/staff">
         <ProtectedRoute requiredRole="staff">
           <StaffDashboard />
+        </ProtectedRoute>
+      </Route>
+      
+      <Route path="/sales">
+        <ProtectedRoute requiredRole="staff">
+          <SalesPersona />
         </ProtectedRoute>
       </Route>
       

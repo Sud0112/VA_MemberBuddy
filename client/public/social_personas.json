@@ -1,0 +1,20 @@
+{
+  "@emily_fitness": {
+    "interests": ["yoga", "pilates", "wellness", "healthy eating", "mindfulness"]
+  },
+  "@marcus_active": {
+    "interests": ["weightlifting", "CrossFit", "HIIT workouts", "protein supplements", "muscle building"]
+  },
+  "@sophie_wellness": {
+    "interests": ["swimming", "aqua aerobics", "recovery", "spa treatments", "holistic health"]
+  },
+  "@james_runner": {
+    "interests": ["running", "marathon training", "endurance sports", "cardio workouts", "outdoor fitness"]
+  },
+  "@bella_yoga": {
+    "interests": ["hot yoga", "meditation", "flexibility", "stress relief", "spiritual wellness"]
+  },
+  "@david_strength": {
+    "interests": ["powerlifting", "strength training", "functional fitness", "sports performance", "nutrition coaching"]
+  }
+}

@@ -1,0 +1,38 @@
+Objective: Integrate a new feature set into my existing React application. This feature will be a new persona called "Sales Persona" that reads from external JSON data files, displays prospects, and uses the Gemini API to automatically contact new leads when a "Deploy" button is pressed.
+Core Requirements:
+1. Data Source (From External JSON Files):
+All CRM and persona data must be managed in external JSON files. This allows lead information to be updated without changing the application code.
+In your project's public directory, create two files:
+crm_data.json: An array of objects, where each object represents a prospect.
+Fields: id (number), name (string), email (string), status (string: 'New', 'Contacted', 'Interested'), and socialMediaHandle (string).
+social_personas.json: An object that maps a prospect's socialMediaHandle to their simulated interests.
+The main React component must fetch data from these two files when it first mounts using a useEffect hook and the fetch API, then store the data in the component's state.
+2. User Interface (Built with Tailwind CSS & Lucide Icons):
+Create a two-panel layout.
+Panel 1: "CRM Prospects":
+Display the list of prospects from the fetched CRM data.
+For each prospect, show their name, email, and status.
+The status should be a colored "pill" or badge for visual distinction (e.g., a blue background for 'New', yellow for 'Contacted').
+Panel 2: "AI Agent Control":
+Include a prominent button labeled "🚀 Deploy Agent".
+Below the button, add a section titled "Agent Activity Log". This must be a scrollable area that displays real-time text updates from the agent's operations.
+3. AI Agent Logic (The deployAgent function):
+This async function must be triggered by clicking the "Deploy Agent" button.
+When the agent is running, the button must be disabled to prevent multiple runs.
+Step 1: The function must filter the CRM data (stored in the component's state) to find all prospects with status: 'New'.
+Step 2: Log the number of new leads found to the "Agent Activity Log". If zero new leads are found, log a "No new leads to process." message and stop execution.
+Step 3: Loop through each new lead found. For each lead:
+Log a message like Processing ${lead.name}... to the activity log.
+Use the lead's socialMediaHandle to look up their interests in the social personas data.
+Call the Gemini API (via the helper function below) to generate a personalized email.
+Log that the email has been generated and is being "sent".
+Crucially: Update the component's state to change that specific prospect's status from 'New' to 'Contacted'. This change must trigger a re-render of the UI, visually updating the prospect's status pill in the CRM panel.
+Implement a 2-second delay between processing each lead to simulate a more realistic operational flow.
+Step 4: Once all new leads have been processed, log a completion message (e.g., "Agent has completed all tasks.") and re-enable the "Deploy Agent" button.
+4. Gemini API Integration:
+Create an async helper function named callGeminiAPI to handle the fetch request to the Gemini API endpoint.
+Use the gemini-2.5-flash-preview-05-20 model.
+The function should accept a prompt and a systemInstruction as arguments.
+Use the following details for the email generation call:
+System Instruction: "You are an expert sales copywriter for 'Virgin Active', a premium gym operating in London, UK. Your tone is encouraging, knowledgeable, and not pushy. Write a short, personalized outreach email. The goal is to get the prospect to click a virtual tour link and book a free trial session."
+User Prompt Template: "Generate an email for a prospect named ${lead.name}. Their social media persona suggests they are interested in: ${persona.interests.join(', ')}. Make sure to include placeholders like [Virgin Active Virtual Tour Link] and mention the free trial."
