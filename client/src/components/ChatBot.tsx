@@ -16,7 +16,7 @@ export function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi! I'm your AI assistant. I can help you learn about our facilities, pricing, and schedule a tour. How can I help you today?"
+      content: "Hi there! Welcome to Virgin Active. To get started, which language would you prefer for this chat? [English] [Spanish] [French] [Other]"
     }
   ]);
   const [input, setInput] = useState("");
