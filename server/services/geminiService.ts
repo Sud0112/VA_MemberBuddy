@@ -96,8 +96,7 @@ P.S. Don't forget to book your free trial session - spaces are limited!`,
   try {
     const response = await ai.models.generateContent({
       model,
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      systemInstruction
+      contents: [{ role: "user", parts: [{ text: prompt }] }]
     });
 
     const text = response.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -338,10 +337,7 @@ Return the response as a JSON object with an "offers" array.`;
 
     const response = await ai.models.generateContent({
       model: "gemini-1.5-flash",
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseMimeType: "application/json",
-      },
+      contents: [{ role: "user", parts: [{ text: prompt }] }]
     });
 
     const rawJson = response.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -446,8 +442,7 @@ Keep responses helpful, friendly, and guide the user through the process smoothl
           parts: [{ text: msg.content }],
         })),
         { role: "user", parts: [{ text: message }] }
-      ],
-      systemInstruction,
+      ]
     });
 
     const content =
@@ -579,10 +574,7 @@ Return as JSON with this structure:
 
     const response = await ai.models.generateContent({
       model: "gemini-1.5-flash",
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseMimeType: "application/json",
-      },
+      contents: [{ role: "user", parts: [{ text: prompt }] }]
     });
 
     const rawJson = response.candidates?.[0]?.content?.parts?.[0]?.text;
