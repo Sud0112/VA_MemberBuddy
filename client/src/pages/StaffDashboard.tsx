@@ -160,7 +160,7 @@ function MemberAnalytics() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -181,7 +181,7 @@ function MemberAnalytics() {
 
       {/* Charts Grid */}
       <div className="grid lg:grid-cols-2 gap-6 mb-8">
-        <Card>
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
           <CardHeader>
             <CardTitle>Membership Growth Trend</CardTitle>
           </CardHeader>
@@ -220,7 +220,7 @@ function MemberAnalytics() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
           <CardHeader>
             <CardTitle>Peak Hours Analysis</CardTitle>
           </CardHeader>

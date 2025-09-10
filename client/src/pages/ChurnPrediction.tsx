@@ -331,7 +331,7 @@ export function ChurnPrediction() {
 
         {/* Member Details & Actions */}
         <div className="lg:col-span-2">
-          <Card>
+          <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
             {selectedMember ? (
               <>
                 {/* Selected Member Profile */}

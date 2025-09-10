@@ -102,9 +102,9 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
                 </AvatarFallback>
               </Avatar>
               <div>
-                <h3 className="font-semibold text-gray-900" data-testid="text-user-name">
+                <h2 className="font-semibold text-gray-900" data-testid="text-user-name">
                   {user?.firstName} {user?.lastName}
-                </h3>
+                </h2>
                 <p className="text-sm text-gray-600">{roleDisplayName}</p>
               </div>
             </div>
