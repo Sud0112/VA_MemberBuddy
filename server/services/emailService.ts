@@ -1,5 +1,7 @@
 import sgMail from '@sendgrid/mail';
 import { Resend } from 'resend';
+import { EmailTrackingService } from './emailTrackingService';
+import { v4 as uuidv4 } from 'uuid';
 
 // Initialize email services with API keys from environment
 if (process.env.SENDGRID_API_KEY) {
@@ -28,25 +30,60 @@ export class EmailService {
     return { provider: 'test', configured: false };
   }
 
-  static async sendSalesEmail(emailData: EmailData): Promise<{ success: boolean; messageId?: string; error?: string }> {
+  static async sendSalesEmail(emailData: EmailData): Promise<{ success: boolean; messageId?: string; error?: string; trackingId?: string }> {
     const { provider, configured } = this.getAvailableProvider();
     
     try {
-      // Replace placeholders in email content
+      // Generate unique tracking ID
+      const trackingId = uuidv4();
+      
+      // Create tracking URLs
+      const baseUrl = process.env.REPLIT_DOMAIN ? `https://${process.env.REPLIT_DOMAIN}` : 'http://localhost:5000';
+      const trackingUrl = `${baseUrl}/api/track/${trackingId}`;
+      const virtualTourUrl = `${baseUrl}/api/virtual-tour/${trackingId}`;
+      
+      // Replace placeholders in email content with tracking links
       const processedContent = emailData.content
-        .replace(/\[Virgin Active Virtual Tour Link\]/g, 'https://www.virginactive.com/virtual-tour')
+        .replace(/\[Virgin Active Virtual Tour Link\]/g, virtualTourUrl)
         .replace(/\[PROSPECT_NAME\]/g, emailData.prospectName)
-        .replace(/\[UNSUBSCRIBE_LINK\]/g, 'https://www.virginactive.com/unsubscribe');
+        .replace(/\[UNSUBSCRIBE_LINK\]/g, 'https://www.virginactive.com/unsubscribe')
+        .replace(/\[HOME_PAGE_LINK\]/g, trackingUrl);
 
-      switch (provider) {
-        case 'resend':
-          return await this.sendWithResend(emailData, processedContent);
-        case 'sendgrid':
-          return await this.sendWithSendGrid(emailData, processedContent);
-        case 'test':
-        default:
-          return await this.sendTestEmail(emailData, processedContent);
+      // Add home page link if not already present
+      const enhancedContent = processedContent.includes(trackingUrl) ? processedContent : 
+        `${processedContent}\n\nExplore Virgin Active: ${trackingUrl}`;
+
+      const result = await (async () => {
+        switch (provider) {
+          case 'resend':
+            return await this.sendWithResend(emailData, enhancedContent);
+          case 'sendgrid':
+            return await this.sendWithSendGrid(emailData, enhancedContent);
+          case 'test':
+          default:
+            return await this.sendTestEmail(emailData, enhancedContent);
+        }
+      })();
+
+      // Log email interaction if sending was successful
+      if (result.success) {
+        await EmailTrackingService.logEmailSent(
+          emailData.to,
+          emailData.prospectName,
+          emailData.subject,
+          trackingId,
+          {
+            provider,
+            messageId: result.messageId,
+            timestamp: new Date().toISOString(),
+          }
+        );
       }
+
+      return {
+        ...result,
+        trackingId
+      };
     } catch (error: any) {
       console.error(`Email service error (${provider}):`, error);
       
