@@ -83,9 +83,10 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
   const roleDisplayName = userRole === "staff" ? "Staff Member" : `${user?.membershipType || "Basic"} Member`;
 
   return (
-    <SidebarProvider>
-      <Sidebar className="w-80 hover:opacity-70 transition-opacity" variant="inset">
-        <SidebarHeader className="p-6">
+    <div className="flex min-h-screen">
+      {/* Fixed Sidebar */}
+      <div className="fixed inset-y-0 left-0 w-80 bg-white border-r border-gray-200 hover:opacity-70 transition-opacity overflow-y-auto">
+        <div className="p-6">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
               <Dumbbell className="text-white h-4 w-4" />
@@ -146,9 +147,9 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
               </Button>
             </div>
           </div>
-        </SidebarHeader>
+        </div>
 
-        <SidebarContent className="px-6">
+        <div className="px-6">
           {/* Navigation */}
           <nav className="space-y-2">
             {tabs.map((tab) => (
@@ -178,12 +179,13 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
               <span>Sign Out</span>
             </Button>
           </div>
-        </SidebarContent>
-      </Sidebar>
+        </div>
+      </div>
 
-      <SidebarInset className="flex-1 ml-80">
+      {/* Main Content */}
+      <div className="flex-1 ml-80">
         {children}
-      </SidebarInset>
-    </SidebarProvider>
+      </div>
+    </div>
   );
 }
