@@ -84,7 +84,7 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
 
   return (
     <SidebarProvider>
-      <Sidebar className="w-64">
+      <Sidebar className="w-80">
         <SidebarHeader className="p-6">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
@@ -102,10 +102,10 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
-                <h2 className="font-semibold text-gray-900 truncate" data-testid="text-user-name">
+                <h2 className="text-sm font-semibold text-gray-900" data-testid="text-user-name">
                   {user?.firstName} {user?.lastName}
                 </h2>
-                <p className="text-sm text-gray-600 truncate">{roleDisplayName}</p>
+                <p className="text-xs text-gray-600">{roleDisplayName}</p>
               </div>
             </div>
             {userRole === "member" && (
