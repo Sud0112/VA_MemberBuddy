@@ -478,7 +478,7 @@ export function SalesPersona() {
                 ) : (
                   <>
                     <Rocket className="h-4 w-4 mr-2" />
-                    🚀 Deploy Agent
+                    Deploy Agent
                   </>
                 )}
               </Button>

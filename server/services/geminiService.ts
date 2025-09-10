@@ -38,11 +38,14 @@ Member Profile:
 Please provide 3 actionable retention strategies in markdown format with headers, addressing their specific concerns and situation. Focus on practical, immediate actions the staff can take.`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
+      model: "gemini-1.5-flash",
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
     });
 
-    return response.text || "Unable to generate strategies at this time.";
+    return (
+      response.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "Unable to generate strategies at this time."
+    );
   } catch (error) {
     console.error("Error generating retention strategies:", error);
     throw new Error("Failed to generate retention strategies");
@@ -52,7 +55,7 @@ Please provide 3 actionable retention strategies in markdown format with headers
 export async function generateSalesEmail(
   prompt: string,
   systemInstruction: string,
-  model: string = "gemini-2.5-flash"
+  model: string = "gemini-1.5-flash",
 ): Promise<{ content: string }> {
   if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
     // Mock response for development
@@ -86,20 +89,21 @@ Best regards,
 [Your Name]
 Virgin Active Sales Team
 
-P.S. Don't forget to book your free trial session - spaces are limited!`
+P.S. Don't forget to book your free trial session - spaces are limited!`,
     };
   }
 
   try {
-    const fullPrompt = `${systemInstruction}\n\n${prompt}`;
-    
     const response = await ai.models.generateContent({
-      model: model || "gemini-2.5-flash",
-      contents: fullPrompt,
+      model,
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      systemInstruction
     });
 
+    const text = response.candidates?.[0]?.content?.parts?.[0]?.text;
+
     return {
-      content: response.text || "Email generated successfully"
+      content: text || "Email generated successfully",
     };
   } catch (error) {
     console.error("Error generating sales email:", error);
@@ -248,11 +252,11 @@ Return format:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
+      model: "gemini-1.5-flash",
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
     });
 
-    const emailText = response.text || "";
+    const emailText = response.candidates?.[0]?.content?.parts?.[0]?.text || "";
 
     // Try to parse as JSON, fallback to structured format
     try {
@@ -333,34 +337,14 @@ Create offers that would appeal to this specific group. Each offer should includ
 Return the response as a JSON object with an "offers" array.`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      config: {
+      model: "gemini-1.5-flash",
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig: {
         responseMimeType: "application/json",
-        responseSchema: {
-          type: "object",
-          properties: {
-            offers: {
-              type: "array",
-              items: {
-                type: "object",
-                properties: {
-                  id: { type: "integer" },
-                  title: { type: "string" },
-                  description: { type: "string" },
-                  points: { type: "integer" },
-                  category: { type: "string" },
-                },
-                required: ["id", "title", "description", "points", "category"],
-              },
-            },
-          },
-          required: ["offers"],
-        },
       },
-      contents: prompt,
     });
 
-    const rawJson = response.text;
+    const rawJson = response.candidates?.[0]?.content?.parts?.[0]?.text;
     if (rawJson) {
       return JSON.parse(rawJson);
     } else {
@@ -372,6 +356,9 @@ Return the response as a JSON object with an "offers" array.`;
   }
 }
 
+// =================================================================
+// ===== ACQUISITION CHATBOT FUNCTION - UPDATED AS PER YOUR DATA =====
+// =================================================================
 export async function sendMessageToChat(
   message: string,
   conversationHistory: Array<{ role: string; content: string }>,
@@ -384,10 +371,10 @@ export async function sendMessageToChat(
   if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
     // Mock response for development
     const responses = [
-      "Hi! I'm your AI assistant. I can help you learn about our facilities, pricing, and schedule a tour. How can I help you today?",
-      "We're open 24/7 for Premium members! Basic and Student members have access from 6am-10pm daily. Would you like to know more about our membership options?",
-      "Our Premium membership is £59/month and includes 24/7 access, advanced AI coaching, group fitness classes, personal training sessions, and premium loyalty rewards. Would you like to schedule a tour to see our facilities?",
-      "Great! I'd love to help you schedule a tour. What's your name and email address so we can get that set up for you?",
+      "Hi there! Welcome to Virgin Active. To get started, which language would you prefer for this chat?",
+      "Great! How would you like to explore today? You can [Find clubs near me], learn about [Your goals], [Compare memberships], take a [Virtual club tour], [Show class options], or [Request a call back].",
+      "To suggest the best for you, what’s your main fitness goal? Some popular ones are [Weight loss], [Build muscle], or [Improve endurance].",
+      "Based on your goal to get stronger and visit 3-4 times a week, our 'Virgin Active All Access (Annual)' plan is the best value. It includes unlimited classes and full gym access for about £1.30 per visit. Would you like to explore clubs near you?",
     ];
 
     const randomResponse =
@@ -396,56 +383,87 @@ export async function sendMessageToChat(
   }
 
   try {
-    const systemInstruction = `You are a friendly sales assistant for MemberBuddy, a premium AI-powered fitness club. Your goal is to help prospective members learn about the club and ultimately book a tour.
+    // UPDATED: This system instruction now uses your detailed VA Demo data
+    const systemInstruction = `You are a friendly, motivating, and knowledgeable AI assistant for Virgin Active. Your primary goal is to understand a potential new member's needs and guide them to the perfect club and membership plan. Be conversational and avoid being robotic.
 
-Follow this conversation flow:
-1. Greet warmly and ask how you can help
-2. Answer questions about facilities, pricing, hours, location
-3. When appropriate, suggest booking a tour
-4. If they're interested in a tour, collect their name and email
+Follow this conversational flow based on the user's choices:
 
-Club Information:
-- Premium membership: £59/month (24/7 access, AI coaching, group classes, 2 personal training sessions/month)
-- Basic membership: £22/month (06:00-22:00 access, basic AI workouts)
-- Student membership: £15/month (06:00-16:00 access, student areas)
-- Location: 25 Canary Wharf, London E14 5AB
-- Phone: 020 3837 4721
-- Features: AI personal trainer, smart rewards, premium equipment, wellness support
+1.  **Greeting & Setup:**
+    * Start by welcoming the user to Virgin Active.
+    * First, ask their preferred language: "[English] [Spanish] [French] [Other]".
+    * Once confirmed, present the main menu of options: "[Find clubs near me] [Your goals] [Compare memberships] [Virtual club tour] [Show class options] [Request a call back]".
 
-If they want to book a tour, ask for their name and email. When you have both, respond with [TIMESLOTS:weekday-morning,weekday-afternoon,weekend-morning] to show available times.
+2.  **Path A: "Your goals" (Research and Discovery)**
+    * If the user wants to explore their goals, follow this question sequence to build a profile. Don't ask all questions at once; make it a natural conversation.
+    * a) Main fitness goal? ([Weight loss] [Build muscle] [Improve endurance] [Rehab / recovery] [Flexibility / mobility] [Stress & wellbeing] [Social / classes] [Not sure])
+    * b) Target or timeline? ([Within 3 months] [3–6 months] [6+ months] [No specific timeline])
+    * c) Fitness experience level? ([Beginner] [Intermediate] [Advanced] [Prefer trainer guidance])
+    * d) Preferred workout style? ([Group classes] [Solo gym sessions] [Personal training] [Virtual workouts / on-demand] [Mix of these])
+    * e) Ask to explore clubs. ([Use my location] [Enter a suburb or postcode])
+    * f) Ask for search radius. ([5 km] [10 km] [20 km] [Custom])
+    * g) Ask about important filters/amenities. ([Pool] [Sauna & spa] [Late opening] [Ladies-only] [24/7 access] [Studio classes] [Personal training] [Family-friendly])
+    * h) How often they plan to visit? ([1–2x/week] [3–4x/week] [5+x/week] [Not sure])
+    * i) Preferred session length? ([30 mins] [45 mins] [60 mins] [No preference])
+    * j) Any injuries or medical conditions? ([Yes — I’ll explain] [No])
+    * k) Any other preferences? ([Evening classes] [Weekend classes] [Beginner-friendly] [Advanced classes] [Wheelchair access] [Childcare])
+    * l) Best times to work out? ([Early mornings] [Lunchtime] [Evenings] [Weekends] [No preference])
+    * m) How to receive follow-ups? ([Email] [SMS] [App notifications] [Phone call] [No follow-up])
 
-Keep responses helpful, friendly, and conversational. Always try to guide toward booking a tour.`;
+3.  **Path B: "Compare Memberships"**
+    * If the user wants to compare plans, ask: "[Show me top plans] [Compare clubs & plans] [Find best plan for me] [Enter promo code]".
+    * Based on their choice, you can ask clarifying questions like:
+        * Membership type interest? ([Individual monthly] [Individual annual] [Family] [Student] [Corporate] [Pay-as-you-go])
+        * Expected usage frequency? ([1–2x/week] [3–4x/week] [5+ / week] [Unsure])
+        * Must-have amenities? ([Pool] [Sauna & spa] [Group classes] [Personal training] [24/7 gym] [Kids club])
 
-    const chat = ai.chats.create({
-      model: "gemini-2.5-flash",
-      config: {
-        systemInstruction,
-      },
+4.  **Making Recommendations:**
+    * After gathering information from Path A or B, use the following membership data to make a personalized recommendation. Explain WHY you're recommending it based on their answers.
+    * **Virgin Active Lite (Monthly):**
+        * **Price:** £29 / month
+        * **Commitment:** No contract, cancel anytime.
+        * **Access:** Gym floor only.
+        * **Classes:** Pay-per-class / on-demand.
+        * **Best for:** Occasional visitors, those on a budget, or people who prefer flexibility and don't need classes or pool access.
+    * **Virgin Active All Access (Annual):**
+        * **Price:** £39 / month (billed annually at £468).
+        * **Commitment:** 12 months.
+        * **Access:** Gym floor, unlimited group classes, pool, sauna.
+        * **Perks:** 1 guest pass/month, can freeze up to 3 months.
+        * **Best for:** Regular members (3+ times/week), those who want classes, pool, and the best overall value.
+
+5.  **Handling Other Options:**
+    * **[Find clubs near me]:** Ask for their location (postcode or suburb).
+    * **[Request a call back]:** Ask for their name and phone number.
+    * **[Virtual club tour] / [Show class options]:** Provide links or summary information and ask what they'd like to see first.
+
+Keep responses helpful, friendly, and guide the user through the process smoothly.`;
+
+    const response = await ai.models.generateContent({
+      model: "gemini-1.5-flash",
+      contents: [
+        ...conversationHistory.map((msg) => ({
+          role: msg.role === "user" ? "user" : "model",
+          parts: [{ text: msg.content }],
+        })),
+        { role: "user", parts: [{ text: message }] }
+      ],
+      systemInstruction,
     });
 
-    // Add conversation history
-    for (const msg of conversationHistory) {
-      await chat.sendMessage({ message: msg.content });
-    }
-
-    const response = await chat.sendMessage({ message: message });
     const content =
-      response.text ||
+      response.candidates?.[0]?.content?.parts?.[0]?.text ||
       "I'm sorry, I didn't understand that. Could you please rephrase?";
 
-    // Parse special commands
+    // NOTE: The simple contact extraction logic is kept for demo purposes.
+    // A more robust solution might use function calling or more advanced parsing.
     let contactEmail, contactName, tourBooked;
-
-    // Simple extraction for demo (in production, this would be more sophisticated)
     const emailMatch = message.match(
       /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/,
     );
     if (emailMatch) {
       contactEmail = emailMatch[0];
-      tourBooked = true;
+      tourBooked = true; // Assuming providing an email implies booking interest
     }
-
-    // Extract name if email is provided
     if (contactEmail && message.toLowerCase().includes("my name is")) {
       const nameMatch = message.match(/my name is ([A-Za-z\s]+)/i);
       if (nameMatch) {
@@ -458,7 +476,7 @@ Keep responses helpful, friendly, and conversational. Always try to guide toward
     console.error("Error in chat:", error);
     return {
       content:
-        "I'm experiencing some technical difficulties. Please try again or contact us directly at (555) 123-4567.",
+        "I'm experiencing some technical difficulties. Please try again or contact us directly.",
     };
   }
 }
@@ -560,37 +578,14 @@ Return as JSON with this structure:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      config: {
+      model: "gemini-1.5-flash",
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig: {
         responseMimeType: "application/json",
-        responseSchema: {
-          type: "object",
-          properties: {
-            planTitle: { type: "string" },
-            weeklySchedule: {
-              type: "array",
-              items: {
-                type: "object",
-                properties: {
-                  day: { type: "string" },
-                  focus: { type: "string" },
-                  description: { type: "string" },
-                  exercises: {
-                    type: "array",
-                    items: { type: "string" },
-                  },
-                },
-                required: ["day", "focus", "description", "exercises"],
-              },
-            },
-          },
-          required: ["planTitle", "weeklySchedule"],
-        },
       },
-      contents: prompt,
     });
 
-    const rawJson = response.text;
+    const rawJson = response.candidates?.[0]?.content?.parts?.[0]?.text;
     if (rawJson) {
       return JSON.parse(rawJson);
     } else {

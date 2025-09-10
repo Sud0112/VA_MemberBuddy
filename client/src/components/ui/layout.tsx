@@ -1,12 +1,18 @@
-import { Sidebar, SidebarContent, SidebarProvider, SidebarInset, SidebarHeader } from "@/components/ui/sidebar";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarProvider,
+  SidebarInset,
+  SidebarHeader,
+} from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Dumbbell, 
-  LayoutDashboard, 
-  Gift, 
-  User, 
+import {
+  Dumbbell,
+  LayoutDashboard,
+  Gift,
+  User,
   LogOut,
   TrendingUp,
   Megaphone,
@@ -15,7 +21,7 @@ import {
   Shield,
   ToggleLeft,
   ToggleRight,
-  Rocket
+  Rocket,
 } from "lucide-react";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { NotificationCenter } from "@/components/NotificationCenter";
@@ -30,7 +36,12 @@ interface LayoutProps {
   userRole: "member" | "staff";
 }
 
-export function AppLayout({ children, activeTab, onTabChange, userRole }: LayoutProps) {
+export function AppLayout({
+  children,
+  activeTab,
+  onTabChange,
+  userRole,
+}: LayoutProps) {
   const { user } = useAuthContext();
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -41,24 +52,26 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
 
   const toggleRoleMutation = useMutation({
     mutationFn: async () => {
-      const newRole = user?.role === 'staff' ? 'member' : 'staff';
-      const response = await apiRequest('POST', '/api/user/toggle-role', { role: newRole });
+      const newRole = user?.role === "staff" ? "member" : "staff";
+      const response = await apiRequest("POST", "/api/user/toggle-role", {
+        role: newRole,
+      });
       return await response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/auth/user'] });
+      queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
       toast({
-        title: 'Role Updated',
-        description: `Switched to ${user?.role === 'staff' ? 'Member' : 'Staff'} mode. Page will reload.`,
+        title: "Role Updated",
+        description: `Switched to ${user?.role === "staff" ? "Member" : "Staff"} mode. Page will reload.`,
       });
       // Reload to update the interface
       setTimeout(() => window.location.reload(), 1000);
     },
     onError: () => {
       toast({
-        title: 'Error',
-        description: 'Failed to toggle role. Please try again.',
-        variant: 'destructive',
+        title: "Error",
+        description: "Failed to toggle role. Please try again.",
+        variant: "destructive",
       });
     },
   });
@@ -79,31 +92,51 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
   ];
 
   const tabs = userRole === "staff" ? staffTabs : memberTabs;
-  const primaryColor = userRole === "staff" ? "text-blue-600 bg-blue-50" : "text-primary bg-primary/10";
-  const roleDisplayName = userRole === "staff" ? "Staff Member" : `${user?.membershipType || "Basic"} Member`;
+  const primaryColor =
+    userRole === "staff"
+      ? "text-blue-600 bg-blue-50"
+      : "text-primary bg-primary/10";
+  const roleDisplayName =
+    userRole === "staff"
+      ? "Staff Member"
+      : `${user?.membershipType || "Basic"} Member`;
 
   return (
     <div className="flex min-h-screen">
       {/* Fixed Sidebar */}
-      <div className="fixed inset-y-0 left-0 w-80 bg-white border-r border-gray-200 hover:opacity-70 transition-opacity overflow-y-auto">
+      <div className="fixed inset-y-0 left-0 w-80 bg-white border-r border-gray-200 opacity-70 hover:opacity-100 transition-opacity duration-300 overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
               <Dumbbell className="text-white h-4 w-4" />
             </div>
-            <span className="text-xl font-bold text-gray-900">Member Buddy</span>
+            <span className="text-xl font-bold text-gray-900">
+              Member Buddy
+            </span>
           </div>
 
           {/* User Profile */}
-          <div className={`bg-gradient-to-br ${userRole === "staff" ? "from-blue-50 to-purple-50" : "from-primary/5 to-blue-50"} p-4 rounded-xl mb-6`}>
+          <div
+            className={`bg-gradient-to-br ${userRole === "staff" ? "from-blue-50 to-purple-50" : "from-primary/5 to-blue-50"} p-4 rounded-xl mb-6`}
+          >
             <div className="flex items-center gap-3 mb-3">
               <Avatar className="h-12 w-12">
-                <AvatarFallback className={userRole === "staff" ? "bg-blue-600 text-white" : "bg-primary text-white"}>
-                  {user?.firstName?.[0]}{user?.lastName?.[0]}
+                <AvatarFallback
+                  className={
+                    userRole === "staff"
+                      ? "bg-blue-600 text-white"
+                      : "bg-primary text-white"
+                  }
+                >
+                  {user?.firstName?.[0]}
+                  {user?.lastName?.[0]}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
-                <h2 className="text-sm font-semibold text-gray-900" data-testid="text-user-name">
+                <h2
+                  className="text-sm font-semibold text-gray-900"
+                  data-testid="text-user-name"
+                >
                   {user?.firstName} {user?.lastName}
                 </h2>
                 <p className="text-xs text-gray-600">{roleDisplayName}</p>
@@ -112,7 +145,9 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
             {userRole === "member" && (
               <div className="flex items-center gap-2 text-sm text-primary">
                 <Shield className="h-4 w-4" />
-                <span data-testid="text-loyalty-points">{user?.loyaltyPoints}</span>
+                <span data-testid="text-loyalty-points">
+                  {user?.loyaltyPoints}
+                </span>
                 <span>points</span>
               </div>
             )}
@@ -122,12 +157,15 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
                 <span>Member Relations</span>
               </div>
             )}
-            
+
             {/* Role Toggle for Testing - Development Only */}
             <div className="mt-3 pt-3 border-t border-gray-200">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-gray-600">Persona Testing:</span>
-                <Badge variant={userRole === "staff" ? "default" : "secondary"} className="text-xs">
+                <Badge
+                  variant={userRole === "staff" ? "default" : "secondary"}
+                  className="text-xs"
+                >
                   {userRole === "staff" ? "Staff" : "Member"}
                 </Badge>
               </div>
@@ -139,10 +177,15 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
                 disabled={toggleRoleMutation.isPending}
                 data-testid="button-toggle-role"
               >
-                {user?.role === 'staff' ? <ToggleRight className="h-3 w-3" /> : <ToggleLeft className="h-3 w-3" />}
+                {user?.role === "staff" ? (
+                  <ToggleRight className="h-3 w-3" />
+                ) : (
+                  <ToggleLeft className="h-3 w-3" />
+                )}
                 <span>
-                  {toggleRoleMutation.isPending ? 'Switching...' : 
-                   `Switch to ${user?.role === 'staff' ? 'Member' : 'Staff'}`}
+                  {toggleRoleMutation.isPending
+                    ? "Switching..."
+                    : `Switch to ${user?.role === "staff" ? "Member" : "Staff"}`}
                 </span>
               </Button>
             </div>
@@ -157,7 +200,9 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
                 key={tab.id}
                 variant="ghost"
                 className={`w-full justify-start gap-3 ${
-                  activeTab === tab.id ? primaryColor : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  activeTab === tab.id
+                    ? primaryColor
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                 }`}
                 onClick={() => onTabChange(tab.id)}
                 data-testid={`nav-${tab.id}`}
@@ -183,9 +228,7 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 ml-80">
-        {children}
-      </div>
+      <div className="flex-1 ml-80">{children}</div>
     </div>
   );
 }
