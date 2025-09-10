@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { MessageCircle, X, Send, Bot, User } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { apiRequest } from "@/lib/queryClient";
 
 interface Message {
@@ -16,8 +20,9 @@ export function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi there! Welcome to Virgin Active. To get started, which language would you prefer for this chat? [English] [Spanish] [French] [Other]"
-    }
+      content:
+        "Hi there! Welcome to Virgin Active. To get started, which language would you prefer for this chat? ",
+    },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -28,23 +33,30 @@ export function ChatBot() {
 
     const userMessage = input.trim();
     setInput("");
-    setMessages(prev => [...prev, { role: "user", content: userMessage }]);
+    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setIsLoading(true);
 
     try {
       const response = await apiRequest("POST", "/api/chat/message", {
         message: userMessage,
-        sessionId
+        sessionId,
       });
 
       const data = await response.json();
-      setMessages(prev => [...prev, { role: "assistant", content: data.content }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: data.content },
+      ]);
     } catch (error) {
       console.error("Error sending message:", error);
-      setMessages(prev => [...prev, { 
-        role: "assistant", 
-        content: "I'm experiencing some technical difficulties. Please try again or contact us directly at (555) 123-4567." 
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content:
+            "I'm experiencing some technical difficulties. Please try again or contact us directly at (555) 123-4567.",
+        },
+      ]);
     } finally {
       setIsLoading(false);
     }
@@ -67,7 +79,11 @@ export function ChatBot() {
             className="w-14 h-14 rounded-full shadow-lg hover:scale-110 transition-all duration-300 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold"
             data-testid="button-toggle-chatbot"
           >
-            {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
+            {isOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <MessageCircle className="h-6 w-6" />
+            )}
           </Button>
         </TooltipTrigger>
         <TooltipContent>
@@ -84,7 +100,9 @@ export function ChatBot() {
                 <Bot className="h-4 w-4" />
               </div>
               <div>
-                <h4 className="font-semibold" data-testid="text-chatbot-title">AI Assistant</h4>
+                <h4 className="font-semibold" data-testid="text-chatbot-title">
+                  AI Assistant
+                </h4>
                 <p className="text-xs text-primary-foreground/80">Online now</p>
               </div>
             </div>
@@ -105,7 +123,7 @@ export function ChatBot() {
               </TooltipContent>
             </Tooltip>
           </CardHeader>
-          
+
           <CardContent className="p-0">
             {/* Messages */}
             <div className="h-96 overflow-y-auto p-4 space-y-4">
@@ -144,8 +162,14 @@ export function ChatBot() {
                   <div className="bg-muted rounded-2xl rounded-tl-md p-3 max-w-64">
                     <div className="flex space-x-1">
                       <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-                      <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                      <div
+                        className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                        style={{ animationDelay: "0.1s" }}
+                      ></div>
+                      <div
+                        className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                        style={{ animationDelay: "0.2s" }}
+                      ></div>
                     </div>
                   </div>
                 </div>
