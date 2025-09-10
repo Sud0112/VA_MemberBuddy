@@ -10,6 +10,7 @@ import { LandingPage } from "@/pages/LandingPage";
 import { MemberPortal } from "@/pages/MemberPortal";
 import { StaffDashboard } from "@/pages/StaffDashboard";
 import { SalesPersona } from "@/pages/SalesPersona";
+import VirtualTour from "@/pages/VirtualTour";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 
@@ -48,6 +49,9 @@ function Router() {
           <SalesPersona />
         </ProtectedRoute>
       </Route>
+      
+      {/* Virtual Tour route (public for email links) */}
+      <Route path="/virtual-tour" component={VirtualTour} />
       
       {/* Fallback to 404 */}
       <Route component={NotFound} />
