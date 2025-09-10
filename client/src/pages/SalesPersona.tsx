@@ -388,7 +388,7 @@ export function SalesPersona() {
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Panel 1: CRM Prospects */}
         <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
-          <CardHeader className="p-6 pb-8 bg-gradient-to-r from-red-50 to-pink-50">
+          <CardHeader className="p-6 bg-gradient-to-r from-red-50 to-pink-50">
             <CardTitle className="flex items-center gap-2 text-gray-900">
               <Users className="h-5 w-5 text-red-600" />
               CRM Prospects
@@ -397,7 +397,7 @@ export function SalesPersona() {
               </Badge>
             </CardTitle>
           </CardHeader>
-          <CardContent className="max-h-[600px] overflow-y-auto">
+          <CardContent className="p-6 max-h-[600px] overflow-y-auto">
             <div className="space-y-3">
               {crmData.length > 0 ? (
                 crmData.map((prospect) => (
@@ -455,14 +455,14 @@ export function SalesPersona() {
 
         {/* Panel 2: AI Agent Control */}
         <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
-          <CardHeader className="p-6 pb-8 bg-gradient-to-r from-blue-50 to-indigo-50">
+          <CardHeader className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50">
             <CardTitle className="flex items-center gap-2 text-gray-900">
               <Rocket className="h-5 w-5 text-blue-600" />
               AI Agent Control
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-6">
+            <div className="p-6 space-y-6">
               {/* Deploy Button */}
               <Button
                 onClick={deployAgent}
@@ -532,7 +532,7 @@ export function SalesPersona() {
 
         {/* Panel 3: Email Preview */}
         <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
-          <CardHeader className="p-6 pb-8 bg-gradient-to-r from-green-50 to-emerald-50">
+          <CardHeader className="p-6 bg-gradient-to-r from-green-50 to-emerald-50">
             <CardTitle className="flex items-center gap-2 text-gray-900">
               <Mail className="h-5 w-5 text-green-600" />
               Generated Emails
