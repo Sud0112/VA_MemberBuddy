@@ -18,7 +18,6 @@ interface TourMetrics {
 }
 
 const VirtualTour: React.FC = () => {
-  const location = useLocation();
   const [prospectData, setProspectData] = useState<ProspectData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [trackingId, setTrackingId] = useState<string | null>(null);
