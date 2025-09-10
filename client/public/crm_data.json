@@ -4,41 +4,149 @@
     "name": "Emily Johnson",
     "email": "emily.johnson@email.com",
     "status": "New",
-    "socialMediaHandle": "@emily_fitness"
+    "socialMediaHandle": "@emily_fitness",
+    "phone": "+44 7700 900123",
+    "location": "Canary Wharf, London",
+    "leadSource": "Instagram Ad"
   },
   {
     "id": 2,
     "name": "Marcus Chen",
     "email": "marcus.chen@email.com",
     "status": "New",
-    "socialMediaHandle": "@marcus_active"
+    "socialMediaHandle": "@marcus_active",
+    "phone": "+44 7700 900124",
+    "location": "Shoreditch, London",
+    "leadSource": "Google Search"
   },
   {
     "id": 3,
     "name": "Sophie Williams",
     "email": "sophie.williams@email.com",
     "status": "Contacted",
-    "socialMediaHandle": "@sophie_wellness"
+    "socialMediaHandle": "@sophie_wellness",
+    "phone": "+44 7700 900125",
+    "location": "Kensington, London",
+    "leadSource": "Referral"
   },
   {
     "id": 4,
     "name": "James Thompson",
     "email": "james.thompson@email.com",
     "status": "New",
-    "socialMediaHandle": "@james_runner"
+    "socialMediaHandle": "@james_runner",
+    "phone": "+44 7700 900126",
+    "location": "Greenwich, London",
+    "leadSource": "Facebook Ad"
   },
   {
     "id": 5,
     "name": "Isabella Rodriguez",
     "email": "isabella.rodriguez@email.com",
     "status": "Interested",
-    "socialMediaHandle": "@bella_yoga"
+    "socialMediaHandle": "@bella_yoga",
+    "phone": "+44 7700 900127",
+    "location": "Clapham, London",
+    "leadSource": "Word of Mouth"
   },
   {
     "id": 6,
     "name": "David Park",
     "email": "david.park@email.com",
     "status": "New",
-    "socialMediaHandle": "@david_strength"
+    "socialMediaHandle": "@david_strength",
+    "phone": "+44 7700 900128",
+    "location": "Islington, London",
+    "leadSource": "LinkedIn Ad"
+  },
+  {
+    "id": 7,
+    "name": "Charlotte Brown",
+    "email": "charlotte.brown@email.com",
+    "status": "New",
+    "socialMediaHandle": "@charlotte_pilates",
+    "phone": "+44 7700 900129",
+    "location": "Notting Hill, London",
+    "leadSource": "Instagram Ad"
+  },
+  {
+    "id": 8,
+    "name": "Oliver Taylor",
+    "email": "oliver.taylor@email.com",
+    "status": "New",
+    "socialMediaHandle": "@oliver_boxing",
+    "phone": "+44 7700 900130",
+    "location": "Camden, London",
+    "leadSource": "TikTok Ad"
+  },
+  {
+    "id": 9,
+    "name": "Amelia Davies",
+    "email": "amelia.davies@email.com",
+    "status": "Contacted",
+    "socialMediaHandle": "@amelia_swim",
+    "phone": "+44 7700 900131",
+    "location": "Richmond, London",
+    "leadSource": "Google Search"
+  },
+  {
+    "id": 10,
+    "name": "Henry Wilson",
+    "email": "henry.wilson@email.com",
+    "status": "New",
+    "socialMediaHandle": "@henry_crossfit",
+    "phone": "+44 7700 900132",
+    "location": "Wimbledon, London",
+    "leadSource": "Referral"
+  },
+  {
+    "id": 11,
+    "name": "Grace Mitchell",
+    "email": "grace.mitchell@email.com",
+    "status": "New",
+    "socialMediaHandle": "@grace_dance",
+    "phone": "+44 7700 900133",
+    "location": "Hampstead, London",
+    "leadSource": "Instagram Ad"
+  },
+  {
+    "id": 12,
+    "name": "Lucas Evans",
+    "email": "lucas.evans@email.com",
+    "status": "Interested",
+    "socialMediaHandle": "@lucas_triathlon",
+    "phone": "+44 7700 900134",
+    "location": "Stratford, London",
+    "leadSource": "Facebook Ad"
+  },
+  {
+    "id": 13,
+    "name": "Zoe Anderson",
+    "email": "zoe.anderson@email.com",
+    "status": "New",
+    "socialMediaHandle": "@zoe_wellness",
+    "phone": "+44 7700 900135",
+    "location": "Battersea, London",
+    "leadSource": "Google Ads"
+  },
+  {
+    "id": 14,
+    "name": "Ryan Murphy",
+    "email": "ryan.murphy@email.com",
+    "status": "New",
+    "socialMediaHandle": "@ryan_functional",
+    "phone": "+44 7700 900136",
+    "location": "Bermondsey, London",
+    "leadSource": "LinkedIn Ad"
+  },
+  {
+    "id": 15,
+    "name": "Lily Thompson",
+    "email": "lily.thompson@email.com",
+    "status": "Contacted",
+    "socialMediaHandle": "@lily_barre",
+    "phone": "+44 7700 900137",
+    "location": "Chelsea, London",
+    "leadSource": "Word of Mouth"
   }
 ]

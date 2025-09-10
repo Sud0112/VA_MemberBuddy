@@ -1,20 +1,47 @@
 {
   "@emily_fitness": {
-    "interests": ["yoga", "pilates", "wellness", "healthy eating", "mindfulness"]
+    "interests": ["yoga", "pilates", "wellness", "healthy eating", "mindfulness", "work-life balance"]
   },
   "@marcus_active": {
-    "interests": ["weightlifting", "CrossFit", "HIIT workouts", "protein supplements", "muscle building"]
+    "interests": ["weightlifting", "CrossFit", "HIIT workouts", "protein supplements", "muscle building", "bodybuilding competitions"]
   },
   "@sophie_wellness": {
-    "interests": ["swimming", "aqua aerobics", "recovery", "spa treatments", "holistic health"]
+    "interests": ["swimming", "aqua aerobics", "recovery", "spa treatments", "holistic health", "luxury wellness"]
   },
   "@james_runner": {
-    "interests": ["running", "marathon training", "endurance sports", "cardio workouts", "outdoor fitness"]
+    "interests": ["running", "marathon training", "endurance sports", "cardio workouts", "outdoor fitness", "London Marathon"]
   },
   "@bella_yoga": {
-    "interests": ["hot yoga", "meditation", "flexibility", "stress relief", "spiritual wellness"]
+    "interests": ["hot yoga", "meditation", "flexibility", "stress relief", "spiritual wellness", "retreat weekends"]
   },
   "@david_strength": {
-    "interests": ["powerlifting", "strength training", "functional fitness", "sports performance", "nutrition coaching"]
+    "interests": ["powerlifting", "strength training", "functional fitness", "sports performance", "nutrition coaching", "personal records"]
+  },
+  "@charlotte_pilates": {
+    "interests": ["pilates", "core strength", "posture improvement", "injury prevention", "barre classes", "flexibility training"]
+  },
+  "@oliver_boxing": {
+    "interests": ["boxing", "combat sports", "HIIT training", "stress relief", "competitive boxing", "martial arts"]
+  },
+  "@amelia_swim": {
+    "interests": ["swimming", "aqua fitness", "triathlon training", "open water swimming", "technique improvement", "lane swimming"]
+  },
+  "@henry_crossfit": {
+    "interests": ["CrossFit", "functional movements", "olympic lifting", "competition training", "community workouts", "WODs"]
+  },
+  "@grace_dance": {
+    "interests": ["dance fitness", "cardio dance", "rhythm training", "body expression", "group classes", "choreography"]
+  },
+  "@lucas_triathlon": {
+    "interests": ["triathlon", "endurance training", "swimming", "cycling", "running", "ironman preparation"]
+  },
+  "@zoe_wellness": {
+    "interests": ["holistic wellness", "nutrition", "mental health", "meditation", "life coaching", "wellness retreats"]
+  },
+  "@ryan_functional": {
+    "interests": ["functional fitness", "movement patterns", "injury rehabilitation", "athletic performance", "mobility training", "strength coaching"]
+  },
+  "@lily_barre": {
+    "interests": ["barre classes", "ballet-inspired fitness", "toning", "flexibility", "graceful movement", "posture training"]
   }
 }
