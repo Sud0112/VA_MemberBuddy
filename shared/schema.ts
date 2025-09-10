@@ -71,6 +71,19 @@ export const outreachActions = pgTable("outreach_actions", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Email interactions table for tracking email engagement
+export const emailInteractions = pgTable("email_interactions", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  prospectEmail: varchar("prospect_email").notNull(),
+  prospectName: varchar("prospect_name").notNull(),
+  interactionType: varchar("interaction_type").notNull(), // 'email_sent', 'link_clicked', 'tour_viewed'
+  emailSubject: varchar("email_subject"),
+  trackingId: uuid("tracking_id").unique().notNull().defaultRandom(),
+  metadata: jsonb("metadata").default({}),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Chat conversations table
 export const chatConversations = pgTable("chat_conversations", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -227,3 +240,11 @@ export const insertChurnEmailSchema = createInsertSchema(churnEmails).omit({
 });
 export type InsertChurnEmail = z.infer<typeof insertChurnEmailSchema>;
 export type ChurnEmail = typeof churnEmails.$inferSelect;
+
+export const insertEmailInteractionSchema = createInsertSchema(emailInteractions).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertEmailInteraction = z.infer<typeof insertEmailInteractionSchema>;
+export type EmailInteraction = typeof emailInteractions.$inferSelect;
