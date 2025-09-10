@@ -6,6 +6,7 @@ import {
   chatConversations,
   workoutPlans,
   churnEmails,
+  emailInteractions,
   type User,
   type UpsertUser,
   type LoyaltyOffer,
@@ -20,6 +21,8 @@ import {
   type InsertWorkoutPlan,
   type ChurnEmail,
   type InsertChurnEmail,
+  type EmailInteraction,
+  type InsertEmailInteraction,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, sql } from "drizzle-orm";
@@ -66,6 +69,12 @@ export interface IStorage {
   markChurnEmailSent(emailId: string): Promise<ChurnEmail>;
   getRiskLevel(member: User): { level: 'low' | 'medium' | 'high', band: string, percentage: number };
   checkAndCreateChurnEmail(memberId: string): Promise<ChurnEmail | null>;
+
+  // Email interaction tracking operations
+  createEmailInteraction(interaction: InsertEmailInteraction): Promise<EmailInteraction>;
+  getEmailInteractionsByProspect(email: string): Promise<EmailInteraction[]>;
+  getEmailInteractionByTrackingId(trackingId: string): Promise<EmailInteraction | undefined>;
+  updateEmailInteraction(id: string, updates: Partial<EmailInteraction>): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {

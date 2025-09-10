@@ -73,7 +73,7 @@ export const outreachActions = pgTable("outreach_actions", {
 
 // Email interactions table for tracking email engagement
 export const emailInteractions = pgTable("email_interactions", {
-  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  id: uuid("id").primaryKey().defaultRandom(),
   prospectEmail: varchar("prospect_email").notNull(),
   prospectName: varchar("prospect_name").notNull(),
   interactionType: varchar("interaction_type").notNull(), // 'email_sent', 'link_clicked', 'tour_viewed'

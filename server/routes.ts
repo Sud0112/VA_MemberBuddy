@@ -17,6 +17,7 @@ import {
   generateSalesEmail,
 } from "./services/geminiService";
 import { EmailService } from "./services/emailService";
+import { EmailTrackingService } from "./services/emailTrackingService";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
@@ -517,6 +518,87 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching email service status:", error);
       res.status(500).json({ message: "Failed to fetch email service status" });
+    }
+  });
+
+  // Email tracking endpoints
+  app.get('/api/track/:trackingId', async (req, res) => {
+    try {
+      const { trackingId } = req.params;
+      
+      // Log the link click
+      await EmailTrackingService.logLinkClicked(trackingId, {
+        userAgent: req.headers['user-agent'],
+        ip: req.ip,
+        timestamp: new Date().toISOString(),
+      });
+
+      // Redirect to home page with tracking parameter
+      res.redirect(`/?track=${trackingId}`);
+    } catch (error) {
+      console.error("Error tracking email click:", error);
+      // Still redirect to home page even if tracking fails
+      res.redirect('/');
+    }
+  });
+
+  // Virtual tour endpoint
+  app.get('/api/virtual-tour/:trackingId', async (req, res) => {
+    try {
+      const { trackingId } = req.params;
+      
+      // Log the tour view
+      await EmailTrackingService.logTourViewed(trackingId, {
+        userAgent: req.headers['user-agent'],
+        ip: req.ip,
+        timestamp: new Date().toISOString(),
+      });
+
+      // Get prospect information
+      const interaction = await EmailTrackingService.getEmailInteractionByTrackingId(trackingId);
+      
+      if (interaction) {
+        res.json({
+          success: true,
+          prospectName: interaction.prospectName,
+          prospectEmail: interaction.prospectEmail,
+          trackingId,
+          message: 'Virtual tour tracking recorded'
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'Tracking ID not found'
+        });
+      }
+    } catch (error) {
+      console.error("Error tracking virtual tour:", error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to track virtual tour'
+      });
+    }
+  });
+
+  // Get prospect engagement data
+  app.get('/api/prospect/:email/engagement', isAuthenticated, async (req: any, res) => {
+    try {
+      const user = await storage.getUser(req.user.claims.sub);
+      if (!user || user.role !== 'staff') {
+        return res.status(403).json({ message: "Staff access required" });
+      }
+
+      const { email } = req.params;
+      const summary = await EmailTrackingService.getProspectEngagementSummary(email);
+      const interactions = await EmailTrackingService.getEmailInteractionsByProspect(email);
+
+      res.json({
+        summary,
+        interactions
+      });
+    } catch (error) {
+      console.error("Error fetching prospect engagement:", error);
+      res.status(500).json({ message: "Failed to fetch engagement data" });
     }
   });
 
