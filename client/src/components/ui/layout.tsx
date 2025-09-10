@@ -101,11 +101,11 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
                   {user?.firstName?.[0]}{user?.lastName?.[0]}
                 </AvatarFallback>
               </Avatar>
-              <div>
-                <h2 className="font-semibold text-gray-900" data-testid="text-user-name">
+              <div className="flex-1 min-w-0">
+                <h2 className="font-semibold text-gray-900 truncate" data-testid="text-user-name">
                   {user?.firstName} {user?.lastName}
                 </h2>
-                <p className="text-sm text-gray-600">{roleDisplayName}</p>
+                <p className="text-sm text-gray-600 truncate">{roleDisplayName}</p>
               </div>
             </div>
             {userRole === "member" && (
