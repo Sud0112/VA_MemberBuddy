@@ -84,7 +84,7 @@ export function AppLayout({ children, activeTab, onTabChange, userRole }: Layout
 
   return (
     <SidebarProvider>
-      <Sidebar className="w-80">
+      <Sidebar className="w-80" variant="inset">
         <SidebarHeader className="p-6">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
