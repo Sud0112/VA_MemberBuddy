@@ -22,6 +22,9 @@ interface Prospect {
   email: string;
   status: 'New' | 'Contacted' | 'Interested';
   socialMediaHandle: string;
+  phone?: string;
+  location?: string;
+  leadSource?: string;
 }
 
 interface SocialPersonas {
@@ -37,10 +40,19 @@ interface ActivityLog {
   type: 'info' | 'success' | 'warning';
 }
 
+interface GeneratedEmail {
+  id: number;
+  prospectName: string;
+  subject: string;
+  content: string;
+  timestamp: string;
+}
+
 export function SalesPersona() {
   const [crmData, setCrmData] = useState<Prospect[]>([]);
   const [socialPersonas, setSocialPersonas] = useState<SocialPersonas>({});
   const [activityLog, setActivityLog] = useState<ActivityLog[]>([]);
+  const [generatedEmails, setGeneratedEmails] = useState<GeneratedEmail[]>([]);
   const [isDeploying, setIsDeploying] = useState(false);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -152,7 +164,18 @@ export function SalesPersona() {
         const userPrompt = `Generate an email for a prospect named ${lead.name}. Their social media persona suggests they are interested in: ${persona.interests.join(', ')}. Make sure to include placeholders like [Virgin Active Virtual Tour Link] and mention the free trial.`;
 
         try {
-          await callGeminiAPI(userPrompt, systemInstruction);
+          const emailContent = await callGeminiAPI(userPrompt, systemInstruction);
+          
+          // Store the generated email
+          const newEmail: GeneratedEmail = {
+            id: Date.now(),
+            prospectName: lead.name,
+            subject: `Transform Your Fitness Journey with Virgin Active`,
+            content: emailContent,
+            timestamp: new Date().toLocaleTimeString()
+          };
+          setGeneratedEmails(prev => [newEmail, ...prev]);
+          
           addToActivityLog(`✉️ Email generated and sent to ${lead.name}`, 'success');
 
           // Update prospect status to 'Contacted'
@@ -230,54 +253,83 @@ export function SalesPersona() {
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Sales Persona - AI Agent</h1>
-        <p className="text-gray-600">Manage prospects and deploy AI agent for automated outreach</p>
+    <div className="p-8 max-w-7xl mx-auto">
+      {/* Virgin Active Header */}
+      <div className="mb-12">
+        <div className="max-w-6xl mx-auto text-center">
+          <span className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold uppercase tracking-wider rounded-full mb-4">
+            Sales Operations
+          </span>
+          <h1 className="text-4xl lg:text-6xl font-black tracking-tight text-gray-900 leading-tight mb-6">
+            SALES{" "}
+            <span className="text-red-600 block">PERSONA AI</span>
+          </h1>
+          <p className="text-xl text-gray-700 leading-relaxed mb-8 max-w-2xl mx-auto">
+            AI-powered lead outreach and automated sales email generation
+          </p>
+        </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-3 gap-6">
         {/* Panel 1: CRM Prospects */}
-        <Card>
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+          <CardHeader className="pb-4 bg-gradient-to-r from-red-50 to-pink-50">
+            <CardTitle className="flex items-center gap-2 text-gray-900">
+              <Users className="h-5 w-5 text-red-600" />
               CRM Prospects
+              <Badge variant="outline" className="ml-auto">{crmData.length} total</Badge>
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
+          <CardContent className="max-h-[600px] overflow-y-auto">
+            <div className="space-y-3">
               {crmData.length > 0 ? (
                 crmData.map((prospect) => (
-                  <div key={prospect.id} className="border rounded-lg p-4">
-                    <div className="flex items-start justify-between mb-2">
+                  <div key={prospect.id} className="border border-slate-100 rounded-lg p-4 hover:border-red-200 transition-colors bg-white">
+                    <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-2">
-                        <User className="h-4 w-4 text-gray-500" />
-                        <span className="font-medium">{prospect.name}</span>
+                        <User className="h-4 w-4 text-red-600" />
+                        <span className="font-semibold text-gray-900">{prospect.name}</span>
                       </div>
                       {getStatusBadge(prospect.status)}
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
-                      <Mail className="h-4 w-4" />
-                      {prospect.email}
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      {prospect.socialMediaHandle}
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <Mail className="h-4 w-4" />
+                        {prospect.email}
+                      </div>
+                      {prospect.phone && (
+                        <div className="flex items-center gap-2 text-gray-600">
+                          <span className="text-xs">📞</span>
+                          {prospect.phone}
+                        </div>
+                      )}
+                      {prospect.location && (
+                        <div className="flex items-center gap-2 text-gray-600">
+                          <span className="text-xs">📍</span>
+                          {prospect.location}
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+                        <span className="text-xs text-gray-500">{prospect.socialMediaHandle}</span>
+                        {prospect.leadSource && (
+                          <Badge variant="secondary" className="text-xs">{prospect.leadSource}</Badge>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500 text-center py-4">No prospects found</p>
+                <p className="text-gray-500 text-center py-8">No prospects found</p>
               )}
             </div>
           </CardContent>
         </Card>
 
         {/* Panel 2: AI Agent Control */}
-        <Card>
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2">
-              <Rocket className="h-5 w-5" />
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+          <CardHeader className="pb-4 bg-gradient-to-r from-blue-50 to-indigo-50">
+            <CardTitle className="flex items-center gap-2 text-gray-900">
+              <Rocket className="h-5 w-5 text-blue-600" />
               AI Agent Control
             </CardTitle>
           </CardHeader>
@@ -287,7 +339,7 @@ export function SalesPersona() {
               <Button
                 onClick={deployAgent}
                 disabled={isDeploying}
-                className="w-full"
+                className="w-full bg-red-600 hover:bg-red-700 text-white"
                 size="lg"
               >
                 {isDeploying ? (
@@ -308,7 +360,7 @@ export function SalesPersona() {
               {/* Agent Activity Log */}
               <div>
                 <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                  <Activity className="h-5 w-5" />
+                  <Activity className="h-5 w-5 text-blue-600" />
                   Agent Activity Log
                 </h3>
                 <Card className="border-slate-200">
@@ -339,6 +391,63 @@ export function SalesPersona() {
                 </Card>
               </div>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Panel 3: Email Preview */}
+        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+          <CardHeader className="pb-4 bg-gradient-to-r from-green-50 to-emerald-50">
+            <CardTitle className="flex items-center gap-2 text-gray-900">
+              <Mail className="h-5 w-5 text-green-600" />
+              Generated Emails
+              <Badge variant="outline" className="ml-auto">{generatedEmails.length} emails</Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ScrollArea className="h-[600px] w-full">
+              <div className="space-y-4">
+                {generatedEmails.length > 0 ? (
+                  generatedEmails.map((email) => (
+                    <Card key={email.id} className="border border-slate-100 bg-white">
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Mail className="h-4 w-4 text-green-600" />
+                            <span className="font-semibold text-gray-900">{email.prospectName}</span>
+                          </div>
+                          <span className="text-xs text-gray-500">{email.timestamp}</span>
+                        </div>
+                        <p className="text-sm font-medium text-gray-800 border-l-4 border-red-600 pl-3">
+                          {email.subject}
+                        </p>
+                      </CardHeader>
+                      <CardContent className="pt-0">
+                        <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-700 whitespace-pre-wrap">
+                          {email.content}
+                        </div>
+                        <div className="flex gap-2 mt-3">
+                          <Button size="sm" variant="outline" className="text-xs">
+                            📋 Copy
+                          </Button>
+                          <Button size="sm" variant="outline" className="text-xs">
+                            ✏️ Edit
+                          </Button>
+                          <Button size="sm" className="text-xs bg-red-600 hover:bg-red-700">
+                            📧 Send Email
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                ) : (
+                  <div className="text-center py-8">
+                    <Mail className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+                    <p className="text-gray-500">No emails generated yet</p>
+                    <p className="text-sm text-gray-400 mt-2">Deploy the agent to start generating personalized emails</p>
+                  </div>
+                )}
+              </div>
+            </ScrollArea>
           </CardContent>
         </Card>
       </div>
