@@ -16,6 +16,7 @@ import {
   generateWorkoutPlan,
   generateSalesEmail,
 } from "./services/geminiService";
+import { EmailService } from "./services/emailService";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
@@ -452,6 +453,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error generating sales email:", error);
       res.status(500).json({ message: "Failed to generate sales email" });
+    }
+  });
+
+  // Email sending endpoint
+  app.post('/api/send-email', isAuthenticated, async (req: any, res) => {
+    try {
+      const user = await storage.getUser(req.user.claims.sub);
+      if (!user || user.role !== 'staff') {
+        return res.status(403).json({ message: "Staff access required" });
+      }
+
+      const { to, subject, content, prospectName } = req.body;
+      
+      if (!to || !subject || !content || !prospectName) {
+        return res.status(400).json({ 
+          message: "Email address, subject, content, and prospect name are required" 
+        });
+      }
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(to)) {
+        return res.status(400).json({ message: "Invalid email address format" });
+      }
+
+      const result = await EmailService.sendSalesEmail({
+        to,
+        subject,
+        content,
+        prospectName
+      });
+
+      if (result.success) {
+        res.json({ 
+          success: true, 
+          messageId: result.messageId,
+          message: "Email sent successfully" 
+        });
+      } else {
+        res.status(500).json({ 
+          success: false, 
+          error: result.error,
+          message: "Failed to send email"
+        });
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+      res.status(500).json({ message: "Failed to send email" });
+    }
+  });
+
+  // Email service status endpoint
+  app.get('/api/email/status', isAuthenticated, async (req: any, res) => {
+    try {
+      const user = await storage.getUser(req.user.claims.sub);
+      if (!user || user.role !== 'staff') {
+        return res.status(403).json({ message: "Staff access required" });
+      }
+
+      const status = EmailService.getEmailServiceStatus();
+      res.json(status);
+    } catch (error) {
+      console.error("Error fetching email service status:", error);
+      res.status(500).json({ message: "Failed to fetch email service status" });
     }
   });
 

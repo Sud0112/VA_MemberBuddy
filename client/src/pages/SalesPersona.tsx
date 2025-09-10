@@ -48,6 +48,12 @@ interface GeneratedEmail {
   timestamp: string;
 }
 
+interface EmailServiceStatus {
+  provider: string;
+  configured: boolean;
+  description: string;
+}
+
 export function SalesPersona() {
   const [crmData, setCrmData] = useState<Prospect[]>([]);
   const [socialPersonas, setSocialPersonas] = useState<SocialPersonas>({});
@@ -55,6 +61,8 @@ export function SalesPersona() {
   const [generatedEmails, setGeneratedEmails] = useState<GeneratedEmail[]>([]);
   const [isDeploying, setIsDeploying] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [sendingEmails, setSendingEmails] = useState<Set<number>>(new Set());
+  const [emailServiceStatus, setEmailServiceStatus] = useState<EmailServiceStatus | null>(null);
   const { toast } = useToast();
 
   // Fetch data from JSON files on mount
@@ -215,6 +223,64 @@ export function SalesPersona() {
       });
     } finally {
       setIsDeploying(false);
+    }
+  };
+
+  // Send email function
+  const sendEmail = async (email: GeneratedEmail) => {
+    // Find the prospect to get their email address
+    const prospect = crmData.find(p => p.name === email.prospectName);
+    if (!prospect) {
+      toast({
+        title: "Error",
+        description: "Prospect not found",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSendingEmails(prev => new Set(prev).add(email.id));
+    addToActivityLog(`📧 Sending email to ${prospect.name}...`, 'info');
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: prospect.email,
+          subject: email.subject,
+          content: email.content,
+          prospectName: email.prospectName,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        addToActivityLog(`✅ Email successfully sent to ${prospect.name}`, 'success');
+        toast({
+          title: "Success",
+          description: `Email sent to ${prospect.name} successfully!`,
+        });
+      } else {
+        throw new Error(result.error || result.message || 'Failed to send email');
+      }
+    } catch (error: any) {
+      console.error('Email sending error:', error);
+      addToActivityLog(`❌ Failed to send email to ${prospect.name}: ${error.message}`, 'warning');
+      toast({
+        title: "Error",
+        description: error.message || "Failed to send email. Please check email service configuration.",
+        variant: "destructive",
+      });
+    } finally {
+      setSendingEmails(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(email.id);
+        return newSet;
+      });
     }
   };
 
@@ -426,14 +492,31 @@ export function SalesPersona() {
                           {email.content}
                         </div>
                         <div className="flex gap-2 mt-3">
-                          <Button size="sm" variant="outline" className="text-xs">
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="text-xs"
+                            onClick={() => navigator.clipboard.writeText(email.content)}
+                          >
                             📋 Copy
                           </Button>
                           <Button size="sm" variant="outline" className="text-xs">
                             ✏️ Edit
                           </Button>
-                          <Button size="sm" className="text-xs bg-red-600 hover:bg-red-700">
-                            📧 Send Email
+                          <Button 
+                            size="sm" 
+                            className="text-xs bg-red-600 hover:bg-red-700"
+                            onClick={() => sendEmail(email)}
+                            disabled={sendingEmails.has(email.id)}
+                          >
+                            {sendingEmails.has(email.id) ? (
+                              <>
+                                <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-1" />
+                                Sending...
+                              </>
+                            ) : (
+                              <>📧 Send Email</>
+                            )}
                           </Button>
                         </div>
                       </CardContent>
