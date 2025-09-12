@@ -367,8 +367,8 @@ export async function sendMessageToChat(
   if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
     // Mock response for development
     const responses = [
-      "Hi there! Welcome to Virgin Active. To get started, which language would you prefer for this chat?",
-      "Great! How would you like to explore today? You can [Find clubs near me], learn about [Your goals], [Compare memberships], take a [Virtual club tour], [Show class options], or [Request a call back].",
+      "Hi there! Great to meet you! I'm here to help you discover the perfect fitness solution at Virgin Active. What brings you here today?",
+      "That's awesome! I'd love to learn more about your fitness goals. Are you looking to get started with a new routine, or are you already active and looking for something different?",
       "To suggest the best for you, what’s your main fitness goal? Some popular ones are [Weight loss], [Build muscle], or [Improve endurance].",
       "Based on your goal to get stronger and visit 3-4 times a week, our 'Virgin Active All Access (Annual)' plan is the best value. It includes unlimited classes and full gym access for about £1.30 per visit. Would you like to explore clubs near you?",
     ];
@@ -380,7 +380,7 @@ export async function sendMessageToChat(
 
   try {
     // UPDATED: This system instruction now uses your detailed VA Demo data
-    const systemInstruction = `You are a friendly, motivating, and knowledgeable AI assistant for Virgin Active. Your primary goal is to understand a potential new member's needs and guide them to the perfect club and membership plan. Be conversational and avoid being robotic.
+    const systemInstruction = `You are a warm, conversational, and knowledgeable fitness consultant for Virgin Active. Your goal is to have natural conversations that help people discover their perfect fitness journey. Be genuinely interested in their goals and respond naturally to what they actually say.
 
 Follow this conversational flow based on the user's choices:
 

@@ -17,6 +17,7 @@ interface Message {
 
 export function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showProactiveGreeting, setShowProactiveGreeting] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -27,6 +28,22 @@ export function ChatBot() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId] = useState(() => `session-${Date.now()}-${Math.random()}`);
+
+  // Show proactive greeting after a short delay when component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowProactiveGreeting(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Hide proactive greeting when chat is opened
+  useEffect(() => {
+    if (isOpen) {
+      setShowProactiveGreeting(false);
+    }
+  }, [isOpen]);
 
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
@@ -71,6 +88,45 @@ export function ChatBot() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
+      {/* Proactive Greeting */}
+      {showProactiveGreeting && !isOpen && (
+        <div className="absolute bottom-16 right-0 mb-2 animate-in slide-in-from-bottom-4 duration-500">
+          <Card className="w-72 shadow-lg border bg-background/95 backdrop-blur">
+            <CardContent className="p-4">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <Bot className="h-4 w-4 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-foreground" data-testid="text-proactive-greeting">
+                    Hi there! 👋 Welcome to Virgin Active. I'm here to help you find the perfect fitness solution. What brings you here today?
+                  </p>
+                  <div className="flex gap-2 mt-3">
+                    <Button
+                      size="sm"
+                      onClick={() => setIsOpen(true)}
+                      className="text-xs bg-primary hover:bg-primary/90"
+                      data-testid="button-start-chat"
+                    >
+                      Start Chat
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setShowProactiveGreeting(false)}
+                      className="text-xs"
+                      data-testid="button-dismiss-greeting"
+                    >
+                      Maybe later
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
       {/* Toggle Button */}
       <Tooltip>
         <TooltipTrigger asChild>
