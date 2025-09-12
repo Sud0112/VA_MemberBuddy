@@ -364,6 +364,15 @@ export async function sendMessageToChat(
   contactName?: string;
   tourBooked?: boolean;
 }> {
+  // Only log detailed info in development
+  if (process.env.NODE_ENV === 'development') {
+    console.log('🤖 Chat AI Request:', {
+      userMessage: message.substring(0, 50) + (message.length > 50 ? '...' : ''),
+      conversationHistoryLength: conversationHistory.length,
+      timestamp: new Date().toISOString()
+    });
+  }
+
   if (!process.env.GEMINI_API_KEY && !process.env.API_KEY) {
     // Mock response for development
     const responses = [
@@ -375,6 +384,8 @@ export async function sendMessageToChat(
 
     const randomResponse =
       responses[Math.floor(Math.random() * responses.length)];
+    console.log('⚠️  Using mock AI response (no API key configured)');
+    console.log('🤖 Chat AI Response (Mock):', { content: randomResponse });
     return { content: randomResponse };
   }
 
@@ -434,7 +445,12 @@ Follow this conversational flow based on the user's choices:
 
 Keep responses helpful, friendly, and guide the user through the process smoothly.`;
 
-    const response = await ai.models.generateContent({
+    console.log('🎯 AI System Instruction:', systemInstruction.substring(0, 100) + '...');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('📝 Conversation History Length:', conversationHistory.length);
+    }
+    
+    const aiRequest = {
       model: "gemini-1.5-flash",
       contents: [
         ...conversationHistory.map((msg) => ({
@@ -443,11 +459,25 @@ Keep responses helpful, friendly, and guide the user through the process smoothl
         })),
         { role: "user", parts: [{ text: message }] }
       ]
+    };
+    
+    console.log('🔄 Sending to Gemini AI:', {
+      model: aiRequest.model,
+      messagesCount: aiRequest.contents.length,
+      lastMessage: message
     });
+    
+    const response = await ai.models.generateContent(aiRequest);
 
     const content =
       response.candidates?.[0]?.content?.parts?.[0]?.text ||
       "I'm sorry, I didn't understand that. Could you please rephrase?";
+      
+    console.log('✅ Gemini AI Response:', {
+      content: content,
+      candidates: response.candidates?.length,
+      hasContent: !!response.candidates?.[0]?.content?.parts?.[0]?.text
+    });
 
     // NOTE: The simple contact extraction logic is kept for demo purposes.
     // A more robust solution might use function calling or more advanced parsing.
@@ -458,17 +488,28 @@ Keep responses helpful, friendly, and guide the user through the process smoothl
     if (emailMatch) {
       contactEmail = emailMatch[0];
       tourBooked = true; // Assuming providing an email implies booking interest
+      if (process.env.NODE_ENV === 'development') {
+        console.log('📧 Contact Info Extracted (dev only)');
+      }
     }
     if (contactEmail && message.toLowerCase().includes("my name is")) {
       const nameMatch = message.match(/my name is ([A-Za-z\s]+)/i);
       if (nameMatch) {
         contactName = nameMatch[1].trim();
+        console.log('👤 Contact Name Extracted:', { contactName });
       }
     }
 
-    return { content, contactEmail, contactName, tourBooked };
+    const result = { content, contactEmail, contactName, tourBooked };
+    console.log('🎯 Final Chat Response:', result);
+    return result;
   } catch (error) {
-    console.error("Error in chat:", error);
+    console.error('❌ Chat AI Error:', {
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+      userMessage: message,
+      timestamp: new Date().toISOString()
+    });
     return {
       content:
         "I'm experiencing some technical difficulties. Please try again or contact us directly.",
