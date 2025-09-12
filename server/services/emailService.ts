@@ -21,12 +21,19 @@ type EmailProvider = 'sendgrid' | 'resend' | 'test';
 
 export class EmailService {
   private static getAvailableProvider(): { provider: EmailProvider; configured: boolean } {
+    console.log('🔧 Email Service Configuration Check:');
+    console.log('  RESEND_API_KEY:', process.env.RESEND_API_KEY ? 'configured ✅' : 'not set ❌');
+    console.log('  SENDGRID_API_KEY:', process.env.SENDGRID_API_KEY ? 'configured ✅' : 'not set ❌');
+    
     if (process.env.RESEND_API_KEY) {
+      console.log('  Selected provider: Resend');
       return { provider: 'resend', configured: true };
     }
     if (process.env.SENDGRID_API_KEY) {
+      console.log('  Selected provider: SendGrid');
       return { provider: 'sendgrid', configured: true };
     }
+    console.log('  Selected provider: Test mode');
     return { provider: 'test', configured: false };
   }
 
