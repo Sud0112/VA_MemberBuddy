@@ -5,15 +5,27 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Dumbbell } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const { login, logout } = useAuthContext();
+
+  // Logout function for convenience
+  const handleLogout = () => {
+    logout();
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out.",
+    });
+    setLocation("/");
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,14 +44,16 @@ export function Login() {
 
     setTimeout(() => {
       if (user) {
-        // Store user in localStorage for demo purposes
-        localStorage.setItem("user", JSON.stringify({
+        // Use AuthContext login function
+        const userData = {
           id: Date.now().toString(),
           email: user.email,
           role: user.role,
           firstName: user.email.split("@")[0],
           lastName: "User"
-        }));
+        };
+        
+        login(userData as any);
 
         toast({
           title: "Login Successful",
@@ -48,9 +62,9 @@ export function Login() {
 
         // Redirect based on role
         if (user.role === "staff") {
-          navigate("/staff");
+          setLocation("/staff");
         } else {
-          navigate("/member");
+          setLocation("/portal");
         }
       } else {
         toast({
@@ -121,6 +135,14 @@ export function Login() {
               <div><strong>Member:</strong> member@virginactive.com / member123</div>
               <div><strong>Demo:</strong> demo@virginactive.com / demo123</div>
             </div>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full mt-3 text-xs"
+              onClick={handleLogout}
+            >
+              Logout Current Session
+            </Button>
           </div>
         </CardContent>
       </Card>

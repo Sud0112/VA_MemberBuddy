@@ -7,15 +7,16 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { CookieConsent } from "@/components/CookieConsent";
 import { LandingPage } from "@/pages/LandingPage";
+import { Login } from "@/pages/Login";
 import { MemberPortal } from "@/pages/MemberPortal";
 import { StaffDashboard } from "@/pages/StaffDashboard";
 import { SalesPersona } from "@/pages/SalesPersona";
 import VirtualTour from "@/pages/VirtualTour";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuthContext } from "@/contexts/AuthContext";
 import NotFound from "@/pages/not-found";
 
 function Router() {
-  const { isAuthenticated, isLoading, user } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuthContext();
 
   if (isLoading) {
     return (
@@ -49,6 +50,9 @@ function Router() {
           <SalesPersona />
         </ProtectedRoute>
       </Route>
+
+      {/* Login route */}
+      <Route path="/login" component={Login} />
 
       {/* Virtual Tour route (public for email links) */}
       <Route path="/virtual-tour" component={VirtualTour} />
