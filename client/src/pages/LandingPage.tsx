@@ -37,7 +37,7 @@ import {
 
 export function LandingPage() {
   const handleGetStarted = () => {
-    window.location.href = "/api/login";
+    window.location.href = "/login";
   };
 
   const handleBookTour = () => {
@@ -180,25 +180,25 @@ export function LandingPage() {
                 WELCOME TO{" "}
                 <span className="text-red-600 block">REAL WELLNESS</span>
                 <span className="block text-3xl md:text-4xl lg:text-5xl mt-2 text-gray-600 font-bold">
-                  One membership. Endless variety.
+                  One membership. Endless possibilities.
                 </span>
               </h1>
               <div className="space-y-4 mb-10 text-left max-w-2xl mx-auto lg:mx-0">
                 <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-medium">
                   <span className="text-gray-900 font-bold">Real rewards:</span>{" "}
-                  instant goodies from Kauai & Mother plus partner discounts
+                  Instant benefits from Kauai & Mother, plus exclusive partner discounts
                 </p>
                 <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-medium">
                   <span className="text-gray-900 font-bold">
                     Real endorphins:
                   </span>{" "}
-                  spacious gym floors & unlimited exercise classes
+                  Spacious gym floors with unlimited exercise classes
                 </p>
                 <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-medium">
                   <span className="text-gray-900 font-bold">
                     Real relaxation:
                   </span>{" "}
-                  pools, saunas & steam rooms
+                  Premium pools, saunas, and steam rooms
                 </p>
               </div>
 

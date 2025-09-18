@@ -9,7 +9,7 @@ import {
   insertChatConversationSchema,
   insertWorkoutPlanSchema,
 } from "@shared/schema";
-import { 
+import {
   generateRetentionStrategies,
   generateLoyaltyOffers,
   sendMessageToChat,
@@ -43,7 +43,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.user.claims.sub;
       const { role } = req.body;
-      
+
       if (!role || !['member', 'staff'].includes(role)) {
         return res.status(400).json({ message: 'Invalid role. Must be "member" or "staff"' });
       }
@@ -53,7 +53,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         role,
         updatedAt: new Date()
       });
-      
+
       res.json({ message: 'Role updated successfully', user: updatedUser });
     } catch (error) {
       console.error('Error toggling user role:', error);
@@ -83,7 +83,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...req.body,
         createdBy: user.id,
       });
-      
+
       const offer = await storage.createLoyaltyOffer(offerData);
       res.json(offer);
     } catch (error) {
@@ -123,14 +123,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.user.claims.sub;
       const user = await storage.getUser(userId);
-      
+
       if (!user || user.role !== 'member') {
         return res.status(403).json({ message: "Member access required" });
       }
 
       const offers = await storage.getLoyaltyOffers();
       const offer = offers.find(o => o.id === req.params.offerId);
-      
+
       if (!offer) {
         return res.status(404).json({ message: "Offer not found" });
       }
@@ -142,7 +142,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Check if already redeemed
       const userRedemptions = await storage.getUserRedemptions(userId);
       const alreadyRedeemed = userRedemptions.some(r => r.offerId === offer.id);
-      
+
       if (alreadyRedeemed) {
         return res.status(400).json({ message: "Offer already redeemed" });
       }
@@ -257,7 +257,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.user.claims.sub;
       const user = await storage.getUser(userId);
-      
+
       if (!user || user.role !== 'member') {
         return res.status(403).json({ message: "Member access required" });
       }
@@ -271,7 +271,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const workoutPlan = await generateWorkoutPlan(goals, healthData);
-      
+
       // Save to database
       const planData = insertWorkoutPlanSchema.parse({
         userId,
@@ -281,7 +281,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       await storage.createWorkoutPlan(planData);
-      
+
       res.json(workoutPlan);
     } catch (error) {
       console.error("Error generating workout plan:", error);
@@ -388,7 +388,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const response = await sendMessageToChat(message, conversation.messages as any[]);
-      
+
       // Update conversation with new messages
       const updatedMessages = [
         ...conversation.messages as any[],
@@ -419,7 +419,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const atRiskMembers = await storage.getAtRiskMembers();
-      
+
       // Mock metrics for demo (in production, these would be calculated from real data)
       const metrics = {
         totalMembers: 2847,
@@ -444,7 +444,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const { prompt, systemInstruction, model } = req.body;
-      
+
       if (!prompt || !systemInstruction) {
         return res.status(400).json({ message: "Prompt and system instruction are required" });
       }
@@ -458,6 +458,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Email sending endpoint
+  app.post("/api/leads", async (req, res) => {
+    try {
+      const { name, email, phone, fitnessGoal, frequency, location, language, sessionId } = req.body;
+
+      // In a real application, you would save this to a database
+      console.log("New lead captured:", {
+        name,
+        email,
+        phone,
+        fitnessGoal,
+        frequency,
+        location,
+        language,
+        sessionId,
+        timestamp: new Date().toISOString()
+      });
+
+      res.json({ success: true, message: "Lead saved successfully" });
+    } catch (error) {
+      console.error("Error saving lead:", error);
+      res.status(500).json({ success: false, error: "Failed to save lead" });
+    }
+  });
+
   app.post('/api/send-email', isAuthenticated, async (req: any, res) => {
     try {
       const user = await storage.getUser(req.user.claims.sub);
@@ -466,10 +490,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const { to, subject, content, prospectName } = req.body;
-      
+
       if (!to || !subject || !content || !prospectName) {
-        return res.status(400).json({ 
-          message: "Email address, subject, content, and prospect name are required" 
+        return res.status(400).json({
+          message: "Email address, subject, content, and prospect name are required"
         });
       }
 
@@ -487,14 +511,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       if (result.success) {
-        res.json({ 
-          success: true, 
+        res.json({
+          success: true,
           messageId: result.messageId,
-          message: "Email sent successfully" 
+          message: "Email sent successfully"
         });
       } else {
-        res.status(500).json({ 
-          success: false, 
+        res.status(500).json({
+          success: false,
           error: result.error,
           message: "Failed to send email"
         });
@@ -525,7 +549,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/track/:trackingId', async (req, res) => {
     try {
       const { trackingId } = req.params;
-      
+
       // Log the link click
       await EmailTrackingService.logLinkClicked(trackingId, {
         userAgent: req.headers['user-agent'],
@@ -546,7 +570,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/virtual-tour/:trackingId', async (req, res) => {
     try {
       const { trackingId } = req.params;
-      
+
       // Log the tour view
       await EmailTrackingService.logTourViewed(trackingId, {
         userAgent: req.headers['user-agent'],
@@ -556,7 +580,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Get prospect information
       const interaction = await EmailTrackingService.getEmailInteractionByTrackingId(trackingId);
-      
+
       if (interaction) {
         res.json({
           success: true,

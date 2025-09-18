@@ -29,30 +29,30 @@ function Router() {
     <Switch>
       {/* Public routes */}
       <Route path="/" component={isAuthenticated ? ((user as any)?.role === 'staff' ? StaffDashboard : MemberPortal) : LandingPage} />
-      
+
       {/* Protected member routes */}
       <Route path="/portal">
         <ProtectedRoute requiredRole="member">
           <MemberPortal />
         </ProtectedRoute>
       </Route>
-      
+
       {/* Protected staff routes */}
       <Route path="/staff">
         <ProtectedRoute requiredRole="staff">
           <StaffDashboard />
         </ProtectedRoute>
       </Route>
-      
+
       <Route path="/sales">
         <ProtectedRoute requiredRole="staff">
           <SalesPersona />
         </ProtectedRoute>
       </Route>
-      
+
       {/* Virtual Tour route (public for email links) */}
       <Route path="/virtual-tour" component={VirtualTour} />
-      
+
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
