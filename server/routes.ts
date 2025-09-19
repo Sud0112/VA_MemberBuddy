@@ -457,6 +457,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // AI Chat endpoint for churn analysis
+  app.post('/api/ai/chat', isAuthenticated, async (req: any, res) => {
+    try {
+      const user = await storage.getUser(req.user.claims.sub);
+      if (!user || user.role !== 'staff') {
+        return res.status(403).json({ message: "Staff access required" });
+      }
+
+      const { message, context } = req.body;
+      if (!message) {
+        return res.status(400).json({ message: "Message is required" });
+      }
+
+      // Create a contextual conversation for churn analysis
+      const conversationHistory = [
+        {
+          role: 'system',
+          content: `You are a Customer Churn Analysis AI assistant for a premium health and wellness club. 
+          Your role is to help staff with customer retention insights, churn prevention strategies, and data analysis.
+          Be professional, analytical, and provide actionable recommendations.
+          
+          Context: ${context || 'general_churn_analysis'}`
+        }
+      ];
+
+      const result = await sendMessageToChat(message, conversationHistory);
+      res.json({ response: result.content });
+    } catch (error) {
+      console.error("Error processing AI chat:", error);
+      res.status(500).json({ message: "Failed to process AI chat" });
+    }
+  });
+
   // Email sending endpoint
   app.post("/api/leads", async (req, res) => {
     try {

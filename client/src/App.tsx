@@ -11,6 +11,7 @@ import { Login } from "@/pages/Login";
 import { MemberPortal } from "@/pages/MemberPortal";
 import { StaffDashboard } from "@/pages/StaffDashboard";
 import { SalesPersona } from "@/pages/SalesPersona";
+import { CustomerChurnAnalysis } from "@/pages/CustomerChurnAnalysis";
 import VirtualTour from "@/pages/VirtualTour";
 import { useAuthContext } from "@/contexts/AuthContext";
 import NotFound from "@/pages/not-found";
@@ -48,6 +49,12 @@ function Router() {
       <Route path="/sales">
         <ProtectedRoute requiredRole="staff">
           <SalesPersona />
+        </ProtectedRoute>
+      </Route>
+
+      <Route path="/churn-analysis">
+        <ProtectedRoute requiredRole="staff">
+          <CustomerChurnAnalysis />
         </ProtectedRoute>
       </Route>
 

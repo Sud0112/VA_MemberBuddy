@@ -84,8 +84,7 @@ export function AppLayout({
   ];
 
   const staffTabs = [
-    { id: "churn-prediction", label: "Churn Prediction", icon: TrendingUp },
-    { id: "churn-emails", label: "Churn Emails", icon: Mail },
+    { id: "customer-churn-analysis", label: "Customer Churn Analysis", icon: TrendingUp },
     { id: "loyalty-campaigns", label: "Loyalty Campaigns", icon: Megaphone },
     { id: "member-analytics", label: "Member Analytics", icon: Users },
     { id: "sales-persona", label: "Sales Persona", icon: Rocket },
