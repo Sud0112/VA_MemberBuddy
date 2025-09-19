@@ -430,6 +430,41 @@ export class DatabaseStorage implements IStorage {
       return null;
     }
   }
+
+  // Email interaction tracking operations
+  async createEmailInteraction(interaction: InsertEmailInteraction): Promise<EmailInteraction> {
+    const [emailInteraction] = await db
+      .insert(emailInteractions)
+      .values(interaction)
+      .returning();
+    return emailInteraction;
+  }
+
+  async getEmailInteractionsByProspect(email: string): Promise<EmailInteraction[]> {
+    return await db
+      .select()
+      .from(emailInteractions)
+      .where(eq(emailInteractions.prospectEmail, email))
+      .orderBy(desc(emailInteractions.createdAt));
+  }
+
+  async getEmailInteractionByTrackingId(trackingId: string): Promise<EmailInteraction | undefined> {
+    const [interaction] = await db
+      .select()
+      .from(emailInteractions)
+      .where(eq(emailInteractions.trackingId, trackingId));
+    return interaction;
+  }
+
+  async updateEmailInteraction(id: string, updates: Partial<EmailInteraction>): Promise<void> {
+    await db
+      .update(emailInteractions)
+      .set({
+        ...updates,
+        updatedAt: new Date(),
+      })
+      .where(eq(emailInteractions.id, id));
+  }
 }
 
 // Seed data function
