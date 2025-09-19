@@ -67,6 +67,9 @@ export function SalesPersona() {
   const [loading, setLoading] = useState(true);
   const [sendingEmails, setSendingEmails] = useState<Set<number>>(new Set());
   
+  // UI state - dashboard hidden by default
+  const [showDashboard, setShowDashboard] = useState(false);
+  
   // Chat state
   const [showChat, setShowChat] = useState(false);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
@@ -503,22 +506,110 @@ export function SalesPersona() {
     );
   }
 
-  return (
-    <div className="p-8 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="mb-12">
-        <div className="max-w-6xl mx-auto text-center">
-          <span className="inline-block px-4 py-2 bg-primary text-primary-foreground text-sm font-bold uppercase tracking-wider rounded-full mb-4">
-            Sales Operations
-          </span>
-          <h1 className="text-4xl lg:text-6xl font-black tracking-tight text-foreground leading-tight mb-6">
-            SALES <span className="text-primary block">PERSONA AI</span>
-          </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-2xl mx-auto">
-            AI-powered lead outreach and automated sales email generation
-          </p>
-        </div>
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen">
+      {!showDashboard ? (
+        /* ChatGPT-style Landing Page */
+        <div className="flex flex-col items-center justify-center min-h-screen p-8 bg-gradient-to-br from-background to-muted/20">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            {/* Hero Section */}
+            <div className="space-y-6">
+              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto">
+                <Bot className="h-8 w-8 text-primary" />
+              </div>
+              
+              <h1 className="text-5xl lg:text-7xl font-black tracking-tight text-foreground leading-tight">
+                Sales <span className="text-primary">Agent AI</span>
+              </h1>
+              
+              <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                Your intelligent CRM assistant for lead management, email outreach, and sales automation. Let AI handle your prospecting while you focus on closing deals.
+              </p>
+            </div>
+
+            {/* Call to Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button
+                onClick={() => setShowChat(true)}
+                className="px-8 py-4 text-lg font-semibold bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                data-testid="button-start-sales-chat"
+              >
+                <MessageCircle className="mr-2 h-5 w-5" />
+                Start Sales Chat
+              </Button>
+              
+              <Button
+                onClick={() => setShowDashboard(true)}
+                variant="outline"
+                className="px-8 py-4 text-lg font-semibold rounded-xl border-2 hover:bg-muted transition-all duration-300"
+                data-testid="button-view-dashboard"
+              >
+                <Activity className="mr-2 h-5 w-5" />
+                View Dashboard
+              </Button>
+            </div>
+
+            {/* Features Preview */}
+            <div className="grid md:grid-cols-3 gap-6 mt-16 max-w-3xl mx-auto">
+              <div className="text-center p-6 rounded-xl bg-card border border-border hover:shadow-lg transition-shadow">
+                <Users className="h-8 w-8 text-primary mx-auto mb-4" />
+                <h3 className="font-semibold text-foreground mb-2">Lead Management</h3>
+                <p className="text-sm text-muted-foreground">Track and organize prospects with intelligent CRM integration</p>
+              </div>
+              
+              <div className="text-center p-6 rounded-xl bg-card border border-border hover:shadow-lg transition-shadow">
+                <Mail className="h-8 w-8 text-primary mx-auto mb-4" />
+                <h3 className="font-semibold text-foreground mb-2">AI Email Outreach</h3>
+                <p className="text-sm text-muted-foreground">Generate personalized emails based on prospect data</p>
+              </div>
+              
+              <div className="text-center p-6 rounded-xl bg-card border border-border hover:shadow-lg transition-shadow">
+                <Rocket className="h-8 w-8 text-primary mx-auto mb-4" />
+                <h3 className="font-semibold text-foreground mb-2">Automated Workflows</h3>
+                <p className="text-sm text-muted-foreground">Let AI handle repetitive sales tasks automatically</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* Dashboard View */
+        <div className="p-8 max-w-7xl mx-auto">
+          {/* Header with Back Button */}
+          <div className="mb-8 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Button
+                onClick={() => setShowDashboard(false)}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+                data-testid="button-back-to-landing"
+              >
+                <X className="h-4 w-4" />
+                Back to Agent
+              </Button>
+              <div>
+                <h1 className="text-3xl font-bold text-foreground">Sales Dashboard</h1>
+                <p className="text-muted-foreground">Manage your leads, emails, and sales activities</p>
+              </div>
+            </div>
+            
+            <Button
+              onClick={() => setShowChat(true)}
+              className="flex items-center gap-2"
+              data-testid="button-open-sales-chat"
+            >
+              <MessageCircle className="h-4 w-4" />
+              Open Sales Chat
+            </Button>
+          </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Panel 1: CRM Prospects */}
@@ -830,6 +921,10 @@ export function SalesPersona() {
               </ScrollArea>
             </CardContent>
           </Card>
+        </div>
+      )}
+        
+        {/* Close Dashboard View */}
         </div>
       )}
     </div>
