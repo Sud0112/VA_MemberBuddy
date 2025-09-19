@@ -21,6 +21,7 @@ import {
   X,
   Sparkles,
   ArrowRight,
+  ArrowLeft,
   Send,
   Edit3,
   Copy,
@@ -642,167 +643,219 @@ export function SalesPersona() {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-blue-900/20 dark:to-indigo-900/20">
-      {!showDashboard ? (
-        /* Enhanced Landing Page with better text contrast */
-        <div className="flex flex-col items-center justify-center min-h-screen p-8">
-          <div className="max-w-6xl mx-auto text-center space-y-12">
-            {/* Enhanced Hero Section */}
-            <div className="space-y-8">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-blue-600/20 blur-3xl rounded-full animate-pulse"></div>
-                <div className="relative w-24 h-24 bg-gradient-to-br from-primary to-blue-600 rounded-3xl flex items-center justify-center mx-auto shadow-2xl">
-                  <Bot className="h-12 w-12 text-white animate-bounce" />
-                </div>
-              </div>
-              
-              <div className="space-y-6">
-                <h1 className="text-6xl lg:text-8xl font-black tracking-tight bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 dark:from-white dark:via-blue-200 dark:to-indigo-200 bg-clip-text text-transparent leading-tight drop-shadow-lg">
-                  Sales Agent
-                  <span className="block text-primary drop-shadow-lg">AI Platform</span>
-                </h1>
-                
-                <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20">
-                  <p className="text-xl lg:text-2xl text-gray-800 dark:text-gray-200 leading-relaxed max-w-4xl mx-auto font-medium">
-                    Transform your sales process with intelligent automation. Your AI-powered CRM assistant handles lead management, personalized outreach, and sales automation while you focus on building relationships and closing deals.
-                  </p>
-                </div>
-              </div>
+  // Landing Page View
+  if (!showDashboard) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex flex-col">
+        {/* Header */}
+        <div className="flex-1 flex flex-col items-center justify-center px-4">
+          <div className="w-full max-w-4xl mx-auto text-center">
+            {/* Bot Icon */}
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mb-8 shadow-lg">
+              <Bot className="h-12 w-12 text-white" />
             </div>
 
-            {/* Real-time Status Indicators */}
-            {processingStatus.isActive && (
-              <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-blue-200/50 animate-in slide-in-from-bottom-4">
-                <div className="flex items-center gap-4 mb-4">
-                  <Brain className="h-6 w-6 text-blue-600 animate-pulse" />
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">AI Agent Active</h3>
-                </div>
-                <Progress value={processingStatus.progress} className="mb-3" />
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  {processingStatus.currentTask} ({processingStatus.currentStep}/{processingStatus.totalSteps})
-                </p>
-              </div>
-            )}
+            {/* Main Heading */}
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
+              Sales Persona
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                AI Agent
+              </span>
+            </h1>
 
-            {/* Enhanced CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            {/* Subtitle */}
+            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+              AI-powered lead management and automated sales outreach with personalized email generation
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               <Button
                 onClick={() => setShowChat(true)}
-                className="group px-10 py-6 text-xl font-bold bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 text-white rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105"
+                size="lg"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-full shadow-lg transition-all duration-200"
                 data-testid="button-start-sales-chat"
               >
-                <MessageCircle className="mr-3 h-6 w-6 group-hover:animate-pulse" />
-                Start AI Conversation
-                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                <MessageCircle className="mr-2 h-5 w-5" />
+                Start Sales Chat
               </Button>
-              
               <Button
                 onClick={() => setShowDashboard(true)}
                 variant="outline"
-                className="group px-10 py-6 text-xl font-bold rounded-2xl border-2 hover:bg-white/90 dark:hover:bg-gray-800/90 backdrop-blur-sm transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-xl text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
+                size="lg"
+                className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold px-8 py-4 rounded-full transition-all duration-200"
                 data-testid="button-view-dashboard"
               >
-                <TrendingUp className="mr-3 h-6 w-6 group-hover:animate-bounce" />
-                View Analytics Dashboard
+                <TrendingUp className="mr-2 h-5 w-5" />
+                View Dashboard
               </Button>
             </div>
 
-            {/* Enhanced Features Grid with better contrast */}
-            <div className="grid md:grid-cols-3 gap-8 mt-20 max-w-5xl mx-auto">
-              <div className="group text-center p-8 rounded-3xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 hover:shadow-2xl transition-all duration-500 hover:scale-105 shadow-lg">
-                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
-                  <Users className="h-8 w-8 text-white" />
+            {/* Feature Cards */}
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <Users className="h-6 w-6 text-emerald-600" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Smart Lead Management</h3>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">Intelligent prospect tracking with automated status updates and lead scoring based on engagement patterns.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Smart Lead Management</h3>
+                <p className="text-gray-600">
+                  Intelligent prospect tracking with automated status updates and engagement analysis
+                </p>
               </div>
-              
-              <div className="group text-center p-8 rounded-3xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 hover:shadow-2xl transition-all duration-500 hover:scale-105 shadow-lg">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
-                  <Zap className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">AI-Powered Outreach</h3>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">Generate personalized emails using social media insights and behavioral data to maximize conversion rates.</p>
-              </div>
-              
-              <div className="group text-center p-8 rounded-3xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 hover:shadow-2xl transition-all duration-500 hover:scale-105 shadow-lg">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
-                  <Rocket className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Automated Workflows</h3>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">Streamline repetitive sales tasks with intelligent automation and real-time performance analytics.</p>
-              </div>
-            </div>
 
-            {/* Enhanced Stats Section with better contrast */}
-            <div className="mt-20 p-8 rounded-3xl bg-gradient-to-r from-white/95 to-blue-50/95 dark:from-gray-800/95 dark:to-blue-900/30 backdrop-blur-sm border border-primary/20 shadow-xl">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-center">
-                  <div className="text-4xl font-black text-primary mb-2">{crmData.length}</div>
-                  <p className="text-gray-700 dark:text-gray-300 font-semibold">Total Prospects</p>
+              <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <Zap className="h-6 w-6 text-blue-600" />
                 </div>
-                <div className="text-center">
-                  <div className="text-4xl font-black text-emerald-600 mb-2">{generatedEmails.length}</div>
-                  <p className="text-gray-700 dark:text-gray-300 font-semibold">Emails Generated</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">AI-Powered Outreach</h3>
+                <p className="text-gray-600">
+                  Generate personalized emails using social media insights and behavioral data
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <Rocket className="h-6 w-6 text-purple-600" />
                 </div>
-                <div className="text-center">
-                  <div className="text-4xl font-black text-blue-600 mb-2">{crmData.filter(p => p.status === "New").length}</div>
-                  <p className="text-gray-700 dark:text-gray-300 font-semibold">New Leads</p>
-                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Automated Workflows</h3>
+                <p className="text-gray-600">
+                  Streamline sales tasks with intelligent automation and real-time analytics
+                </p>
               </div>
             </div>
           </div>
         </div>
-      ) : (
-        /* Enhanced Dashboard View with better text contrast */
-        <div className="p-8 max-w-7xl mx-auto">
-          {/* Enhanced Header with progress indicator */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-6">
+
+        {/* Chat Interface */}
+        {showChat && (
+          <div className="fixed bottom-4 right-4 w-96 h-96 bg-white rounded-lg shadow-2xl border border-gray-200 flex flex-col z-50">
+            {/* Chat Header */}
+            <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
+              <div className="flex items-center space-x-2">
+                <Bot className="h-5 w-5" />
+                <span className="font-semibold">Sales AI Agent</span>
+              </div>
+              <Button
+                onClick={() => setShowChat(false)}
+                variant="ghost"
+                size="sm"
+                className="text-white hover:bg-white/20"
+                data-testid="button-close-chat"
+              >
+                ×
+              </Button>
+            </div>
+
+            {/* Chat Messages */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {chatMessages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`flex gap-3 ${
+                    message.role === "user" ? "justify-end" : ""
+                  }`}
+                >
+                  {message.role === "agent" && (
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Bot className="h-4 w-4 text-white" />
+                    </div>
+                  )}
+                  <div
+                    className={`max-w-[80%] p-3 rounded-lg ${
+                      message.role === "user"
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-100 text-gray-900"
+                    }`}
+                  >
+                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                    {message.buttons && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {message.buttons.map((button, btnIndex) => (
+                          <Button
+                            key={btnIndex}
+                            size="sm"
+                            variant="outline"
+                            className="text-xs"
+                            onClick={() => handleChatButton(button.value)}
+                            disabled={isProcessing}
+                          >
+                            {button.text}
+                          </Button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  {message.role === "user" && (
+                    <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center flex-shrink-0">
+                      <User className="h-4 w-4 text-white" />
+                    </div>
+                  )}
+                </div>
+              ))}
+              
+              {isProcessing && (
+                <div className="flex gap-3">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Bot className="h-4 w-4 text-white" />
+                  </div>
+                  <div className="bg-gray-100 text-gray-900 max-w-[80%] p-3 rounded-lg">
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Dashboard View
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="p-8">
+        {/* Dashboard Header */}
+        <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 mb-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
               <Button
                 onClick={() => setShowDashboard(false)}
                 variant="outline"
                 size="sm"
-                className="flex items-center gap-2 hover:bg-white/90 dark:hover:bg-gray-800/90 backdrop-blur-sm transition-all text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
+                className="border-gray-300"
                 data-testid="button-back-to-landing"
               >
-                <X className="h-4 w-4" />
-                Back to AI Agent
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back
               </Button>
-              
+              <div>
+                <h1 className="text-3xl font-bold text-slate-800 mb-2">
+                  Sales Intelligence Dashboard
+                </h1>
+                <p className="text-slate-600 text-lg">
+                  AI-powered lead management and outreach automation
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
               <Button
                 onClick={() => setShowChat(true)}
-                className="flex items-center gap-2 bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 shadow-lg hover:shadow-xl transition-all"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                 data-testid="button-open-sales-chat"
               >
-                <MessageCircle className="h-4 w-4" />
+                <MessageCircle className="mr-2 h-4 w-4" />
                 Open Sales Chat
               </Button>
             </div>
-            
-            {processingStatus.isActive && (
-              <div className="mb-6 p-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl border border-blue-200/50 shadow-lg">
-                <div className="flex items-center gap-3 mb-3">
-                  <RefreshCw className="h-5 w-5 text-blue-600 animate-spin" />
-                  <span className="font-semibold text-gray-900 dark:text-white">AI Agent Processing...</span>
-                </div>
-                <Progress value={processingStatus.progress} className="mb-2" />
-                <p className="text-sm text-gray-700 dark:text-gray-300">{processingStatus.currentTask}</p>
-              </div>
-            )}
-            
-            <div className="text-center space-y-4">
-              <h1 className="text-4xl font-black bg-gradient-to-r from-gray-900 to-blue-800 dark:from-white dark:to-blue-200 bg-clip-text text-transparent drop-shadow-lg">
-                Sales Intelligence Dashboard
-              </h1>
-              <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 shadow-lg inline-block">
-                <p className="text-lg text-gray-800 dark:text-gray-200">Monitor your leads, track AI activities, and manage email campaigns</p>
-              </div>
-            </div>
           </div>
+        </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+        {/* Main Dashboard Content */}
+        <div className="grid lg:grid-cols-3 gap-8">
             {/* Enhanced CRM Prospects Panel with better contrast */}
             <Card className="border-0 shadow-xl bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm">
               <CardHeader className="p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-t-lg border-b">
@@ -1054,10 +1107,9 @@ export function SalesPersona() {
             </Card>
           </div>
         </div>
-      )}
 
-      {/* Enhanced Proactive CRM Agent Chat with better contrast */}
-      {showChat && (
+        {/* Chat Interface for Dashboard View */}
+        {showChat && (
         <div className="fixed bottom-6 right-6 z-50">
           <Card className="w-96 shadow-2xl border-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm overflow-hidden">
             <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 flex flex-row items-center justify-between">
