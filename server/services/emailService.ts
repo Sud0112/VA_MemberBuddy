@@ -110,7 +110,7 @@ export class EmailService {
     }
 
     const { data, error } = await resend.emails.send({
-      from: 'Virgin Active <no-reply@virginactive.com>',
+      from: 'Member Buddy <onboarding@resend.dev>',
       to: emailData.to,
       subject: emailData.subject,
       text: processedContent,
