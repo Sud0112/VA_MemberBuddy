@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
 import { 
   Bell, 
   X, 
@@ -11,84 +12,64 @@ import {
   Gift,
   TrendingUp,
   Users,
-  CheckCircle
+  CheckCircle,
+  UserPlus
 } from "lucide-react";
 
 interface Notification {
   id: string;
-  type: 'achievement' | 'alert' | 'reward' | 'milestone';
+  type: 'achievement' | 'alert' | 'reward' | 'milestone' | 'lead';
   title: string;
   message: string;
-  timestamp: Date;
+  timestamp: Date | string;
   read: boolean;
   urgent?: boolean;
+  leadId?: string;
+  memberId?: string;
 }
 
 interface NotificationCenterProps {
   userRole: 'member' | 'staff';
+  onNavigateToSalesPersona?: (leadId?: string) => void;
 }
 
-export function NotificationCenter({ userRole }: NotificationCenterProps) {
+export function NotificationCenter({ userRole, onNavigateToSalesPersona }: NotificationCenterProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [notifications, setNotifications] = useState<Notification[]>(() => {
-    // Mock notifications based on user role
-    if (userRole === 'member') {
-      return [
-        {
-          id: '1',
-          type: 'achievement',
-          title: 'Streak Milestone! 🎉',
-          message: 'You have completed a 7-day workout streak! Keep it up!',
-          timestamp: new Date(Date.now() - 10 * 60 * 1000),
-          read: false
-        },
-        {
-          id: '2',
-          type: 'reward',
-          title: 'Points Earned',
-          message: 'You earned 50 loyalty points from your last workout!',
-          timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
-          read: false
-        },
-        {
-          id: '3',
-          type: 'milestone',
-          title: 'Monthly Goal Achieved!',
-          message: 'Congratulations! You have hit your monthly workout target of 20 sessions.',
-          timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
-          read: true
-        }
-      ];
-    } else {
-      return [
-        {
-          id: '1',
-          type: 'alert',
-          title: 'Member At Risk',
-          message: 'Member has not visited in 6 days. Consider outreach.',
-          timestamp: new Date(Date.now() - 30 * 60 * 1000),
-          read: false,
-          urgent: true
-        },
-        {
-          id: '2',
-          type: 'milestone',
-          title: 'Revenue Milestone',
-          message: 'Monthly revenue target exceeded by 12%! Great work team.',
-          timestamp: new Date(Date.now() - 60 * 60 * 1000),
-          read: false
-        },
-        {
-          id: '3',
-          type: 'alert',
-          title: 'Peak Hour Alert',
-          message: 'Gym capacity at 85% during 6-7 PM slot today.',
-          timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000),
-          read: false
-        }
-      ];
-    }
+  
+  // Fetch real notifications for staff, use mock data for members
+  const { data: fetchedNotifications, isLoading } = useQuery({
+    queryKey: ['/api/staff/notifications'],
+    enabled: userRole === 'staff', // Only fetch for staff
+    refetchInterval: 30000, // Refetch every 30 seconds for real-time updates
   });
+
+  // Use mock data for members, real data for staff
+  const notifications: Notification[] = userRole === 'member' ? [
+    {
+      id: '1',
+      type: 'achievement',
+      title: 'Streak Milestone! 🎉',
+      message: 'You have completed a 7-day workout streak! Keep it up!',
+      timestamp: new Date(Date.now() - 10 * 60 * 1000),
+      read: false
+    },
+    {
+      id: '2',
+      type: 'reward',
+      title: 'Points Earned',
+      message: 'You earned 50 loyalty points from your last workout!',
+      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+      read: false
+    },
+    {
+      id: '3',
+      type: 'milestone',
+      title: 'Monthly Goal Achieved!',
+      message: 'Congratulations! You have hit your monthly workout target of 20 sessions.',
+      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
+      read: true
+    }
+  ] : (fetchedNotifications as Notification[] || []);
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
@@ -102,28 +83,34 @@ export function NotificationCenter({ userRole }: NotificationCenterProps) {
         return <Target className="h-5 w-5 text-green-600" />;
       case 'alert':
         return <AlertTriangle className="h-5 w-5 text-red-600" />;
+      case 'lead':
+        return <UserPlus className="h-5 w-5 text-blue-600" />;
       default:
         return <Bell className="h-5 w-5 text-gray-600" />;
     }
   };
 
+  // For now, these will be no-ops since we're using real-time data
+  // In a full implementation, these would update the server state
   const markAsRead = (id: string) => {
-    setNotifications(prev => prev.map(n => 
-      n.id === id ? { ...n, read: true } : n
-    ));
+    // TODO: Make API call to mark notification as read
+    console.log('Mark as read:', id);
   };
 
   const markAllAsRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+    // TODO: Make API call to mark all notifications as read
+    console.log('Mark all as read');
   };
 
   const removeNotification = (id: string) => {
-    setNotifications(prev => prev.filter(n => n.id !== id));
+    // TODO: Make API call to remove notification
+    console.log('Remove notification:', id);
   };
 
-  const formatTime = (timestamp: Date) => {
+  const formatTime = (timestamp: Date | string) => {
     const now = new Date();
-    const diffMs = now.getTime() - timestamp.getTime();
+    const date = typeof timestamp === 'string' ? new Date(timestamp) : timestamp;
+    const diffMs = now.getTime() - date.getTime();
     const diffMins = Math.floor(diffMs / 60000);
     const diffHours = Math.floor(diffMs / 3600000);
     const diffDays = Math.floor(diffMs / 86400000);
@@ -200,7 +187,13 @@ export function NotificationCenter({ userRole }: NotificationCenterProps) {
                             : 'bg-blue-50 border-blue-200'
                           : 'bg-gray-50 border-gray-200'
                       }`}
-                      onClick={() => markAsRead(notification.id)}
+                      onClick={() => {
+                        markAsRead(notification.id);
+                        if (notification.type === 'lead' && onNavigateToSalesPersona) {
+                          setIsOpen(false); // Close notification panel
+                          onNavigateToSalesPersona(notification.leadId);
+                        }
+                      }}
                       data-testid={`notification-${notification.id}`}
                     >
                       <div className="flex items-start gap-3">

@@ -97,6 +97,25 @@ export const chatConversations = pgTable("chat_conversations", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Leads table for prospect data from ChatBot
+export const leads = pgTable("leads", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  firstName: varchar("first_name").notNull(),
+  lastName: varchar("last_name"),
+  email: varchar("email").notNull().unique(),
+  phone: varchar("phone"),
+  fitnessGoal: varchar("fitness_goal"), // 'weight_loss', 'build_muscle', etc.
+  frequency: varchar("frequency"), // '1-2', '3-4', '5+', 'unsure'
+  location: varchar("location"), // 'central_london', 'east_london', etc.
+  language: varchar("language"), // 'english', 'spanish', 'french'
+  sessionId: varchar("session_id").notNull(),
+  conversationId: uuid("conversation_id").references(() => chatConversations.id),
+  status: varchar("status").notNull().default("new"), // 'new', 'contacted', 'converted', 'lost'
+  assignedStaff: varchar("assigned_staff").references(() => users.id),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Workout plans table
 export const workoutPlans = pgTable("workout_plans", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -193,6 +212,17 @@ export const churnEmailsRelations = relations(churnEmails, ({ one }) => ({
   }),
 }));
 
+export const leadsRelations = relations(leads, ({ one }) => ({
+  conversation: one(chatConversations, {
+    fields: [leads.conversationId],
+    references: [chatConversations.id],
+  }),
+  assignedStaffMember: one(users, {
+    fields: [leads.assignedStaff],
+    references: [users.id],
+  }),
+}));
+
 // Types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
@@ -248,3 +278,11 @@ export const insertEmailInteractionSchema = createInsertSchema(emailInteractions
 });
 export type InsertEmailInteraction = z.infer<typeof insertEmailInteractionSchema>;
 export type EmailInteraction = typeof emailInteractions.$inferSelect;
+
+export const insertLeadSchema = createInsertSchema(leads).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertLead = z.infer<typeof insertLeadSchema>;
+export type Lead = typeof leads.$inferSelect;

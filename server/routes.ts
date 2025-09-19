@@ -8,6 +8,7 @@ import {
   insertOutreachActionSchema,
   insertChatConversationSchema,
   insertWorkoutPlanSchema,
+  insertLeadSchema,
 } from "@shared/schema";
 import {
   generateRetentionStrategies,
@@ -490,13 +491,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Email sending endpoint
+  // Lead capture endpoint - PUBLIC route for ChatBot (no authentication required)
   app.post("/api/leads", async (req, res) => {
     try {
       const { name, email, phone, fitnessGoal, frequency, location, language, sessionId } = req.body;
 
-      // In a real application, you would save this to a database
-      console.log("New lead captured:", {
+      if (!name || !email) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Name and email are required" 
+        });
+      }
+
+      // Save lead to dedicated leads table
+      const leadData = insertLeadSchema.parse({
+        firstName: name.split(' ')[0] || name,
+        lastName: name.split(' ').slice(1).join(' ') || '',
+        email: email.toLowerCase(),
+        phone,
+        fitnessGoal,
+        frequency,
+        location,
+        language,
+        sessionId,
+        status: 'new'
+      });
+
+      // Use direct DB insert for now (TODO: add to storage interface)  
+      const { db } = await import('./db');
+      const { leads } = await import('@shared/schema');
+      const [savedLead] = await db.insert(leads).values(leadData).returning();
+
+      // Save the conversation data with lead details
+      const conversationData = {
+        sessionId,
+        messages: [{
+          role: 'system',
+          content: `Lead captured: ${name} (${email}) - Fitness Goal: ${fitnessGoal}, Frequency: ${frequency}, Location: ${location}, Language: ${language}`
+        }],
+        isComplete: true,
+        contactEmail: email,
+        contactName: name,
+        tourBooked: false
+      };
+
+      // Save or update the conversation
+      const existingConversation = await storage.getChatConversation(sessionId);
+      if (existingConversation) {
+        await storage.updateChatConversation(sessionId, conversationData);
+      } else {
+        await storage.createChatConversation(conversationData);
+      }
+
+      console.log("New lead saved to CRM:", {
+        id: savedLead.id,
         name,
         email,
         phone,
@@ -508,10 +556,84 @@ export async function registerRoutes(app: Express): Promise<Server> {
         timestamp: new Date().toISOString()
       });
 
-      res.json({ success: true, message: "Lead saved successfully" });
+      res.json({ 
+        success: true, 
+        message: "Lead saved to CRM successfully",
+        leadId: savedLead.id
+      });
     } catch (error) {
-      console.error("Error saving lead:", error);
-      res.status(500).json({ success: false, error: "Failed to save lead" });
+      console.error("Error saving lead to CRM:", error);
+      res.status(500).json({ success: false, error: "Failed to save lead to CRM" });
+    }
+  });
+
+  // Staff notifications endpoint - shows new leads and other alerts
+  app.get('/api/staff/notifications', isAuthenticated, async (req: any, res) => {
+    try {
+      const user = await storage.getUser(req.user.claims.sub);
+      if (!user || user.role !== 'staff') {
+        return res.status(403).json({ message: "Staff access required" });
+      }
+
+      const notifications = [];
+
+      // Get recent leads from dedicated leads table
+      const { db } = await import('./db');
+      const { leads } = await import('@shared/schema');
+      const { sql, gte } = await import('drizzle-orm');
+      const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+      const recentLeads = await db.select().from(leads).where(
+        gte(leads.createdAt, twentyFourHoursAgo)
+      ).orderBy(sql`${leads.createdAt} DESC`);
+
+      // Add lead notifications
+      recentLeads.forEach(lead => {
+        notifications.push({
+          id: `lead-${lead.id}`,
+          type: 'lead',
+          title: 'New Lead Captured! 🎯',
+          message: `${lead.firstName} ${lead.lastName} (${lead.email}) just completed a chat conversation and is interested in membership.`,
+          timestamp: lead.createdAt,
+          read: false,
+          urgent: true,
+          leadId: lead.id
+        });
+      });
+
+      // Get at-risk members for notifications
+      const atRiskMembers = await storage.getAtRiskMembers();
+      const criticalMembers = atRiskMembers.slice(0, 3); // Show only top 3 most critical
+
+      criticalMembers.forEach((member, index) => {
+        notifications.push({
+          id: `risk-${member.id}`,
+          type: 'alert',
+          title: 'Member At Risk',
+          message: `${member.firstName} ${member.lastName} hasn't visited recently. Consider outreach.`,
+          timestamp: new Date(Date.now() - (index + 1) * 60 * 60 * 1000),
+          read: false,
+          urgent: index === 0, // Mark first one as urgent
+          memberId: member.id
+        });
+      });
+
+      // Add some general business notifications
+      notifications.push({
+        id: 'business-1',
+        type: 'milestone',
+        title: 'Revenue Milestone',
+        message: 'Monthly revenue target exceeded by 12%! Great work team.',
+        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+        read: false
+      });
+
+      // Sort by timestamp (newest first)
+      notifications.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+      res.json(notifications);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+      res.status(500).json({ message: "Failed to fetch notifications" });
     }
   });
 

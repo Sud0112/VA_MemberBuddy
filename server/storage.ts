@@ -7,6 +7,7 @@ import {
   workoutPlans,
   churnEmails,
   emailInteractions,
+  leads,
   type User,
   type UpsertUser,
   type LoyaltyOffer,
@@ -23,6 +24,8 @@ import {
   type InsertChurnEmail,
   type EmailInteraction,
   type InsertEmailInteraction,
+  type Lead,
+  type InsertLead,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, sql } from "drizzle-orm";

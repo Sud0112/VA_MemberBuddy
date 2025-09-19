@@ -19,6 +19,15 @@ import { SalesPersona } from "@/pages/SalesPersona";
 export function StaffDashboard() {
   const [activeTab, setActiveTab] = useState("customer-churn-analysis");
 
+  // Handle navigation to Sales Persona with lead data
+  const handleNavigateToSalesPersona = (leadId?: string) => {
+    setActiveTab("sales-persona");
+    // TODO: Pass leadId to SalesPersona component for pre-population
+    if (leadId) {
+      console.log("Navigating to Sales Persona with lead:", leadId);
+    }
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case "loyalty-campaigns":
@@ -37,6 +46,7 @@ export function StaffDashboard() {
       activeTab={activeTab}
       onTabChange={setActiveTab}
       userRole="staff"
+      onNavigateToSalesPersona={handleNavigateToSalesPersona}
     >
       {renderContent()}
     </AppLayout>

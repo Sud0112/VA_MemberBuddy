@@ -36,6 +36,7 @@ interface LayoutProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
   userRole: "member" | "staff";
+  onNavigateToSalesPersona?: (leadId?: string) => void;
 }
 
 export function AppLayout({
@@ -43,6 +44,7 @@ export function AppLayout({
   activeTab,
   onTabChange,
   userRole,
+  onNavigateToSalesPersona,
 }: LayoutProps) {
   const { user } = useAuthContext();
   const queryClient = useQueryClient();
@@ -152,9 +154,15 @@ export function AppLayout({
               </div>
             )}
             {userRole === "staff" && (
-              <div className="flex items-center gap-2 text-sm text-blue-700">
-                <Shield className="h-4 w-4" />
-                <span>Member Relations</span>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm text-blue-700">
+                  <Shield className="h-4 w-4" />
+                  <span>Member Relations</span>
+                </div>
+                <NotificationCenter 
+                  userRole={userRole} 
+                  onNavigateToSalesPersona={onNavigateToSalesPersona} 
+                />
               </div>
             )}
 
