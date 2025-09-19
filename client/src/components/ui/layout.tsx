@@ -22,6 +22,8 @@ import {
   ToggleLeft,
   ToggleRight,
   Rocket,
+  TrendingDown,
+  BarChart,
 } from "lucide-react";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { NotificationCenter } from "@/components/NotificationCenter";
