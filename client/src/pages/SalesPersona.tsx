@@ -267,9 +267,11 @@ export function SalesPersona() {
         };
     }
 
-    // Add agent response after a delay
+    // Show typing indicator then add agent response after a delay
+    setIsProcessing(true);
     setTimeout(() => {
       setChatMessages(prev => [...prev, agentResponse]);
+      setIsProcessing(false);
     }, 1000);
   };
 
@@ -503,16 +505,16 @@ export function SalesPersona() {
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      {/* Virgin Active Header */}
+      {/* Header */}
       <div className="mb-12">
         <div className="max-w-6xl mx-auto text-center">
-          <span className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold uppercase tracking-wider rounded-full mb-4">
+          <span className="inline-block px-4 py-2 bg-primary text-primary-foreground text-sm font-bold uppercase tracking-wider rounded-full mb-4">
             Sales Operations
           </span>
-          <h1 className="text-4xl lg:text-6xl font-black tracking-tight text-gray-900 leading-tight mb-6">
-            SALES <span className="text-red-600 block">PERSONA AI</span>
+          <h1 className="text-4xl lg:text-6xl font-black tracking-tight text-foreground leading-tight mb-6">
+            SALES <span className="text-primary block">PERSONA AI</span>
           </h1>
-          <p className="text-xl text-gray-700 leading-relaxed mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-2xl mx-auto">
             AI-powered lead outreach and automated sales email generation
           </p>
         </div>
@@ -520,10 +522,10 @@ export function SalesPersona() {
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Panel 1: CRM Prospects */}
-        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
-          <CardHeader className="p-6 bg-gradient-to-r from-red-50 to-pink-50">
-            <CardTitle className="flex items-center gap-2 text-gray-900">
-              <Users className="h-5 w-5 text-red-600" />
+        <Card className="card-readable">
+          <CardHeader className="p-6 bg-gradient-to-r from-primary/5 to-primary/10">
+            <CardTitle className="flex items-center gap-2 text-foreground">
+              <Users className="h-5 w-5 text-primary" />
               CRM Prospects
               <Badge variant="outline" className="ml-auto">
                 {crmData.length} total
@@ -536,36 +538,36 @@ export function SalesPersona() {
                 crmData.map((prospect) => (
                   <div
                     key={prospect.id}
-                    className="border border-slate-100 rounded-lg p-4 hover:border-red-200 transition-colors bg-white"
+                    className="border border-border rounded-lg p-4 hover:border-primary/30 transition-colors bg-card"
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-2">
-                        <User className="h-4 w-4 text-red-600" />
-                        <span className="font-semibold text-gray-900">
+                        <User className="h-4 w-4 text-primary" />
+                        <span className="font-semibold text-foreground">
                           {prospect.name}
                         </span>
                       </div>
                       {getStatusBadge(prospect.status)}
                     </div>
                     <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2 text-gray-600">
+                      <div className="flex items-center gap-2 text-muted-foreground">
                         <Mail className="h-4 w-4" />
                         {prospect.email}
                       </div>
                       {prospect.phone && (
-                        <div className="flex items-center gap-2 text-gray-600">
+                        <div className="flex items-center gap-2 text-muted-foreground">
                           <span className="text-xs">📞</span>
                           {prospect.phone}
                         </div>
                       )}
                       {prospect.location && (
-                        <div className="flex items-center gap-2 text-gray-600">
+                        <div className="flex items-center gap-2 text-muted-foreground">
                           <span className="text-xs">📍</span>
                           {prospect.location}
                         </div>
                       )}
-                      <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                        <span className="text-xs text-gray-500">
+                      <div className="flex items-center justify-between pt-2 border-t border-border">
+                        <span className="text-xs text-muted-foreground">
                           {prospect.socialMediaHandle}
                         </span>
                         {prospect.leadSource && (
@@ -578,7 +580,7 @@ export function SalesPersona() {
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500 text-center py-8">
+                <p className="text-muted-foreground text-center py-8">
                   No prospects found
                 </p>
               )}
@@ -587,21 +589,21 @@ export function SalesPersona() {
         </Card>
 
         {/* Panel 2: AI Agent Control & Activity */}
-        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
-          <CardHeader className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50">
-            <CardTitle className="flex items-center gap-2 text-gray-900">
-              <Rocket className="h-5 w-5 text-blue-600" />
+        <Card className="card-readable">
+          <CardHeader className="p-6 bg-gradient-to-r from-primary/5 to-primary/10">
+            <CardTitle className="flex items-center gap-2 text-foreground">
+              <Rocket className="h-5 w-5 text-primary" />
               AI Agent Activity
             </CardTitle>
           </CardHeader>
           <CardContent className="p-6">
             {/* Agent Activity Log */}
             <div>
-              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                <Activity className="h-5 w-5 text-blue-600" />
+              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-foreground">
+                <Activity className="h-5 w-5 text-primary" />
                 Activity Log
               </h3>
-              <Card className="border-slate-200">
+              <Card className="border-border">
                 <CardContent className="p-0">
                   <ScrollArea className="h-[500px] w-full">
                     <div className="p-4">
@@ -615,18 +617,18 @@ export function SalesPersona() {
                               {getLogIcon(log.type)}
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-1">
-                                  <Clock className="h-3 w-3 text-gray-400" />
-                                  <span className="text-xs text-gray-500">
+                                  <Clock className="h-3 w-3 text-muted-foreground" />
+                                  <span className="text-xs text-muted-foreground">
                                     {log.timestamp}
                                   </span>
                                 </div>
-                                <p className="text-gray-900">{log.message}</p>
+                                <p className="text-foreground">{log.message}</p>
                               </div>
                             </div>
                           ))}
                         </div>
                       ) : (
-                        <p className="text-gray-500 text-center py-8">
+                        <p className="text-muted-foreground text-center py-8">
                           No activity yet. The agent will start processing when you interact with it.
                         </p>
                       )}
@@ -639,10 +641,10 @@ export function SalesPersona() {
         </Card>
 
         {/* Panel 3: Email Preview */}
-        <Card className="border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300">
-          <CardHeader className="p-6 bg-gradient-to-r from-green-50 to-emerald-50">
-            <CardTitle className="flex items-center gap-2 text-gray-900">
-              <Mail className="h-5 w-5 text-green-600" />
+        <Card className="card-readable">
+          <CardHeader className="p-6 bg-gradient-to-r from-primary/5 to-primary/10">
+            <CardTitle className="flex items-center gap-2 text-foreground">
+              <Mail className="h-5 w-5 text-primary" />
               Generated Emails
               <Badge variant="outline" className="ml-auto">
                 {generatedEmails.length} emails
@@ -798,26 +800,26 @@ export function SalesPersona() {
                         )}
                       </div>
                       {message.role === "user" && (
-                        <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
-                          <User className="h-4 w-4 text-gray-600" />
+                        <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
+                          <User className="h-4 w-4 text-muted-foreground" />
                         </div>
                       )}
                     </div>
                   ))}
                   {isProcessing && (
-                    <div className="flex gap-3">
-                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Bot className="h-4 w-4 text-blue-600" />
+                    <div className="flex gap-3" data-testid="crm-typing-indicator">
+                      <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Bot className="h-4 w-4 text-primary" />
                       </div>
-                      <div className="bg-gray-100 rounded-2xl rounded-tl-md p-3">
+                      <div className="bg-muted rounded-2xl rounded-tl-md p-3">
                         <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
                           <div
-                            className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                            className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
                             style={{ animationDelay: "0.1s" }}
                           ></div>
                           <div
-                            className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                            className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
                             style={{ animationDelay: "0.2s" }}
                           ></div>
                         </div>

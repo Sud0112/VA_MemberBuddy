@@ -418,7 +418,7 @@ export function ChatBot() {
             </div>
 
             {/* Input */}
-            {(currentStep === "name" || currentStep === "email" || currentStep === "phone") && currentStep !== "complete" && (
+            {(currentStep === "name" || currentStep === "email" || currentStep === "phone") && (
               <div className="p-4 border-t">
                 <div className="flex gap-2">
                   <Input
