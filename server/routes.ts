@@ -40,27 +40,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Role toggle endpoint for testing personas
-  app.post('/api/user/toggle-role', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const { role } = req.body;
-
-      if (!role || !['member', 'staff'].includes(role)) {
-        return res.status(400).json({ message: 'Invalid role. Must be "member" or "staff"' });
-      }
-
-      const updatedUser = await storage.upsertUser({
-        id: userId,
-        role,
-        updatedAt: new Date()
-      });
-
-      res.json({ message: 'Role updated successfully', user: updatedUser });
-    } catch (error) {
-      console.error('Error toggling user role:', error);
-      res.status(500).json({ message: 'Failed to update user role' });
-    }
-  });
+  // REMOVED: /api/user/toggle-role endpoint due to security vulnerability
+  // This endpoint allowed privilege escalation where any user could change their role to staff
+  // Role changes should only be done by administrators through secure admin interfaces
 
   // Loyalty offers endpoints
   app.get('/api/loyalty-offers', isAuthenticated, async (req, res) => {
@@ -778,6 +760,175 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching prospect engagement:", error);
       res.status(500).json({ message: "Failed to fetch engagement data" });
+    }
+  });
+
+  // Member notifications endpoint - generates personalized notifications based on real data
+  app.get('/api/member/notifications', isAuthenticated, async (req: any, res) => {
+    try {
+      const user = await storage.getUser(req.user.claims.sub);
+      if (!user || user.role !== 'member') {
+        return res.status(403).json({ message: "Member access required" });
+      }
+
+      const notifications = [];
+      const now = new Date();
+
+      // Loyalty points milestone notifications
+      const loyaltyPoints = user.loyaltyPoints || 0;
+      if (loyaltyPoints >= 500) {
+        notifications.push({
+          id: `loyalty-milestone-${user.id}`,
+          type: 'milestone',
+          title: 'VIP Status Achieved! 👑',
+          message: `Congratulations! You've earned ${loyaltyPoints} loyalty points and achieved VIP status. Exclusive rewards await you!`,
+          timestamp: new Date(now.getTime() - 2 * 60 * 60 * 1000), // 2 hours ago
+          read: false
+        });
+      } else if (loyaltyPoints >= 250) {
+        notifications.push({
+          id: `loyalty-progress-${user.id}`,
+          type: 'achievement',
+          title: 'Points Milestone! 🎯',
+          message: `Amazing progress! You've earned ${loyaltyPoints} loyalty points. Keep it up to unlock more rewards!`,
+          timestamp: new Date(now.getTime() - 6 * 60 * 60 * 1000), // 6 hours ago
+          read: false
+        });
+      } else if (loyaltyPoints >= 100) {
+        notifications.push({
+          id: `loyalty-reward-${user.id}`,
+          type: 'reward',
+          title: 'Points Earned! 💰',
+          message: `You've earned ${loyaltyPoints} loyalty points! Redeem them for exclusive rewards in the members area.`,
+          timestamp: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
+          read: true
+        });
+      }
+
+      // Membership type specific notifications
+      if (user.membershipType === 'Premium') {
+        notifications.push({
+          id: `premium-perk-${user.id}`,
+          type: 'reward',
+          title: 'Premium Member Perks! ⭐',
+          message: 'As a Premium member, you have access to exclusive classes and 24/7 gym access. Book your sessions now!',
+          timestamp: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
+          read: true
+        });
+      } else if (user.membershipType === 'Student') {
+        notifications.push({
+          id: `student-discount-${user.id}`,
+          type: 'reward',
+          title: 'Student Discount Applied! 🎓',
+          message: 'Your student membership is active with special pricing. Make the most of your fitness journey!',
+          timestamp: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
+          read: true
+        });
+      }
+
+      // Visit-based notifications
+      const daysSinceLastVisit = user.lastVisit 
+        ? Math.floor((now.getTime() - new Date(user.lastVisit).getTime()) / (1000 * 60 * 60 * 24))
+        : null;
+
+      if (daysSinceLastVisit === null) {
+        notifications.push({
+          id: `welcome-${user.id}`,
+          type: 'milestone',
+          title: 'Welcome to Member Buddy! 🚀',
+          message: 'Your fitness journey starts here! Book your first session and get started with personalized workout plans.',
+          timestamp: new Date(now.getTime() - 30 * 60 * 1000), // 30 minutes ago
+          read: false
+        });
+      } else if (daysSinceLastVisit >= 7) {
+        notifications.push({
+          id: `comeback-${user.id}`,
+          type: 'alert',
+          title: 'We miss you! 💪',
+          message: `It's been ${daysSinceLastVisit} days since your last visit. Come back and continue your fitness journey!`,
+          timestamp: new Date(now.getTime() - 12 * 60 * 60 * 1000), // 12 hours ago
+          read: false
+        });
+      } else if (daysSinceLastVisit <= 1) {
+        notifications.push({
+          id: `streak-${user.id}`,
+          type: 'achievement',
+          title: 'Great Consistency! 🔥',
+          message: 'You\'re maintaining an excellent workout routine! Keep up the amazing work.',
+          timestamp: new Date(now.getTime() - 4 * 60 * 60 * 1000), // 4 hours ago
+          read: false
+        });
+      }
+
+      // General fitness notifications
+      notifications.push({
+        id: `weekly-challenge-${user.id}`,
+        type: 'milestone',
+        title: 'Weekly Challenge Available! 💪',
+        message: 'New weekly fitness challenge is now available. Complete it to earn bonus loyalty points!',
+        timestamp: new Date(now.getTime() - 18 * 60 * 60 * 1000), // 18 hours ago
+        read: false
+      });
+
+      // Sort by timestamp (newest first) and limit to 5 most recent
+      notifications.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+      const recentNotifications = notifications.slice(0, 5);
+
+      res.json(recentNotifications);
+    } catch (error) {
+      console.error("Error fetching member notifications:", error);
+      res.status(500).json({ message: "Failed to fetch notifications" });
+    }
+  });
+
+  // Simple demo authentication endpoint
+  app.post('/api/auth/login', async (req, res) => {
+    try {
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Email and password are required" 
+        });
+      }
+
+      // Simple demo password - for security, use proper hashing in production
+      const demoPassword = "demo123";
+      if (password !== demoPassword) {
+        return res.status(401).json({ 
+          success: false, 
+          error: "Invalid password. Use 'demo123' for all users." 
+        });
+      }
+
+      // Look up user in database
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return res.status(404).json({ 
+          success: false, 
+          error: "User not found. Try a staff email like amanda.smith@clubpulse.co.uk" 
+        });
+      }
+
+      // Return user data for successful login
+      res.json({
+        success: true,
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          role: user.role,
+          membershipType: user.membershipType
+        }
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Internal server error" 
+      });
     }
   });
 

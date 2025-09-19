@@ -36,40 +36,14 @@ interface NotificationCenterProps {
 export function NotificationCenter({ userRole, onNavigateToSalesPersona }: NotificationCenterProps) {
   const [isOpen, setIsOpen] = useState(false);
   
-  // Fetch real notifications for staff, use mock data for members
+  // Fetch real notifications for both staff and members from their respective endpoints
   const { data: fetchedNotifications, isLoading } = useQuery({
-    queryKey: ['/api/staff/notifications'],
-    enabled: userRole === 'staff', // Only fetch for staff
+    queryKey: userRole === 'staff' ? ['/api/staff/notifications'] : ['/api/member/notifications'],
     refetchInterval: 30000, // Refetch every 30 seconds for real-time updates
   });
 
-  // Use mock data for members, real data for staff
-  const notifications: Notification[] = userRole === 'member' ? [
-    {
-      id: '1',
-      type: 'achievement',
-      title: 'Streak Milestone! 🎉',
-      message: 'You have completed a 7-day workout streak! Keep it up!',
-      timestamp: new Date(Date.now() - 10 * 60 * 1000),
-      read: false
-    },
-    {
-      id: '2',
-      type: 'reward',
-      title: 'Points Earned',
-      message: 'You earned 50 loyalty points from your last workout!',
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
-      read: false
-    },
-    {
-      id: '3',
-      type: 'milestone',
-      title: 'Monthly Goal Achieved!',
-      message: 'Congratulations! You have hit your monthly workout target of 20 sessions.',
-      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
-      read: true
-    }
-  ] : (fetchedNotifications as Notification[] || []);
+  // Use real data from API for both staff and members
+  const notifications: Notification[] = (fetchedNotifications as Notification[] || []);
 
   const unreadCount = notifications.filter(n => !n.read).length;
 

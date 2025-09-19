@@ -31,37 +31,29 @@ export function Login() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Dummy credentials
-    const validCredentials = [
-      { email: "admin@virginactive.com", password: "admin123", role: "staff" },
-      { email: "member@virginactive.com", password: "member123", role: "member" },
-      { email: "demo@virginactive.com", password: "demo123", role: "member" }
-    ];
+    try {
+      // Call real authentication API
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const user = validCredentials.find(
-      cred => cred.email === email && cred.password === password
-    );
+      const data = await response.json();
 
-    setTimeout(() => {
-      if (user) {
-        // Use AuthContext login function
-        const userData = {
-          id: Date.now().toString(),
-          email: user.email,
-          role: user.role,
-          firstName: user.email.split("@")[0],
-          lastName: "User"
-        };
-        
-        login(userData as any);
+      if (data.success && data.user) {
+        // Use AuthContext login function with real user data
+        login(data.user);
 
         toast({
           title: "Login Successful",
-          description: `Welcome back, ${user.email}!`,
+          description: `Welcome back, ${data.user.firstName} ${data.user.lastName}!`,
         });
 
         // Redirect based on role
-        if (user.role === "staff") {
+        if (data.user.role === "staff") {
           setLocation("/staff");
         } else {
           setLocation("/portal");
@@ -69,12 +61,20 @@ export function Login() {
       } else {
         toast({
           title: "Login Failed",
-          description: "Invalid email or password. Try: admin@virginactive.com / admin123",
+          description: data.error || "Invalid credentials",
           variant: "destructive",
         });
       }
+    } catch (error) {
+      console.error("Login error:", error);
+      toast({
+        title: "Login Failed",
+        description: "Network error. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -87,10 +87,10 @@ export function Login() {
             </div>
           </div>
           <CardTitle className="text-2xl font-bold text-gray-900">
-            Virgin Active Login
+            Member Buddy Login
           </CardTitle>
           <p className="text-gray-600 mt-2">
-            Sign in to your account
+            Sign in with your club account
           </p>
         </CardHeader>
         <CardContent>
@@ -131,9 +131,9 @@ export function Login() {
           <div className="mt-6 p-4 bg-gray-100 rounded-lg">
             <h4 className="font-semibold text-sm text-gray-700 mb-2">Demo Credentials:</h4>
             <div className="text-xs text-gray-600 space-y-1">
-              <div><strong>Staff:</strong> admin@virginactive.com / admin123</div>
-              <div><strong>Member:</strong> member@virginactive.com / member123</div>
-              <div><strong>Demo:</strong> demo@virginactive.com / demo123</div>
+              <div><strong>Staff:</strong> amanda.smith@clubpulse.co.uk / demo123</div>
+              <div><strong>Member:</strong> sarah.wilson@email.com / demo123</div>
+              <div><strong>All users use password:</strong> demo123</div>
             </div>
             <Button
               variant="outline"
